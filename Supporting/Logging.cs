@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Supporting
 {
-    class Logging
+    public static class Logging
     {
+        
     }
 }
