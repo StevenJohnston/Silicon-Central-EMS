@@ -8,5 +8,9 @@ namespace AllEmployees
 {
     public class Employee
     {
+        protected string firstName;
+        protected string lastName;
+        protected string socialInsuranceNumber;
+        protected string dateOfBirth;
     }
 }
