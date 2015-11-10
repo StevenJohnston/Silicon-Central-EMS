@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace AllEmployees
 {
-    enum seasons
+    
+    public class SeasonalEmployee : Employee
     {
-        winter,
-        spring,
-        summer,
-        fall,
-    }
-    class SeasonalEmployee
-    {
+        public enum seasons
+        {
+            winter,
+            spring,
+            summer,
+            fall,
+        }
         seasons season;
         double piecePay;
     }
