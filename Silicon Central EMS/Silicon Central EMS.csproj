@@ -42,15 +42,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllEmployees.cs" />
-    <Compile Include="Presentation.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Silicon Central EMS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Supporting.cs" />
-    <Compile Include="TheCompany.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AllEmployees\AllEmployees.csproj">
+      <Project>{800399ec-90e1-4f98-a127-73acc4ba1228}</Project>
+      <Name>AllEmployees</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Presentation\Presentation.csproj">
+      <Project>{f71c0c99-b1e9-46e1-a9ff-88b7a0361106}</Project>
+      <Name>Presentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Supporting\Supporting.csproj">
+      <Project>{bdb07612-18c8-47fb-9124-4c350e745782}</Project>
+      <Name>Supporting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TheCompany\TheCompany.csproj">
+      <Project>{1282613c-4973-47d8-ac33-c39d81f9c785}</Project>
+      <Name>TheCompany</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
