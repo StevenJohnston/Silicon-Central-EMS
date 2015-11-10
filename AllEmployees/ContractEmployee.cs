@@ -8,5 +8,8 @@ namespace AllEmployees
 {
     class ContractEmployee
     {
+        string contractStartDate;
+        string contractStopDate;
+        double fixedContractAmount;
     }
 }
