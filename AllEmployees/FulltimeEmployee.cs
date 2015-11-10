@@ -8,5 +8,8 @@ namespace AllEmployees
 {
     class FulltimeEmployee
     {
+        string dateOfHire;
+        string dateOfTermination;
+        double salary;
     }
 }
