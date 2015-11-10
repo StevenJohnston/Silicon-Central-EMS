@@ -35,14 +35,15 @@ namespace AllEmployees
                 }
                 else
                 {
-
+                    //put error code
                 }
 
             }
             else
             {
-
+                //put error code
             }
+            //did not return anything because error code has not been created
             return "";
 
         }
