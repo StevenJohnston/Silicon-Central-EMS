@@ -1,2 +1,3 @@
 C:\Users\Steven Windows7\Documents\SET2ndYear\Windows and Mobile Programming\SETPaint\Silicon Central EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe.config
 C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe.config
+C:\Users\William\Desktop\EMS\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe.config
