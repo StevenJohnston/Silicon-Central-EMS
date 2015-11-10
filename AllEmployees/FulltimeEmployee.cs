@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AllEmployees
 {
-    class FulltimeEmployee
+    class FulltimeEmployee : Employee
     {
         string dateOfHire;
         string dateOfTermination;
