@@ -14,6 +14,27 @@ namespace AllEmployees
         protected string socialInsuranceNumber;
         protected string dateOfBirth;
 
+        public Employee()
+        {
+            this.firstName = "";
+            this.lastName = "";
+            this.socialInsuranceNumber = "";
+            this.dateOfBirth = ""; 
+        }
+
+        public Employee(string firstName, string lastName)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
+        public Employee(string firstName, string lastName, string socialInsuranceNumber, string dateOfBirth)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.socialInsuranceNumber = socialInsuranceNumber;
+            this.dateOfBirth = dateOfBirth;
+
+        }
         string ValidateDateOfBirth(string dateOfBirth)
         {
             int year = 0;
