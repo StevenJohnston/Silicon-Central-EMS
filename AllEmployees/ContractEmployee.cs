@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace AllEmployees
 {
-    class ContractEmployee
+    class ContractEmployee : Employee
     {
         string contractStartDate;
         string contractStopDate;
         double fixedContractAmount;
+
+        
     }
 }
