@@ -11,6 +11,8 @@ namespace Silicon_Central_EMS
     {
         static void Main(string[] args)
         {
+            UIMenu menu = new UIMenu();
+            menu.Launch();
         }
     }
 }
