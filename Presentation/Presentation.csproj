@@ -43,6 +43,12 @@
     <Compile Include="UIMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TheCompany\TheCompany.csproj">
+      <Project>{1282613c-4973-47d8-ac33-c39d81f9c785}</Project>
+      <Name>TheCompany</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
