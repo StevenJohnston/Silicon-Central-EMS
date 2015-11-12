@@ -16,8 +16,10 @@ namespace Supporting
     public class FileIO
     {
         public delegate Message loadFunc(object param);
+        public delegate Message saveFunc(StreamWriter fileOut);
         public static object lockObj = new object();
-        string path = "DBase/EMS project DBase.txt";
+        string path = "DBase";
+        string file = "EMS Project DBase.txt";
         public FileIO()
         {
             
@@ -30,9 +32,20 @@ namespace Supporting
             {
                 try
                 {
-                    using (StreamReader fileIn = new StreamReader(path))
+                    if (!Directory.Exists(path))
                     {
-                        func(fileIn.ReadLine());
+                        Directory.CreateDirectory(path);
+                    }
+                    if (File.Exists(path+ "\\" + file))
+                    {
+                        using (StreamReader fileIn = new StreamReader(path+"\\"+file))
+                        {
+                            func(fileIn.ReadLine());
+                        }
+                    }
+                    else
+                    {
+                        File.Create(path+ "\\" + file);
                     }
                 }
                 catch (Exception e)
@@ -46,9 +59,59 @@ namespace Supporting
             }
             return returnMessage;
         }
-        public Message write(loadFunc func, object param)
+        public Message Save(saveFunc func)
         {
-            return new Message();
-        } 
+            Message returnMessage = new Message();
+            returnMessage.code = 200;
+            lock (lockObj)
+            {
+                try
+                {
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    File.WriteAllText(path+"\\"+file, string.Empty);
+                    using (StreamWriter fileOut = File.AppendText(path + "\\" + file))
+                    {
+                        func(fileOut);
+                    }
+                }
+                catch (Exception e)
+                {
+
+                }
+                finally
+                {
+
+                }
+            }
+            return returnMessage;
+        }
+        public Message Clear()
+        {
+            Message returnMessage = new Message();
+            returnMessage.code = 200;
+            lock (lockObj)
+            {
+                try
+                {
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    File.WriteAllText(path, String.Empty);
+                }
+                catch (Exception e)
+                {
+
+                }
+                finally
+                {
+
+                }
+            }
+            return returnMessage;
+        }
     }
 }
