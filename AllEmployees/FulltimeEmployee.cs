@@ -10,6 +10,22 @@ namespace AllEmployees
     {
         string dateOfHire;
         string dateOfTermination;
-        double salary;
+        decimal salary;
+        public FulltimeEmployee(string[] employeeData)
+        {
+            int index = employeeData[0] == "FT" ? 1 : 0;
+            firstName = employeeData[index];
+            lastName = employeeData[index + 1];
+            SocialInsuranceNumber = employeeData[index +2];
+            dateOfBirth = employeeData[index + 3];
+            dateOfHire = employeeData[index + 4];
+            dateOfTermination = employeeData[index + 5];
+            salary = Convert.ToDecimal(employeeData[index + 6]);
+        }
+        public override string ToString()
+        {
+            return "FT|"+firstName+"|"+lastName+"|"+SocialInsuranceNumber+"|"+dateOfBirth+"|"+dateOfHire+"|"+dateOfTermination+"|"+salary;
+        }
+
     }
 }
