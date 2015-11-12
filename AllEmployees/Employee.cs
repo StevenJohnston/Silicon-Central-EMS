@@ -11,14 +11,41 @@ namespace AllEmployees
     {
         protected string firstName;
         protected string lastName;
-        protected string socialInsuranceNumber;
+        private string socialInsuranceNumber;
         protected string dateOfBirth;
+        private bool isValid = true;
+
+        public string SocialInsuranceNumber
+        {
+            get
+            {
+                return socialInsuranceNumber;
+            }
+
+            set
+            {
+                socialInsuranceNumber = value;
+            }
+        }
+
+        public bool IsValid
+        {
+            get
+            {
+                return isValid;
+            }
+
+            set
+            {
+                isValid = value;
+            }
+        }
 
         public Employee()
         {
             this.firstName = "";
             this.lastName = "";
-            this.socialInsuranceNumber = "";
+            this.SocialInsuranceNumber = "";
             this.dateOfBirth = ""; 
         }
 
@@ -31,7 +58,7 @@ namespace AllEmployees
         {
             this.firstName = firstName;
             this.lastName = lastName;
-            this.socialInsuranceNumber = socialInsuranceNumber;
+            this.SocialInsuranceNumber = socialInsuranceNumber;
             this.dateOfBirth = dateOfBirth;
 
         }
