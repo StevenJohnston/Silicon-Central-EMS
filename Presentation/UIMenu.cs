@@ -20,13 +20,9 @@ namespace Presentation
             {
                 if (nextFunc == null)
                 {
-                    nextFunc = lastFunc;
-                }
-                else if (nextFunc == Quit)
-                {
                     break;
                 }
-                else
+                else if (nextFunc != lastFunc)
                 {
                     Console.Clear();
                 }
@@ -56,6 +52,7 @@ namespace Presentation
                     break;
                 default:
                     Console.Clear();
+                    next = MainMenu;
                     Console.WriteLine("**Invalid input. Enter values 1, 2, or 9**\n");
                     break;
             }
@@ -74,16 +71,21 @@ namespace Presentation
             {
                 case "1":
                     Console.Clear();
-                    Console.WriteLine("**Database Loaded**");
+                    employeeDirectory.Load();
                     next = FileManagementMenu;
+                    Console.WriteLine("**Database Loaded**");
                     break;
                 case "2":
-                    next = EmployeeManagementMenu;
+                    Console.Clear();
+                    employeeDirectory.Save();
+                    next = FileManagementMenu;
+                    Console.WriteLine("**Database Saved**");
                     break;
                 case "9":
-                    next = Quit;
+                    next = MainMenu;
                     break;
                 default:
+                    next = FileManagementMenu;
                     Console.Clear();
                     Console.WriteLine("**Invalid input. Enter values 1, 2, or 9**\n");
                     break;
