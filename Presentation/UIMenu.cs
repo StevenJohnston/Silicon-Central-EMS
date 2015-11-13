@@ -18,6 +18,8 @@ namespace Presentation
             nextFunction nextFunc = MainMenu;
             for (;;)
             {
+                lastFunc = nextFunc;
+                nextFunc = nextFunc();
                 if (nextFunc == null)
                 {
                     break;
@@ -26,8 +28,6 @@ namespace Presentation
                 {
                     Console.Clear();
                 }
-                lastFunc = nextFunc;
-                nextFunc = nextFunc();
             }
         }
         public nextFunction MainMenu()
@@ -51,8 +51,8 @@ namespace Presentation
                     next = Quit;
                     break;
                 default:
-                    Console.Clear();
                     next = MainMenu;
+                    Console.Clear();
                     Console.WriteLine("**Invalid input. Enter values 1, 2, or 9**\n");
                     break;
             }
@@ -94,13 +94,80 @@ namespace Presentation
         }
         public nextFunction EmployeeManagementMenu()
         {
+            string menuChoice;
+            nextFunction next = null;
             Console.WriteLine("Menu 3 : EMPLOYEE MANAGEMENT MENU");
             Console.WriteLine("1. Display Employee Set");
             Console.WriteLine("2. Create a NEW Employee");
             Console.WriteLine("3. Modify an EXISTING Employee");
             Console.WriteLine("4. Remove an EXISTING Employee");
             Console.WriteLine("9. Return to Main Menu");
-            return null;
+            menuChoice = Console.ReadLine();
+            switch (menuChoice)
+            {
+                case "1":
+                    Console.Clear();
+                    List<string> employeeStrings = employeeDirectory.ShowAll();
+                    foreach (string employee in employeeStrings)
+                    {
+                        Console.WriteLine(employee);
+                    }
+                    next = EmployeeManagementMenu;
+                    Console.WriteLine("Press Any Key To Continue...");
+                    Console.ReadKey();
+                    Console.Clear();
+                    break;
+                case "2":
+                    Console.Clear();
+                    next = EmployeeDetailsMenu;
+                    break;
+                case "3":
+                    Console.Clear();
+                    next = EmployeeDetailsMenu;
+                    break;
+                case "4":
+                    Console.Clear();
+                    Console.WriteLine("Enter SIN number of employee to remove");
+                    string employeeSin = Console.ReadLine();
+                    TheCompany.Message existMessage = employeeDirectory.ExistBySin(employeeSin);
+                    if (existMessage.code == 200)
+                    {
+                        Console.WriteLine("Employee Found:");
+                        Console.WriteLine(existMessage.message);
+                        string lineIn = "";
+                        for (; lineIn != "y" && lineIn!="n";lineIn = Console.ReadLine())
+                        {
+                            Console.WriteLine("Are you sure you want to remove? y:n");
+                        }
+                        if (lineIn == "y")
+                        {
+                            TheCompany.Message removeMessage = employeeDirectory.RemoveBySin(employeeSin);
+                            Console.WriteLine(removeMessage.message);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Employee Not Removed");
+                        }
+                        Console.WriteLine("Press Any Key To Continue...");
+                        Console.ReadKey();
+                    }
+                    else if (existMessage.code == 100)
+                    {
+                        Console.WriteLine(existMessage.message);
+                    } 
+
+                    next = EmployeeManagementMenu;
+                    break;
+                case "9":
+                    next = MainMenu;
+                    break;
+                default:
+                    next = FileManagementMenu;
+                    Console.Clear();
+                    Console.WriteLine("**Invalid input. Enter values 1, 2, 4, or 9**\n");
+                    break;
+            }
+            return next;
         }
         public nextFunction EmployeeDetailsMenu()
         {
