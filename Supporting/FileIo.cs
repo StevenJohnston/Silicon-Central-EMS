@@ -40,7 +40,10 @@ namespace Supporting
                     {
                         using (StreamReader fileIn = new StreamReader(path+"\\"+file))
                         {
-                            func(fileIn.ReadLine());
+                            while (!fileIn.EndOfStream)
+                            {
+                                func(fileIn.ReadLine());
+                            }
                         }
                     }
                     else
