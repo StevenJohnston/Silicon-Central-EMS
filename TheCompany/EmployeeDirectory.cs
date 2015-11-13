@@ -74,5 +74,52 @@ namespace TheCompany
             }
             return returnMessage;
         }
+
+        public List<string> ShowAll()
+        {
+            List<string> employeeStrings = new List<string>();
+            foreach (KeyValuePair<string,Employee> employee in employees)
+            {
+                employeeStrings.Add(employee.Value.ToString());
+            }
+            return employeeStrings;
+        }
+
+        public Message RemoveBySin(string employeeSin)
+        {
+            Message returnMessage = new Message();
+            returnMessage.code = 200;
+
+            Employee removeEmployee = employees[employeeSin];
+            if (removeEmployee == null)
+            {
+                returnMessage.code = 100;
+                returnMessage.message = "That employee does not exist";
+            }
+            else
+            {
+                employees.Remove(employeeSin);
+                returnMessage.message = "Employee Removed";
+            }
+            return returnMessage;
+        }
+
+        public Message ExistBySin(string employeeSin)
+        {
+            Message returnMessage = new Message();
+            returnMessage.code = 200;
+
+            Employee removeEmployee = employees[employeeSin];
+            if (removeEmployee == null)
+            {
+                returnMessage.code = 100;
+                returnMessage.message = "That employee does not exist";
+            }
+            else
+            {
+                returnMessage.message = removeEmployee.ToString();
+            }
+            return returnMessage;
+        }
     }
 }
