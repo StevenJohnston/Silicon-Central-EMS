@@ -89,7 +89,7 @@ namespace TheCompany
         {
             Message returnMessage = new Message();
             returnMessage.code = 200;
-
+            
             Employee removeEmployee = employees[employeeSin];
             if (removeEmployee == null)
             {
@@ -109,15 +109,16 @@ namespace TheCompany
             Message returnMessage = new Message();
             returnMessage.code = 200;
 
-            Employee removeEmployee = employees[employeeSin];
-            if (removeEmployee == null)
+            
+            if (employees.ContainsKey(employeeSin))
             {
-                returnMessage.code = 100;
-                returnMessage.message = "That employee does not exist";
+                Employee removeEmployee = employees[employeeSin];
+                returnMessage.message = removeEmployee.ToString();
             }
             else
             {
-                returnMessage.message = removeEmployee.ToString();
+                returnMessage.code = 100;
+                returnMessage.message = "That employee does not exist";
             }
             return returnMessage;
         }
