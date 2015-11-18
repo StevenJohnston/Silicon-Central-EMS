@@ -48,7 +48,7 @@ namespace Presentation
                     next = EmployeeManagementMenu;
                     break;
                 case "9":
-                    next = Quit;
+                    next = null;
                     break;
                 default:
                     next = MainMenu;
@@ -175,10 +175,6 @@ namespace Presentation
             Console.WriteLine("1. Specify Base Employee Details");
             Console.WriteLine("2. Manage Employees");
             Console.WriteLine("9. Return to Employee Management Menu");
-            return null;
-        }
-        public nextFunction Quit()
-        {
             return null;
         }
 
