@@ -14,7 +14,7 @@ namespace AllEmployees
 
         protected string firstName;
         protected string lastName;
-        private string socialInsuranceNumber;
+        protected string socialInsuranceNumber;
         protected string dateOfBirth;
         private bool isValid = true;
 
@@ -69,7 +69,7 @@ namespace AllEmployees
         }
 
 
-        public bool ValidateEmployee(string name, string lastName, string socialInsuranceNumber, string dateOfBirth)
+        protected bool ValidateEmployee(string name, string lastName, string socialInsuranceNumber, string dateOfBirth)
         {
             bool[] valid = new bool[4] { false, false, false, false };
             bool allValid = false;
@@ -84,12 +84,12 @@ namespace AllEmployees
             return allValid;
         }
 
-        private bool ValidateName(string name)
+        protected bool ValidateName(string name)
         {
             return Regex.IsMatch(name, "^[a-zA-Z'-]*?$");
         }
 
-        public bool ValidateSIN(string socialInsuranceNumber)
+        protected bool ValidateSIN(string socialInsuranceNumber)
         {
             //first digit can't be 0 or 8
             int newSin = 0;
@@ -131,7 +131,7 @@ namespace AllEmployees
             return validSin;
         }
         
-        private bool ValidateDate(string date)
+        protected bool ValidateDate(string date)
         {
             bool valid = false;
             int year = 0;
@@ -163,6 +163,16 @@ namespace AllEmployees
             //did not return anything because error code has not been created
             return valid;
 
+        }
+
+        protected bool ValidateMoney(Decimal money)
+        {
+            bool valid = false;
+            if (money >= 0)
+            {
+                valid = true;
+            }
+            return valid;
         }
     }
 }
