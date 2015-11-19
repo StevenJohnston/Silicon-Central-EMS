@@ -11,11 +11,19 @@ namespace AllEmployees
     public class Employee
     {
         public static int[] sinCheck = new int[9] { 1, 2, 1, 2, 1, 2, 1, 2, 1 };
+        public enum dateType{
+            BIRTH,
+            HIRE,
+            TERMINATE,
+            CONTRACT_START,
+            CONTRACT_END
+        }
+
 
         protected string firstName;
         protected string lastName;
         protected string socialInsuranceNumber;
-        protected string dateOfBirth;
+        protected DateTime dateOfBirth;
         private bool isValid = true;
 
         public string SocialInsuranceNumber
@@ -49,7 +57,7 @@ namespace AllEmployees
             this.firstName = "";
             this.lastName = "";
             this.SocialInsuranceNumber = "";
-            this.dateOfBirth = ""; 
+            //this.dateOfBirth = ""; 
         }
 
         public Employee(string firstName, string lastName)
@@ -64,7 +72,7 @@ namespace AllEmployees
                 this.firstName = firstName;
                 this.lastName = lastName;
                 this.SocialInsuranceNumber = socialInsuranceNumber;
-                this.dateOfBirth = dateOfBirth;
+                //this.dateOfBirth = dateOfBirth;
             }
         }
 
@@ -130,40 +138,44 @@ namespace AllEmployees
             }
             return validSin;
         }
-        
+
         protected bool ValidateDate(string date)
         {
             bool valid = false;
-            int year = 0;
             CultureInfo culture;
             culture = CultureInfo.CreateSpecificCulture("en-US");
-            string newTemp = date.ToLower();
-            string formats = "yyyy/mm/dd";
+            string[] formats = { "yyyy/MM/dd", "yyyy/M/dd"};
             DateTime dateValue;
 
-            newTemp = newTemp.Remove(4, newTemp.Length - 4);
-            if (DateTime.TryParseExact(newTemp, formats, new CultureInfo("en-US"), DateTimeStyles.None, out dateValue))
+            if (DateTime.TryParseExact(date, formats, new CultureInfo("en-US"), DateTimeStyles.None, out dateValue))
             {
-                //convert string to int
-                year = Convert.ToInt32(newTemp);
-                //check year range
-                if ((year >= 1900) && (year <= 2001))
+                if (dateValue <= DateTime.Now)
                 {
                     valid = true;
                 }
-                else
+            }
+            return valid;
+        }
+
+        //used to check if date is before beforeDate -- returns true if valid
+        static public bool ValidateDate(string date, DateTime beforeDate)
+        {
+            bool valid = false;
+            CultureInfo culture;
+            culture = CultureInfo.CreateSpecificCulture("en-US");
+            string[] formats = { "yyyy/MM/dd", "yyyy/M/dd" };
+            DateTime dateValue;
+
+            if (DateTime.TryParseExact(date, formats, new CultureInfo("en-US"), DateTimeStyles.None, out dateValue))
+            {
+                if (dateValue <= beforeDate)
                 {
-                    //put error code
+                    valid = true;
                 }
             }
-            else
-            {
-                //put error code
-            }
-            //did not return anything because error code has not been created
             return valid;
-
         }
+
 
         protected bool ValidateMoney(Decimal money)
         {

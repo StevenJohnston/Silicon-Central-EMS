@@ -53,7 +53,7 @@ namespace AllEmployees
             return allValid;
         }
 
-        protected virtual bool ValidateDate(string date, dateType type)
+        protected bool ValidateDate(string date, dateType type)
         {
             bool valid = false;
             CultureInfo culture;
