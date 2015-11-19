@@ -34,7 +34,7 @@ namespace AllEmployees
             }
         }
 
-        private bool ValidateContract(string name, string lastName, string socialInsuranceNumber, string dateOfBirth, string contractStartDate, string contractStopDate, decimal fixedContractAmount)
+        private bool ValidateContract(string name, string lastName, string businessNumber, string dateOfBirth, string contractStartDate, string contractStopDate, decimal fixedContractAmount)
         {
             bool allValid = false;
             bool[] valid = new bool[5];
@@ -42,15 +42,66 @@ namespace AllEmployees
             if (valid[0])
             {
                 this.dateOfBirth = Convert.ToDateTime(dateOfBirth);
+                valid[4] = ValidateBusinessNumber(businessNumber);
             }
+            
             valid[1] = ValidateDate(contractStartDate, dateType.CONTRACT_START);
             valid[2] = ValidateDate(contractStopDate, dateType.CONTRACT_END);
             valid[3] = ValidateMoney(fixedContractAmount);
-            if (valid[0] & valid[1] & valid[2] & valid[3])
+            if (valid[0] & valid[1] & valid[2] & valid[3] & valid[4])
             {
                 allValid = true;
             }
             return allValid;
+        }
+
+        private bool ValidateBusinessNumber(string businessNumber)
+        {
+
+            int newSin = 0;
+            Int32.TryParse(socialInsuranceNumber.Replace(" ", string.Empty), out newSin);
+
+            int[] tempSin = new int[9];
+            int[] sin = new int[9];
+            int[] year = new int[4];
+            int tempYear = dateOfBirth.Year;
+            double totalSin = 0;
+            bool validSin = false;
+            int toAdd = 0;
+            int theSin = newSin;
+            for (int x = 8; x >= 0; x--) //splits the SIN into an array
+            {
+                sin[x] = newSin % 10;
+                newSin /= 10;
+            }
+            for(int x = 4; x >= 0; x--)
+            {
+                year[x] = tempYear % 10;
+                tempYear /= 10;
+            }
+            if (sin[0] == year[2] && sin[1] == year[3])
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    toAdd = sinCheck[x] * sin[x];
+                    if (toAdd >= 10)
+                    {
+                        toAdd = (toAdd % 10) + (toAdd / 10);
+                    }
+                    totalSin += toAdd;
+                }
+
+                if ((Math.Ceiling(totalSin / 10) * 10 - totalSin) == sin[8])
+                {
+                    validSin = true;
+                }
+            }
+            else if (theSin == 0)
+            {
+                validSin = true;
+            }
+            return validSin;
+        
         }
 
         protected bool ValidateDate(string date, dateType type)
