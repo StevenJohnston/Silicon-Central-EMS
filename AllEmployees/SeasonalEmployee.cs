@@ -18,28 +18,45 @@ namespace AllEmployees
         }
         seasons season { get; set; }
         Decimal piecePay { get; set; }
-        
 
-        private bool ValidateSeason(string newSeason)
+        public SeasonalEmployee(string[] employeeData)
+        {
+            int index = employeeData[0] == "SS" ? 1 : 0;
+
+            if (ValidateSeasonal(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], (seasons)Convert.ToInt32(employeeData[index + 4]), Convert.ToDecimal(employeeData[index + 5])))
+            {
+                firstName = employeeData[index];
+                lastName = employeeData[index + 1];
+                socialInsuranceNumber = employeeData[index + 2];
+                dateOfBirth = employeeData[index + 3];
+                season = (seasons)Convert.ToInt32(employeeData[index + 4]);
+                piecePay = Convert.ToDecimal(employeeData[index + 5]);
+            }
+        }
+
+        private bool ValidateSeasonal(string name, string lastName, string socialInsuranceNumber, string dateOfBirth, seasons season, decimal piecePay)
+        {
+            bool[] valid = new bool[3] { false, false, false };
+            bool allValid = false;
+
+            valid[0] = ValidateEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
+            valid[1] = ValidateSeason(season);
+            valid[2] = ValidateMoney(piecePay);
+            if (valid[0] & valid[1] & valid[2] & valid[3])
+            {
+                allValid = true;
+            }
+            return allValid;
+        }
+
+        private bool ValidateSeason(seasons newSeason)
         {
             bool valid = false;
 
-            if (newSeason.ToUpper() == "WINTER")
+            if (newSeason >= seasons.winter && newSeason <= seasons.fall)
             {
                 valid = true;
-            }
-            else if (newSeason.ToUpper() == "SPRING")
-            {
-                valid = true;
-            }
-            else if (newSeason.ToUpper() == "SUMMER")
-            {
-                valid = true;
-            }
-            else if (newSeason.ToUpper() == "FALL")
-            {
-                valid = true;
-            }
+            } 
 
             return valid;
         }
