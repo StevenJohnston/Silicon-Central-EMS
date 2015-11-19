@@ -14,10 +14,13 @@ namespace AllEmployees
         public FulltimeEmployee(string[] employeeData)
         {
             int index = employeeData[0] == "FT" ? 1 : 0;
-            firstName = employeeData[index];
-            lastName = employeeData[index + 1];
-            SocialInsuranceNumber = employeeData[index +2];
-            dateOfBirth = employeeData[index + 3];
+            if (ValidateEmployee(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3]))
+            {
+                firstName = employeeData[index];
+                lastName = employeeData[index + 1];
+                SocialInsuranceNumber = employeeData[index + 2];
+                dateOfBirth = employeeData[index + 3];
+            }
             dateOfHire = employeeData[index + 4];
             dateOfTermination = employeeData[index + 5];
             salary = Convert.ToDecimal(employeeData[index + 6]);
