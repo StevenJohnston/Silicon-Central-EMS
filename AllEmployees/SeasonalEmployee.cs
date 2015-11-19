@@ -19,6 +19,11 @@ namespace AllEmployees
         seasons season { get; set; }
         Decimal piecePay { get; set; }
 
+        public SeasonalEmployee()
+        {
+
+        }
+
         public SeasonalEmployee(string[] employeeData)
         {
             int index = employeeData[0] == "SS" ? 1 : 0;
@@ -28,7 +33,7 @@ namespace AllEmployees
                 firstName = employeeData[index];
                 lastName = employeeData[index + 1];
                 socialInsuranceNumber = employeeData[index + 2];
-                dateOfBirth = employeeData[index + 3];
+                dateOfBirth = Convert.ToDateTime(employeeData[index + 3]);
                 season = (seasons)Convert.ToInt32(employeeData[index + 4]);
                 piecePay = Convert.ToDecimal(employeeData[index + 5]);
             }
