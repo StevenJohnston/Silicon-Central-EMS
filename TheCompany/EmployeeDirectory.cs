@@ -122,5 +122,18 @@ namespace TheCompany
             }
             return returnMessage;
         }
+
+        public static bool isDateAfterHire(object date)
+        {
+            bool valid = true;
+            
+            return valid;
+        }
+        public static bool isDateAfterBirth(object date)
+        {
+            bool valid = true;
+            
+            return valid;
+        }
     }
 }
