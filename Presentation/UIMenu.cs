@@ -11,8 +11,10 @@ namespace Presentation
     public class UIMenu
     {
         public delegate nextFunction nextFunction();
+        public delegate bool validator(object obj);
         EmployeeDirectory employeeDirectory = new EmployeeDirectory();
         bool newEmployee = false;
+
         public void Launch()
         {
             nextFunction lastFunc = null;
@@ -187,10 +189,43 @@ namespace Presentation
                 case "1":
                     //InputTillCorrect(new Regex[] { new Regex(@"^FT$"), new Regex(@"^PT$"), new Regex(@"^CT$"), new Regex(@"^SS$") },"Enter Employee Type", "Employee Types consist of (FT,PT,CT,SS,)");
                     employeeInfo[0] = InputTillCorrect(new Regex(@"^(?i)(FT|PT|CT|SS|Full Time|Part Time|Contract|Seasonal)(?-i)$"), "Enter Employee Type", "Employee Types consist of (FT,PT,CT,SS,)");
-                    employeeInfo[1] = InputTillCorrect(new Regex(@"^w+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
-                    employeeInfo[2] = InputTillCorrect(new Regex(@"^w+$"), "Enter Employee First Name", "Employee First Name consist of only characters");
+                    //employeeInfo[1] = InputTillCorrect(new Regex(@"^w+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
+                    //employeeInfo[2] = InputTillCorrect(new Regex(@"^w+$"), "Enter Employee First Name", "Employee First Name consist of only characters");
 
-                    if(employeeInfo[0] == )
+                    switch (employeeInfo[0].ToLower())
+                    {
+                        case "ft":
+                        case "full time":
+                            next = FullTimeMenu;
+                            break;
+                        case "pt":
+                        case "part time":
+                            break;
+                        case "ct":
+                        case "contract":
+                            break;
+                        case "ss":
+                        case "seasonal":
+                            break;
+
+                    }
+                    switch (employeeInfo[0].ToLower())
+                    {
+                        case "ft":
+                        case "full time":
+                            break;
+                        case "pt":
+                        case "part time":
+                            break;
+                        case "ct":
+                        case "contract":
+                            break;
+                        case "ss":
+                        case "seasonal":
+                            break;
+
+                    }
+                    if (employeeInfo[0].ToLower() == "ft" || employeeInfo[0].ToLower() == "full time")
                     employeeInfo[3] = InputTillCorrect(new Regex(@"^$"), "Enter Employee ", "Employee  consist of ()");
                     employeeInfo[4] = InputTillCorrect(new Regex(@"^$"), "Enter Employee ", "Employee  consist of ()");
                     employeeInfo[5] = InputTillCorrect(new Regex(@"^$"), "Enter Employee ", "Employee  consist of ()");
@@ -201,6 +236,79 @@ namespace Presentation
                     break;
             }
             return next;
+        }
+        public nextFunction FullTimeMenu()
+        {
+            nextFunction next = EmployeeDetailsMenu;
+            string[] fullTimeInfo = new string[8];
+            //Base Employee
+            fullTimeInfo[0] = "FT";
+            fullTimeInfo[1] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
+            fullTimeInfo[2] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee First Name", "Employee First Name consist of only characters");
+            fullTimeInfo[3] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee SIN", "Employee SIN should be formatted like so: ### ### ###");
+            fullTimeInfo[4] = InputTillCorrect(ValidateDate, "Enter Employee Date Of Birth", "That date is not valid");
+
+
+            fullTimeInfo[5] = InputTillCorrect(EmployeeDirectory.isDateAfterBirth, "Enter Employee Date Of Hire", "Date must be after date of birth");
+            fullTimeInfo[6] = InputTillCorrect(EmployeeDirectory.isDateAfterHire, "Enter Date of Termination", "Date must be after date of hire");
+            fullTimeInfo[7] = InputTillCorrect(new Regex(@"^\d[(.\d)]$"), "Enter Employee Salary", "That is not a valid salary");
+            return next;
+        }
+        public nextFunction PartTimeMenu()
+        {
+            nextFunction next = EmployeeDetailsMenu;
+            string[] fullTimeInfo = new string[8];
+            fullTimeInfo[0] = "FT";
+            fullTimeInfo[1] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
+            fullTimeInfo[2] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee First Name", "Employee First Name consist of only characters");
+            fullTimeInfo[3] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee SIN", "Employee SIN should be formatted like so: ### ### ###");
+            fullTimeInfo[4] = InputTillCorrect(ValidateDate, "Enter Employee Date Of Hire", "That date is not valid");
+            fullTimeInfo[5] = InputTillCorrect(EmployeeDirectory.isDateAfterBirth, "Enter Employee Date Of Hire", "Date must be after date of birth");
+            fullTimeInfo[6] = InputTillCorrect(EmployeeDirectory.isDateAfterHire, "Enter Date of Termination", "Date must be after date of hire");
+            fullTimeInfo[7] = InputTillCorrect(new Regex(@"^\d[(.\d)]$"), "Enter Employee Salary", "That is not a valid salary");
+            return next;
+        }
+        public nextFunction ContractMenu()
+        {
+            nextFunction next = EmployeeDetailsMenu;
+            return next;
+        }
+        public nextFunction SeasonalMenu()
+        {
+            nextFunction next = EmployeeDetailsMenu;
+            return next;
+        }
+        public string[] getFullTimeInfo()
+        {
+            string[] fullTimeInfo = new string[3];
+            fullTimeInfo[0] = InputTillCorrect(ValidateDate, "Enter Employee Date Of Hire","That date is not valid");
+            fullTimeInfo[1] = InputTillCorrect(ValidateDate, "Enter Employee Date Of Termination", "That date is not valid");
+            fullTimeInfo[2] = InputTillCorrect(new Regex(@"^\d[(.\d)]$"), "Enter Employee Salary", "That is not a valid salary");
+            return fullTimeInfo;
+        }
+        public string[] getPartTimeInfo()
+        {
+            string[] partTimeInfo = new string[3];
+            partTimeInfo[0] = InputTillCorrect(ValidateDate, "Enter Employee Date Of Hire", "That date is not valid");
+            partTimeInfo[1] = InputTillCorrect(ValidateDate, "Enter Employee Date Of Termination", "That date is not valid");
+            partTimeInfo[2] = InputTillCorrect(new Regex(@"^\d[(.\d)]$"), "Enter Employee Hourly Rate", "That is not a valid Hourly Rate");
+            return partTimeInfo;
+        }
+        public string[] getContractInfo()
+        {
+            string[] contractInfo = new string[3];
+            contractInfo[0] = InputTillCorrect(ValidateDate, "Enter Contract Start Date", "That date is not valid");
+            contractInfo[1] = InputTillCorrect(ValidateDate, "Enter Contract Stop Date", "That date is not valid");
+            contractInfo[2] = InputTillCorrect(new Regex(@"^\d[(.\d)]$"), "Enter Fixed Contract Amount", "That is a not a vaild fixed contract amount");
+            return contractInfo;
+        }
+        public string[] getSeasonalInfo()
+        {
+            string[] seasonalInfo = new string[3];
+            seasonalInfo[0] = InputTillCorrect(new Regex(@"^$"), "Enter Contract Start Date", "That date is not valid");
+            seasonalInfo[1] = InputTillCorrect(ValidateDate, "Enter Contract Stop Date", "That date is not valid");
+            seasonalInfo[2] = InputTillCorrect(new Regex(@"^\d[(.\d)]$"), "Enter Fixed Contract Amount", "That is a not a vaild fixed contract amount");
+            return seasonalInfo;
         }
         public string InputTillCorrect(Regex regex,string message, string errorMessage)
         {
@@ -213,6 +321,28 @@ namespace Presentation
                 Console.WriteLine(message);
             }
             return lineIn;
+        }
+        public string InputTillCorrect(validator validatorMethod,string message,string errorMessage)
+        {
+            string lineIn = "";
+            for (; !validatorMethod(lineIn); lineIn = Console.ReadLine())
+            {
+                Console.Clear();
+                Console.WriteLine(errorMessage);
+                Console.WriteLine(message);
+            }
+            return lineIn;
+        }
+        public bool ValidateDate(object sin)
+        {
+            bool validDate = false;
+            return validDate;
+        }
+        public bool ValidateSin(object sin)
+        {
+            bool validSin = true;
+            string sinString = (string)sin;
+            return validSin;
         }
     }
 }
