@@ -190,7 +190,7 @@ namespace Presentation
                     employeeInfo[1] = InputTillCorrect(new Regex(@"^w+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
                     employeeInfo[2] = InputTillCorrect(new Regex(@"^w+$"), "Enter Employee First Name", "Employee First Name consist of only characters");
 
-                    if(employeeInfo[0] == )
+                    if(employeeInfo[0] == "")
                     employeeInfo[3] = InputTillCorrect(new Regex(@"^$"), "Enter Employee ", "Employee  consist of ()");
                     employeeInfo[4] = InputTillCorrect(new Regex(@"^$"), "Enter Employee ", "Employee  consist of ()");
                     employeeInfo[5] = InputTillCorrect(new Regex(@"^$"), "Enter Employee ", "Employee  consist of ()");
