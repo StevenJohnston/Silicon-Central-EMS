@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace AllEmployees
 {
     public class ContractEmployee : Employee
@@ -12,6 +13,34 @@ namespace AllEmployees
         DateTime contractStartDate;
         DateTime contractStopDate;
         decimal fixedContractAmount;
+        public bool VariablesLogString(string[] employeeData)
+        {
+            bool success = true;
+            int index = employeeData[0] == "CT" ? 1 : 0;
+            logString += "Trying to create Contract Employee with:\n||\tFirst Name: " + employeeData[index] +
+                        "||Last Name: " + employeeData[index + 1] +
+                        "||BN: " + employeeData[index + 2] +
+                        "||Date of Incorporation: " + employeeData[index + 3] +
+                        "||Contract Start: " + employeeData[index + 4] +
+                        "||Contract End: " + employeeData[index + 5] +
+                        "||Contract Amount: " + employeeData[index + 6];
+            return success;
+        }
+
+        public bool SuccessLogString()
+        {
+            bool success = true;
+            if (IsValid)
+            {
+                AddToLogString("\t-->Creating Contract Employee was successful.");
+            }
+            else
+            {
+                AddToLogString("\t-->Creating Contract Employee failed.");
+            }
+            Supporting.Logging.LogString(logString);
+            return success;
+        }
 
         public ContractEmployee()
         {
@@ -21,7 +50,7 @@ namespace AllEmployees
         public ContractEmployee(string[] employeeData)
         {
             int index = employeeData[0] == "CT" ? 1 : 0;
-
+            VariablesLogString(employeeData);
             if (ValidateContract(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], employeeData[index + 5], Convert.ToDecimal(employeeData[index + 6])))
             {
                 firstName = employeeData[index];
@@ -31,7 +60,9 @@ namespace AllEmployees
                 contractStartDate = Convert.ToDateTime(employeeData[index + 4]);
                 contractStopDate = Convert.ToDateTime(employeeData[index + 5]);
                 fixedContractAmount = Convert.ToDecimal(employeeData[index + 6]);
+                IsValid = true;
             }
+            SuccessLogString();
         }
 
         private bool ValidateContract(string name, string lastName, string businessNumber, string dateOfBirth, string contractStartDate, string contractStopDate, decimal fixedContractAmount)
@@ -59,7 +90,13 @@ namespace AllEmployees
         {
 
             int newSin = 0;
-            Int32.TryParse(socialInsuranceNumber.Replace(" ", string.Empty), out newSin);
+            try {
+                Int32.TryParse(socialInsuranceNumber.Replace(" ", string.Empty), out newSin);
+            }
+            catch(FormatException e)
+            {
+                AddToLogString("Business Number Error: " + e.Message + " \n||\t\tTried: " + businessNumber);
+            }
 
             int[] tempSin = new int[9];
             int[] sin = new int[9];
@@ -95,10 +132,18 @@ namespace AllEmployees
                 {
                     validSin = true;
                 }
+                else
+                {
+                    AddToLogString("\tBusiness Number Error: Not a valid business number");
+                }
             }
             else if (theSin == 0)
             {
                 validSin = true;
+            }
+            else
+            {
+                AddToLogString("\tBusiness Number Error: First two digits must match the company's date of incorporation.");
             }
             return validSin;
         
@@ -116,18 +161,22 @@ namespace AllEmployees
             {
                 switch (type)
                 {
-                    case dateType.BIRTH:
-                        if (dateValue <= DateTime.Now)
-                        {
-                            valid = true;
-                            dateOfBirth = dateValue;
-                        }
-                        break;
                     case dateType.CONTRACT_START:
                         if (dateValue >= dateOfBirth && dateValue <= DateTime.Now)
                         {
                             valid = true;
                             contractStartDate = dateValue;
+                        }
+                        else
+                        {
+                            if (dateValue <= dateOfBirth)
+                            {
+                                AddToLogString("\tContract Start Date Error: Must be after the company was created.");
+                            }
+                            else
+                            {
+                                AddToLogString("\tContract Start Date Error: Must be before the current date.");
+                            }
                         }
                         break;
                     case dateType.CONTRACT_END:
@@ -136,7 +185,29 @@ namespace AllEmployees
                             valid = true;
                             contractStopDate = dateValue;
                         }
+                        else
+                        {
+                            if (dateValue <= dateOfBirth)
+                            {
+                                AddToLogString("\tContract Stop Date Error: Must be after the company was created.");
+                            }
+                            else
+                            {
+                                AddToLogString("\tContract Stop Date Error: Must be before the current date.");
+                            }
+                        }
                         break;
+                }
+            }
+            else
+            {
+                if (type == dateType.CONTRACT_START)
+                {
+                    AddToLogString("\tContract Start Date Error: Invalid format.\n||\t\tTried: " + date);
+                }
+                else if (type == dateType.CONTRACT_END)
+                {
+                    AddToLogString("\tContract Stop Date Error: Invalid format.\n||\t\tTried: " + date);
                 }
             }
             return valid;
