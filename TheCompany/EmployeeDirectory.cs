@@ -36,13 +36,13 @@ namespace TheCompany
                     newEmployee = new FulltimeEmployee(recordStr);
                     break;
                 case "PT":
-                    newEmployee = new ParttimeEmployee();
+                    newEmployee = new ParttimeEmployee(recordStr);
                     break;
                 case "CT":
-                    newEmployee = new ContractEmployee();
+                    newEmployee = new ContractEmployee(recordStr);
                     break;
                 case "SN":
-                    newEmployee = new SeasonalEmployee();
+                    newEmployee = new SeasonalEmployee(recordStr);
                     break;
                 default:
                     break;
