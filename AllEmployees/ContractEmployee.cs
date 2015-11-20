@@ -154,7 +154,7 @@ namespace AllEmployees
             bool valid = false;
             CultureInfo culture;
             culture = CultureInfo.CreateSpecificCulture("en-US");
-            string[] formats = { "yyyy/MM/dd", "yyyy/M/dd" };
+            string[] formats = { "yyyy/MM/dd", "yyyy/M/dd", "yyyy/M/d", "yyyy/MM/d" };
             DateTime dateValue;
 
             if (DateTime.TryParseExact(date, formats, new CultureInfo("en-US"), DateTimeStyles.None, out dateValue))
