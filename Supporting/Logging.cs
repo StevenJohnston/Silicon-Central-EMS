@@ -9,14 +9,12 @@ namespace Supporting
 {
     public class Logging
     {
-        public static object lockObj = new object();
 
         public static bool LogString(string toLog)
         {
             bool success = false;
             string path = "Log\\LogFile.txt";
-            string temp = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + ": ";
-            DateTime current = DateTime.Now;
+            string temp = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss");
 
             try
             {
