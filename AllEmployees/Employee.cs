@@ -24,7 +24,13 @@ namespace AllEmployees
         protected string lastName;
         protected string socialInsuranceNumber;
         protected DateTime dateOfBirth;
-        private bool isValid = true;
+        private bool isValid = false;
+        protected string logString = "";
+
+        public void AddToLogString(string toLog)
+        {
+            logString += "\n||" + toLog;
+        }
 
         public string SocialInsuranceNumber
         {
@@ -101,8 +107,13 @@ namespace AllEmployees
         {
             //first digit can't be 0 or 8
             int newSin = 0;
-            Int32.TryParse(socialInsuranceNumber.Replace(" ", string.Empty), out newSin);
-
+            try {
+                newSin = Convert.ToInt32(socialInsuranceNumber.Replace(" ", string.Empty));
+            }
+            catch (FormatException e)
+            {
+                AddToLogString("\tSIN Error: " + e.Message + "\n||\t\tTried: " + socialInsuranceNumber);
+            }
             int[] tempSin = new int[9];
             int[] sin = new int[9];
             double totalSin = 0;
@@ -131,10 +142,18 @@ namespace AllEmployees
                 {
                     validSin = true;
                 }
+                else
+                {
+                    AddToLogString("\tSIN Error: Not a valid SIN.");
+                }
             }
             else if (theSin == 0)
             {
                 validSin = true;
+            }
+            else if(sin[0] == 8)
+            {
+                AddToLogString("\tSIN Error: Cannot start with 8.");
             }
             return validSin;
         }
@@ -153,6 +172,14 @@ namespace AllEmployees
                 {
                     valid = true;
                 }
+                else
+                {
+                    AddToLogString("\tDate of Birth Error: Cannot be in the future.");
+                }
+            }
+            else
+            {
+                AddToLogString("\tDate of Birth Error: Invalid date format.");
             }
             return valid;
         }
@@ -183,6 +210,10 @@ namespace AllEmployees
             if (money >= 0)
             {
                 valid = true;
+            }
+            else
+            {
+                AddToLogString("\tMoney Value Error: Money values must be 0 or greater.\n||\t\tTried: " + money);
             }
             return valid;
         }
