@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace AllEmployees
 {
+    /// <summary>
+    /// This represents the ParttimeEmployee Class which is the child class of Employee
+    /// </summary>
     public class ParttimeEmployee : Employee
     {
         DateTime dateOfHire;  //!< date of hire

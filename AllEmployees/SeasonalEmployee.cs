@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace AllEmployees
 {
-    
+    /// <summary>
+    /// This represents the SeasonalEmployee Class which is the parent class which all other employee 
+    /// will inherit from
+    /// </summary>
     public class SeasonalEmployee : Employee
     {
         /*public enum seasons

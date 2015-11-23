@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace AllEmployees
 {
+    /// <summary>
+    /// This represents the Contract Employee Class which is the child class of Employee
+    /// </summary>
     public class ContractEmployee : Employee
     {
         DateTime contractStartDate; //!< DateTime when contract start

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace AllEmployees
 {
+    /// <summary>
+    /// This represents the FulltimeEmployee Class which is the child class of Employee
+    /// </summary>
     public class FulltimeEmployee : Employee
     {
         DateTime dateOfHire; //!< date of hire
@@ -86,8 +89,8 @@ namespace AllEmployees
         /// <returns>allValid</returns>
         private bool ValidateFulltime(string name, string lastName, string socialInsuranceNumber, string dateOfBirth, string dateOfHire, string dateOfTermination, decimal salary)
         {
-            bool[] valid = new bool[4] { false, false, false, false };
-            bool allValid = false;
+            bool[] valid = new bool[4] { false, false, false, false };  //!< bool array of false
+            bool allValid = false;  //!< bool of status if all information is valid
 
             valid[0] = ValidateEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
             if (valid[0])
@@ -111,11 +114,11 @@ namespace AllEmployees
         /// <returns></returns>
         protected bool ValidateDate(string date, dateType type)
         {
-            bool valid = false;
-            CultureInfo culture;
-            culture = CultureInfo.CreateSpecificCulture("en-US");
-            string[] formats = { "yyyy/MM/dd", "yyyy/M/dd", "yyyy/M/d", "yyyy/MM/d" };
-            DateTime dateValue;
+            bool valid = false;  //!< bool if date was valid
+            CultureInfo culture; //!< Culture information
+            culture = CultureInfo.CreateSpecificCulture("en-US");  //!< Culture of date
+            string[] formats = { "yyyy/MM/dd", "yyyy/M/dd", "yyyy/M/d", "yyyy/MM/d" };  //!< Date format
+            DateTime dateValue;  //!< Date value
 
             if (DateTime.TryParseExact(date, formats, new CultureInfo("en-US"), DateTimeStyles.None, out dateValue))
             {
