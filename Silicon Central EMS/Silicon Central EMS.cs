@@ -9,6 +9,9 @@ namespace Silicon_Central_EMS
 {
     class Program
     {
+        /// <summary>
+        /// Main access point to the program, instantiates object of type UIMenu and launches the user-friendly constructed menu
+        /// </summary>
         static void Main(string[] args)
         {
             UIMenu menu = new UIMenu();

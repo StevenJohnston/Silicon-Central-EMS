@@ -17,8 +17,11 @@ namespace AllEmployees
             fall,
         }
         seasons season { get; set; }*/
-        string season;
-        Decimal piecePay { get; set; }
+        string season; /// What season
+       
+
+
+        Decimal piecePay { get; set; } 
 
         public bool VariablesLogString(string[] employeeData)
         {
@@ -85,10 +88,14 @@ namespace AllEmployees
             }
             return allValid;
         }
-
+        /// <summary>
+        /// Validate the season 
+        /// </summary>
+        /// <param name="newSeason"></param>
+        /// <returns></returns>
         public bool ValidateSeason(string newSeason)
         {
-            bool valid = false;
+            bool valid = false; 
 
             if (newSeason.ToUpper() == "WINTER")
             {

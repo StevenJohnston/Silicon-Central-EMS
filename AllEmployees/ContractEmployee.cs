@@ -10,9 +10,9 @@ namespace AllEmployees
 {
     public class ContractEmployee : Employee
     {
-        DateTime contractStartDate;
-        DateTime contractStopDate;
-        decimal fixedContractAmount;
+        DateTime contractStartDate; //!< DateTime when contract start
+        DateTime contractStopDate; //!< DateTime when contract end
+        decimal fixedContractAmount; //!< Contract Length
         /// <summary>
         /// Log when trying to create an employee
         /// </summary>
@@ -20,7 +20,7 @@ namespace AllEmployees
         /// <returns></returns>
         public bool VariablesLogString(string[] employeeData)
         {
-            bool success = true;
+            bool success = true; ///< bool which gets returned
             int index = employeeData[0] == "CT" ? 1 : 0;
             logString += "Trying to create Contract Employee with:\n||\tFirst Name: " + employeeData[index] +
                         "||Last Name: " + employeeData[index + 1] +
@@ -37,7 +37,7 @@ namespace AllEmployees
         /// <returns>sucess</returns>
         public bool SuccessLogString()
         {
-            bool success = true;
+            bool success = true; ///< bool which gets return indicating if it was valid
             if (IsValid)
             {
                 AddToLogString("\t-->Creating Contract Employee was successful.");
@@ -90,8 +90,8 @@ namespace AllEmployees
         /// <returns></returns>
         private bool ValidateContract(string name, string lastName, string businessNumber, string dateOfBirth, string contractStartDate, string contractStopDate, decimal fixedContractAmount)
         {
-            bool allValid = false;
-            bool[] valid = new bool[5];
+            bool allValid = false; //!< bool which gets return indicating if it was valid
+            bool[] valid = new bool[5]; //!< bool array
             valid[0] = ValidateEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
             if (valid[0])
             {
@@ -116,7 +116,7 @@ namespace AllEmployees
         private bool ValidateBusinessNumber(string businessNumber)
         {
 
-            int newSin = 0;
+            int newSin = 0; //!< SIN
             try {
                 Int32.TryParse(socialInsuranceNumber.Replace(" ", string.Empty), out newSin);
             }
@@ -125,14 +125,14 @@ namespace AllEmployees
                 AddToLogString("Business Number Error: " + e.Message + " \n||\t\tTried: " + businessNumber);
             }
 
-            int[] tempSin = new int[9];
-            int[] sin = new int[9];
-            int[] year = new int[4];
+            int[] tempSin = new int[9]; ///< int array
+            int[] sin = new int[9]; ///< int array
+            int[] year = new int[4]; ///< int array
             int tempYear = dateOfBirth.Year;
-            double totalSin = 0;
-            bool validSin = false;
-            int toAdd = 0;
-            int theSin = newSin;
+            double totalSin = 0;   ///<totalSin
+            bool validSin = false; ///< bool which gets return indicating if it was valid
+            int toAdd = 0; //!< Amount to add
+            int theSin = newSin; //!< assign theSin to newSin
             for (int x = 8; x >= 0; x--) //splits the SIN into an array
             {
                 sin[x] = newSin % 10;
@@ -183,10 +183,10 @@ namespace AllEmployees
         /// <returns></returns>
         protected bool ValidateDate(string date, dateType type)
         {
-            bool valid = false;
-            CultureInfo culture;
-            culture = CultureInfo.CreateSpecificCulture("en-US");
-            string[] formats = { "yyyy/MM/dd", "yyyy/M/dd", "yyyy/M/d", "yyyy/MM/d" };
+            bool valid = false; //!< validation on date
+            CultureInfo culture; //!< culture format
+            culture = CultureInfo.CreateSpecificCulture("en-US"); //!< en-US usa style of date
+            string[] formats = { "yyyy/MM/dd", "yyyy/M/dd", "yyyy/M/d", "yyyy/MM/d" }; //!< different date format
             DateTime dateValue;
 
             if (DateTime.TryParseExact(date, formats, new CultureInfo("en-US"), DateTimeStyles.None, out dateValue))
