@@ -26,7 +26,10 @@ namespace AllEmployees
             AddToLogString(toLog);
             return success;
         }
-
+        /// <summary>
+        /// log if users was crated sucessfully string
+        /// </summary>
+        /// <returns></returns>
         public bool SuccessLogString()
         {
             bool success = true;
@@ -46,6 +49,10 @@ namespace AllEmployees
         {
 
         }
+        /// <summary>
+        /// Constructor that validate part time employee
+        /// </summary>
+        /// <param name="employeeData"></param>
         public ParttimeEmployee(string[] employeeData)
         {
             int index = employeeData[0] == "PT" ? 1 : 0;
@@ -63,7 +70,17 @@ namespace AllEmployees
             }
             SuccessLogString();
         }
-
+        /// <summary>
+        /// Constructor that validate part time employees
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="lastName"></param>
+        /// <param name="socialInsuranceNumber"></param>
+        /// <param name="dateOfBirth"></param>
+        /// <param name="dateOfHire"></param>
+        /// <param name="dateOfTermination"></param>
+        /// <param name="hourlyRate"></param>
+        /// <returns></returns>
         private bool ValidateParttime(string name, string lastName, string socialInsuranceNumber, string dateOfBirth, string dateOfHire, string dateOfTermination, decimal hourlyRate)
         {
             bool allValid = false;
@@ -82,7 +99,12 @@ namespace AllEmployees
             }
             return allValid;
         }
-
+        /// <summary>
+        /// Validate date for parttime employees
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="type"></param>
+        /// <returns>valid</returns>
 
         protected bool ValidateDate(string date, dateType type)
         {

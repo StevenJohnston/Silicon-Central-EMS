@@ -13,6 +13,11 @@ namespace AllEmployees
         DateTime contractStartDate;
         DateTime contractStopDate;
         decimal fixedContractAmount;
+        /// <summary>
+        /// Log when trying to create an employee
+        /// </summary>
+        /// <param name="employeeData"></param>
+        /// <returns></returns>
         public bool VariablesLogString(string[] employeeData)
         {
             bool success = true;
@@ -26,7 +31,10 @@ namespace AllEmployees
                         "||Contract Amount: " + employeeData[index + 6];
             return success;
         }
-
+        /// <summary>
+        /// log if it was successful or not in creating contract employees
+        /// </summary>
+        /// <returns>sucess</returns>
         public bool SuccessLogString()
         {
             bool success = true;
@@ -41,12 +49,17 @@ namespace AllEmployees
             Supporting.Logging.LogString(logString);
             return success;
         }
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ContractEmployee()
         {
 
         }
-
+        /// <summary>
+        /// Constructor that validate employees and sets them
+        /// </summary>
+        /// <param name="employeeData"></param>
         public ContractEmployee(string[] employeeData)
         {
             int index = employeeData[0] == "CT" ? 1 : 0;
@@ -64,7 +77,17 @@ namespace AllEmployees
             }
             SuccessLogString();
         }
-
+        /// <summary>
+        /// Validate employee contract
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="lastName"></param>
+        /// <param name="businessNumber"></param>
+        /// <param name="dateOfBirth"></param>
+        /// <param name="contractStartDate"></param>
+        /// <param name="contractStopDate"></param>
+        /// <param name="fixedContractAmount"></param>
+        /// <returns></returns>
         private bool ValidateContract(string name, string lastName, string businessNumber, string dateOfBirth, string contractStartDate, string contractStopDate, decimal fixedContractAmount)
         {
             bool allValid = false;
@@ -85,7 +108,11 @@ namespace AllEmployees
             }
             return allValid;
         }
-
+        /// <summary>
+        /// Validate BusinessNumber that follows the bussiness rules and formating of the information
+        /// </summary>
+        /// <param name="businessNumber"></param>
+        /// <returns>validSin</returns>
         private bool ValidateBusinessNumber(string businessNumber)
         {
 
@@ -148,7 +175,12 @@ namespace AllEmployees
             return validSin;
         
         }
-
+        /// <summary>
+        /// Validating all dates for the contract employees
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         protected bool ValidateDate(string date, dateType type)
         {
             bool valid = false;

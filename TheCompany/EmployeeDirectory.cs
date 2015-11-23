@@ -9,11 +9,17 @@ using System.IO;
 
 namespace TheCompany
 {
+    /// <summary>
+    /// Struct for message 
+    /// </summary>
     public struct Message
     {
         public int code;
         public string message;
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public class EmployeeDirectory
     {
 
@@ -60,10 +66,18 @@ namespace TheCompany
             }
             return new Supporting.Message();
         }
+        /// <summary>
+        /// Save the file 
+        /// </summary>
         public void Save()
         {
             file.Save(SaveAll);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileOut"></param>
+        /// <returns></returns>
         public Supporting.Message SaveAll(StreamWriter fileOut)
         {
             Supporting.Message returnMessage = new Supporting.Message();
@@ -74,7 +88,10 @@ namespace TheCompany
             }
             return returnMessage;
         }
-
+        /// <summary>
+        /// Show all the empl
+        /// </summary>
+        /// <returns></returns>
         public List<string> ShowAll()
         {
             List<string> employeeStrings = new List<string>();
@@ -84,7 +101,11 @@ namespace TheCompany
             }
             return employeeStrings;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="employeeSin"></param>
+        /// <returns></returns>
         public Message RemoveBySin(string employeeSin)
         {
             Message returnMessage = new Message();
@@ -103,7 +124,11 @@ namespace TheCompany
             }
             return returnMessage;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="employeeSin"></param>
+        /// <returns></returns>
         public Message ExistBySin(string employeeSin)
         {
             Message returnMessage = new Message();
@@ -122,13 +147,22 @@ namespace TheCompany
             }
             return returnMessage;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
         public static bool isDateAfterHire(object date)
         {
             bool valid = true;
             
             return valid;
         }
+        /// <summary>
+        /// is called 
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
         public static bool isDateAfterBirth(object date)
         {
             bool valid = true;
