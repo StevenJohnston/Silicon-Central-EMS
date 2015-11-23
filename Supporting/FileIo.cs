@@ -14,8 +14,8 @@ namespace Supporting
     /// </summary>
     public struct Message
     {
-        public int code;
-        public string message;
+        public int code; //!< The associated error number
+        public string message; //!< The associated message that appears based on the error number 
     }
 
     /// <summary>
