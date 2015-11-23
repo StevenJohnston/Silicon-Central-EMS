@@ -9,9 +9,9 @@ namespace AllEmployees
 {
     public class FulltimeEmployee : Employee
     {
-        DateTime dateOfHire;
-        DateTime dateOfTermination;
-        decimal salary;
+        DateTime dateOfHire; //!< date of hire
+        DateTime dateOfTermination; //!< date of termination 
+        decimal salary; //!< employee salary
         /// <summary>
         /// Logging full time employee with will log last name, SIN, DAte of birht, date of hire, date of termination, salary
         /// </summary>
@@ -19,7 +19,7 @@ namespace AllEmployees
         /// <returns>success</returns>
         public bool VariablesLogString(string[] employeeData)
         {
-            bool success = true;
+            bool success = true; //!<status if recorded to log
             int index = employeeData[0] == "FT" ? 1 : 0;
             string toLog = "Trying to create Fulltime Employee with:\n||\tFirst Name: " + employeeData[index] +
                         "||Last Name: " + employeeData[index + 1] +
@@ -38,7 +38,7 @@ namespace AllEmployees
 
         public bool SuccessLogString()
         {
-            bool success = true;
+            bool success = true; //!< status in creating employee
             if (IsValid)
             {
                 AddToLogString("\t-->Creating Fulltime Employee was successful.");

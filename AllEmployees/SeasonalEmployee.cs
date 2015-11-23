@@ -25,7 +25,7 @@ namespace AllEmployees
 
         public bool VariablesLogString(string[] employeeData)
         {
-            bool success = true;
+            bool success = true; //!< status of the sucess on logging
             int index = employeeData[0] == "SN" ? 1 : 0;
             string toLog = "Trying to create Seasonal Employee with:\n||\tFirst Name: " + employeeData[index] +
                         "||Last Name: " + employeeData[index + 1] +
@@ -36,10 +36,13 @@ namespace AllEmployees
             AddToLogString(toLog);
             return success;
         }
-
+        /// <summary>
+        /// Loging the string when season Employee is sucessful 
+        /// </summary>
+        /// <returns></returns>
         public bool SuccessLogString()
         {
-            bool success = true;
+            bool success = true; //!< bool that tell if it was valid or not
             if (IsValid)
             {
                 AddToLogString("\t-->Creating Seasonal Employee was successful.");
@@ -51,12 +54,16 @@ namespace AllEmployees
             Supporting.Logging.LogString(logString);
             return success;
         }
-
+        /// <summary>
+        /// Seasonal Employee 
+        /// </summary>
         public SeasonalEmployee()
         {
 
         }
-
+        /// <summary>
+        /// Constructor that validate employeeData
+        /// </summary>
         public SeasonalEmployee(string[] employeeData)
         {
             int index = employeeData[0] == "SN" ? 1 : 0;
@@ -73,7 +80,16 @@ namespace AllEmployees
             }
             SuccessLogString();
         }
-
+        /// <summary>
+        /// Constructor that validate name, last name, SIN, DOB, Season, piecePay
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="lastName"></param>
+        /// <param name="socialInsuranceNumber"></param>
+        /// <param name="dateOfBirth"></param>
+        /// <param name="season"></param>
+        /// <param name="piecePay"></param>
+        /// <returns></returns>
         private bool ValidateSeasonal(string name, string lastName, string socialInsuranceNumber, string dateOfBirth, string season, decimal piecePay)
         {
             bool[] valid = new bool[3] { false, false, false };
@@ -95,7 +111,7 @@ namespace AllEmployees
         /// <returns></returns>
         public bool ValidateSeason(string newSeason)
         {
-            bool valid = false; 
+            bool valid = false; //!<Season valid or not
 
             if (newSeason.ToUpper() == "WINTER")
             {
