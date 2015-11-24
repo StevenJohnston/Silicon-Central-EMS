@@ -7,14 +7,17 @@ using System.Threading.Tasks;
 
 namespace AllEmployees
 {
+    /// <summary>
+    /// This represents the ParttimeEmployee Class which is the child class of Employee
+    /// </summary>
     public class ParttimeEmployee : Employee
     {
-        DateTime dateOfHire;
-        DateTime dateOfTermination;
-        decimal hourlyRate;
+        DateTime dateOfHire;  //!< date of hire
+        DateTime dateOfTermination;  //!< date of termination
+        decimal hourlyRate;  //!< hourly pay
         public bool VariablesLogString(string[] employeeData)
         {
-            bool success = true;
+            bool success = true; //!< bool of creating part time employee
             int index = employeeData[0] == "PT" ? 1 : 0;
             string toLog = "Trying to create Parttime Employee with:\n||\tFirst Name: " + employeeData[index] +
                         "||Last Name: " + employeeData[index + 1] +
@@ -26,10 +29,13 @@ namespace AllEmployees
             AddToLogString(toLog);
             return success;
         }
-
+        /// <summary>
+        /// log if users was crated sucessfully string
+        /// </summary>
+        /// <returns></returns>
         public bool SuccessLogString()
         {
-            bool success = true;
+            bool success = true;  //!< bool in creating employee
             if (IsValid)
             {
                 AddToLogString("\t-->Creating Parttime Employee was successful.");
@@ -46,6 +52,10 @@ namespace AllEmployees
         {
 
         }
+        /// <summary>
+        /// Constructor that validate part time employee
+        /// </summary>
+        /// <param name="employeeData"></param>
         public ParttimeEmployee(string[] employeeData)
         {
             int index = employeeData[0] == "PT" ? 1 : 0;
@@ -63,11 +73,21 @@ namespace AllEmployees
             }
             SuccessLogString();
         }
-
+        /// <summary>
+        /// Constructor that validate part time employees
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="lastName"></param>
+        /// <param name="socialInsuranceNumber"></param>
+        /// <param name="dateOfBirth"></param>
+        /// <param name="dateOfHire"></param>
+        /// <param name="dateOfTermination"></param>
+        /// <param name="hourlyRate"></param>
+        /// <returns></returns>
         private bool ValidateParttime(string name, string lastName, string socialInsuranceNumber, string dateOfBirth, string dateOfHire, string dateOfTermination, decimal hourlyRate)
         {
-            bool allValid = false;
-            bool[] valid = new bool[5];
+            bool allValid = false; //!< validate bool
+            bool[] valid = new bool[5]; //!<list of bool to see if it was validate or not
             valid[0] = ValidateEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
             if (valid[0])
             {
@@ -82,15 +102,20 @@ namespace AllEmployees
             }
             return allValid;
         }
-
+        /// <summary>
+        /// Validate date for parttime employees
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="type"></param>
+        /// <returns>valid</returns>
 
         protected bool ValidateDate(string date, dateType type)
         {
-            bool valid = false;
-            CultureInfo culture;
-            culture = CultureInfo.CreateSpecificCulture("en-US");
-            string[] formats = { "yyyy/MM/dd", "yyyy/M/dd", "yyyy/M/d", "yyyy/MM/d" };
-            DateTime dateValue;
+            bool valid = false; //!< validate date status
+            CultureInfo culture; //!< Culture information
+            culture = CultureInfo.CreateSpecificCulture("en-US"); //!< Culture format
+            string[] formats = { "yyyy/MM/dd", "yyyy/M/dd", "yyyy/M/d", "yyyy/MM/d" }; //!< Date format
+            DateTime dateValue; //!< the date it self
 
             if (DateTime.TryParseExact(date, formats, new CultureInfo("en-US"), DateTimeStyles.None, out dateValue))
             {

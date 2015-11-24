@@ -7,15 +7,22 @@ using System.Threading.Tasks;
 
 namespace AllEmployees
 {
+    /// <summary>
+    /// This represents the FulltimeEmployee Class which is the child class of Employee
+    /// </summary>
     public class FulltimeEmployee : Employee
     {
-        DateTime dateOfHire;
-        DateTime dateOfTermination;
-        decimal salary;
-
+        DateTime dateOfHire; //!< date of hire
+        DateTime dateOfTermination; //!< date of termination 
+        decimal salary; //!< employee salary
+        /// <summary>
+        /// Logging full time employee with will log last name, SIN, DAte of birht, date of hire, date of termination, salary
+        /// </summary>
+        /// <param name="employeeData"></param>
+        /// <returns>success</returns>
         public bool VariablesLogString(string[] employeeData)
         {
-            bool success = true;
+            bool success = true; //!<status if recorded to log
             int index = employeeData[0] == "FT" ? 1 : 0;
             string toLog = "Trying to create Fulltime Employee with:\n||\tFirst Name: " + employeeData[index] +
                         "||Last Name: " + employeeData[index + 1] +
@@ -27,10 +34,14 @@ namespace AllEmployees
             AddToLogString(toLog);
             return success;
         }
+        /// <summary>
+        /// Log everytime an employee was added and of an employee fail to be added
+        /// </summary>
+        /// <returns>sucess</returns>
 
         public bool SuccessLogString()
         {
-            bool success = true;
+            bool success = true; //!< status in creating employee
             if (IsValid)
             {
                 AddToLogString("\t-->Creating Fulltime Employee was successful.");
@@ -44,7 +55,10 @@ namespace AllEmployees
         }
 
 
-
+        /// <summary>
+        /// A constructor that set the first, last, SIN, DOB, DOT, Salary, isValid if it pass the validation for the full timers
+        /// </summary>
+        /// <param name="employeeData"></param>
         public FulltimeEmployee(string[] employeeData)
         {
             int index = employeeData[0] == "FT" ? 1 : 0;
@@ -62,11 +76,21 @@ namespace AllEmployees
             }
             SuccessLogString();
         }
-
+        /// <summary>
+        /// Validate full timers 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="lastName"></param>
+        /// <param name="socialInsuranceNumber"></param>
+        /// <param name="dateOfBirth"></param>
+        /// <param name="dateOfHire"></param>
+        /// <param name="dateOfTermination"></param>
+        /// <param name="salary"></param>
+        /// <returns>allValid</returns>
         private bool ValidateFulltime(string name, string lastName, string socialInsuranceNumber, string dateOfBirth, string dateOfHire, string dateOfTermination, decimal salary)
         {
-            bool[] valid = new bool[4] { false, false, false, false };
-            bool allValid = false;
+            bool[] valid = new bool[4] { false, false, false, false };  //!< bool array of false
+            bool allValid = false;  //!< bool of status if all information is valid
 
             valid[0] = ValidateEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
             if (valid[0])
@@ -82,14 +106,19 @@ namespace AllEmployees
             }
             return allValid;
         }
-
+        /// <summary>
+        /// Validated date 
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         protected bool ValidateDate(string date, dateType type)
         {
-            bool valid = false;
-            CultureInfo culture;
-            culture = CultureInfo.CreateSpecificCulture("en-US");
-            string[] formats = { "yyyy/MM/dd", "yyyy/M/dd", "yyyy/M/d", "yyyy/MM/d" };
-            DateTime dateValue;
+            bool valid = false;  //!< bool if date was valid
+            CultureInfo culture; //!< Culture information
+            culture = CultureInfo.CreateSpecificCulture("en-US");  //!< Culture of date
+            string[] formats = { "yyyy/MM/dd", "yyyy/M/dd", "yyyy/M/d", "yyyy/MM/d" };  //!< Date format
+            DateTime dateValue;  //!< Date value
 
             if (DateTime.TryParseExact(date, formats, new CultureInfo("en-US"), DateTimeStyles.None, out dateValue))
             {
@@ -146,10 +175,13 @@ namespace AllEmployees
             }
             return valid;
         }
-        
-        
 
 
+
+        /// <summary>
+        /// A string with the information and the delimiter
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return "FT|"+firstName+"|"+lastName+"|"+SocialInsuranceNumber+"|"+dateOfBirth+"|"+dateOfHire+"|"+dateOfTermination+"|"+salary;

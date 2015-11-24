@@ -8,14 +8,22 @@ using System.Threading.Tasks;
 
 namespace AllEmployees
 {
+    /// <summary>
+    /// This represents the Contract Employee Class which is the child class of Employee
+    /// </summary>
     public class ContractEmployee : Employee
     {
-        DateTime contractStartDate;
-        DateTime contractStopDate;
-        decimal fixedContractAmount;
+        DateTime contractStartDate; //!< DateTime when contract start
+        DateTime contractStopDate; //!< DateTime when contract end
+        decimal fixedContractAmount; //!< Contract Length
+        /// <summary>
+        /// Log when trying to create an employee
+        /// </summary>
+        /// <param name="employeeData"></param>
+        /// <returns></returns>
         public bool VariablesLogString(string[] employeeData)
         {
-            bool success = true;
+            bool success = true; ///< bool which gets returned
             int index = employeeData[0] == "CT" ? 1 : 0;
             logString += "Trying to create Contract Employee with:\n||\tFirst Name: " + employeeData[index] +
                         "||Last Name: " + employeeData[index + 1] +
@@ -26,10 +34,13 @@ namespace AllEmployees
                         "||Contract Amount: " + employeeData[index + 6];
             return success;
         }
-
+        /// <summary>
+        /// log if it was successful or not in creating contract employees
+        /// </summary>
+        /// <returns>sucess</returns>
         public bool SuccessLogString()
         {
-            bool success = true;
+            bool success = true; ///< bool which gets return indicating if it was valid
             if (IsValid)
             {
                 AddToLogString("\t-->Creating Contract Employee was successful.");
@@ -41,12 +52,17 @@ namespace AllEmployees
             Supporting.Logging.LogString(logString);
             return success;
         }
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ContractEmployee()
         {
 
         }
-
+        /// <summary>
+        /// Constructor that validate employees and sets them
+        /// </summary>
+        /// <param name="employeeData"></param>
         public ContractEmployee(string[] employeeData)
         {
             int index = employeeData[0] == "CT" ? 1 : 0;
@@ -64,11 +80,21 @@ namespace AllEmployees
             }
             SuccessLogString();
         }
-
+        /// <summary>
+        /// Validate employee contract
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="lastName"></param>
+        /// <param name="businessNumber"></param>
+        /// <param name="dateOfBirth"></param>
+        /// <param name="contractStartDate"></param>
+        /// <param name="contractStopDate"></param>
+        /// <param name="fixedContractAmount"></param>
+        /// <returns></returns>
         private bool ValidateContract(string name, string lastName, string businessNumber, string dateOfBirth, string contractStartDate, string contractStopDate, decimal fixedContractAmount)
         {
-            bool allValid = false;
-            bool[] valid = new bool[5];
+            bool allValid = false; //!< bool which gets return indicating if it was valid
+            bool[] valid = new bool[5]; //!< bool array
             valid[0] = ValidateEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
             if (valid[0])
             {
@@ -85,11 +111,15 @@ namespace AllEmployees
             }
             return allValid;
         }
-
+        /// <summary>
+        /// Validate BusinessNumber that follows the bussiness rules and formating of the information
+        /// </summary>
+        /// <param name="businessNumber"></param>
+        /// <returns>validSin</returns>
         private bool ValidateBusinessNumber(string businessNumber)
         {
 
-            int newSin = 0;
+            int newSin = 0; //!< SIN
             try {
                 Int32.TryParse(socialInsuranceNumber.Replace(" ", string.Empty), out newSin);
             }
@@ -98,14 +128,14 @@ namespace AllEmployees
                 AddToLogString("Business Number Error: " + e.Message + " \n||\t\tTried: " + businessNumber);
             }
 
-            int[] tempSin = new int[9];
-            int[] sin = new int[9];
-            int[] year = new int[4];
+            int[] tempSin = new int[9]; ///< int array
+            int[] sin = new int[9]; ///< int array
+            int[] year = new int[4]; ///< int array
             int tempYear = dateOfBirth.Year;
-            double totalSin = 0;
-            bool validSin = false;
-            int toAdd = 0;
-            int theSin = newSin;
+            double totalSin = 0;   ///<totalSin
+            bool validSin = false; ///< bool which gets return indicating if it was valid
+            int toAdd = 0; //!< Amount to add
+            int theSin = newSin; //!< assign theSin to newSin
             for (int x = 8; x >= 0; x--) //splits the SIN into an array
             {
                 sin[x] = newSin % 10;
@@ -148,13 +178,18 @@ namespace AllEmployees
             return validSin;
         
         }
-
+        /// <summary>
+        /// Validating all dates for the contract employees
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         protected bool ValidateDate(string date, dateType type)
         {
-            bool valid = false;
-            CultureInfo culture;
-            culture = CultureInfo.CreateSpecificCulture("en-US");
-            string[] formats = { "yyyy/MM/dd", "yyyy/M/dd", "yyyy/M/d", "yyyy/MM/d" };
+            bool valid = false; //!< validation on date
+            CultureInfo culture; //!< culture format
+            culture = CultureInfo.CreateSpecificCulture("en-US"); //!< en-US usa style of date
+            string[] formats = { "yyyy/MM/dd", "yyyy/M/dd", "yyyy/M/d", "yyyy/MM/d" }; //!< different date format
             DateTime dateValue;
 
             if (DateTime.TryParseExact(date, formats, new CultureInfo("en-US"), DateTimeStyles.None, out dateValue))

@@ -8,30 +8,44 @@ using System.Text.RegularExpressions;
 
 namespace AllEmployees
 {
+    /// <summary>
+    /// This represents the Employee Class which is the parent class which all other employee 
+    /// will inherit from
+    /// </summary>
     public class Employee
     {
-        public static int[] sinCheck = new int[9] { 1, 2, 1, 2, 1, 2, 1, 2, 1 };
+        public static int[] sinCheck = new int[9] { 1, 2, 1, 2, 1, 2, 1, 2, 1 }; //!< the int array to check for
+        /// An enum type. 
+        /// That contain the dataType of information that is needed
+        ///For each employee
         public enum dateType{
-            BIRTH,
-            HIRE,
-            TERMINATE,
-            CONTRACT_START,
-            CONTRACT_END
+            BIRTH, /// Birth of the emplogyee
+            HIRE, /// Hire
+            TERMINATE, /// When was their contract terminated
+            CONTRACT_START, ///When was there Contract started
+            CONTRACT_END /// When does their contrac end
         }
 
+  
+        protected string firstName; //!<the user first name
+        protected string lastName; //!<the last name
+        protected string socialInsuranceNumber; //!< the user social Insurance Number
+        protected DateTime dateOfBirth; //!<the user Date of birth
+        private bool isValid = false; //!<bool validate or not
+        protected string logString = ""; //!<The message to be logged 
 
-        protected string firstName;
-        protected string lastName;
-        protected string socialInsuranceNumber;
-        protected DateTime dateOfBirth;
-        private bool isValid = false;
-        protected string logString = "";
+        /// <summary>
+        /// Formatting the string to be display in the logging file
+        /// </summary>
+        /// <param name="toLog"></param>
 
         public void AddToLogString(string toLog)
         {
             logString += "\n||" + toLog;
         }
-
+        /// <summary>
+        /// A getter and setter for socialInsuranceNumber the varible
+        /// </summary>
         public string SocialInsuranceNumber
         {
             get
@@ -45,6 +59,9 @@ namespace AllEmployees
             }
         }
 
+        /// <summary>
+        /// A getter and setter for isValid the varible
+        /// </summary>
         public bool IsValid
         {
             get
@@ -57,36 +74,58 @@ namespace AllEmployees
                 isValid = value;
             }
         }
-
+       /// <summary>
+       /// Employee Constructor the sset the first Name and last name an social insurance number
+       /// </summary>
         public Employee()
         {
-            this.firstName = "";
-            this.lastName = "";
-            this.SocialInsuranceNumber = "";
+            this.firstName = ""; //!<User first name
+            this.lastName = ""; //!<User Last Name
+            this.SocialInsuranceNumber = ""; //!<User Social Insurance Number
             //this.dateOfBirth = ""; 
         }
-
+        /// <summary>
+        /// Constructor that take 2 parameter
+        /// Employee Class that set the first name and last name 
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
         public Employee(string firstName, string lastName)
         {
             this.firstName = firstName;
             this.lastName = lastName;
         }
+        /// <summary>
+        /// A constructor that takes 4 parameters and set first anme, last name, socail insurance number and date of birth
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="socialInsuranceNumber"></param>
+        /// <param name="dateOfBirth"></param>
         public Employee(string firstName, string lastName, string socialInsuranceNumber, string dateOfBirth)
         {
             if (ValidateEmployee(firstName, lastName, socialInsuranceNumber, dateOfBirth))
             {
-                this.firstName = firstName;
-                this.lastName = lastName;
-                this.SocialInsuranceNumber = socialInsuranceNumber;
+                this.firstName = firstName; //!< Setting the first name 
+                this.lastName = lastName; //!< setting the last name
+                this.SocialInsuranceNumber = socialInsuranceNumber; //!< setting the socail insurance number
                 //this.dateOfBirth = dateOfBirth;
             }
         }
-
+        /// <summary>
+        /// Validate the employee name, last name, SIN, and Date of birth
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="lastName"></param>
+        /// <param name="socialInsuranceNumber"></param>
+        /// <param name="dateOfBirth"></param>
+        /// <returns>allValid</returns>
+    
 
         protected bool ValidateEmployee(string name, string lastName, string socialInsuranceNumber, string dateOfBirth)
         {
-            bool[] valid = new bool[4] { false, false, false, false };
-            bool allValid = false;
+            bool[] valid = new bool[4] { false, false, false, false }; //!< bool array that has 4 bool set to false
+            bool allValid = false; //!< a bool to see if data was validate or not
             valid[0] = ValidateName(name);
             valid[1] = ValidateName(lastName);
             valid[2] = ValidateSIN(socialInsuranceNumber);
@@ -98,15 +137,23 @@ namespace AllEmployees
             return allValid;
         }
 
+        /// <summary>
+        /// Validate employee name with regex
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>bool</returns>
         protected bool ValidateName(string name)
         {
-            return Regex.IsMatch(name, "^[a-zA-Z'-]*?$");
+            return Regex.IsMatch(name, "^[a-zA-Z'-]*?$");/// return a bool depending on the regex
         }
-
+        /// <summary>
+        /// ValidateSIN base on the the rules and regulation followed by the canadian SIN standards 
+        /// </summary>
+        /// <param name="socialInsuranceNumber"></param>
+        /// <returns></returns>
         protected bool ValidateSIN(string socialInsuranceNumber)
         {
-            //first digit can't be 0 or 8
-            int newSin = 0;
+            int newSin = 0; //!<first digit can't be 0 or 8
             try {
                 newSin = Convert.ToInt32(socialInsuranceNumber.Replace(" ", string.Empty));
             }
@@ -114,12 +161,12 @@ namespace AllEmployees
             {
                 AddToLogString("\tSIN Error: " + e.Message + "\n||\t\tTried: " + socialInsuranceNumber);
             }
-            int[] tempSin = new int[9];
-            int[] sin = new int[9];
-            double totalSin = 0;
-            bool validSin = false;
-            int toAdd = 0;
-            int theSin = newSin;
+            int[] tempSin = new int[9]; //!< temp sin number 
+            int[] sin = new int[9]; //!< sin number
+            double totalSin = 0; //!<
+            bool validSin = false; //!< if the sin is valid or not
+            int toAdd = 0;//!<
+            int theSin = newSin; //!<Setting a temp storage of the sin
             for (int x = 8; x >= 0; x--) //splits the SIN into an array
             {
                 sin[x] = newSin % 10;
@@ -157,14 +204,18 @@ namespace AllEmployees
             }
             return validSin;
         }
-
+        /// <summary>
+        /// Validate date to see if its validate base on the format yyyy/mm/dd
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns>valid</returns>
         protected bool ValidateDate(string date)
         {
-            bool valid = false;
-            CultureInfo culture;
-            culture = CultureInfo.CreateSpecificCulture("en-US");
-            string[] formats = { "yyyy/MM/dd", "yyyy/M/dd", "yyyy/M/d", "yyyy/MM/d" };
-            DateTime dateValue;
+            bool valid = false; //!< bool to tell if the date was validate or not
+            CultureInfo culture; //!< setting up calture
+            culture = CultureInfo.CreateSpecificCulture("en-US"); //!< Calture format
+            string[] formats = { "yyyy/MM/dd", "yyyy/M/dd", "yyyy/M/d", "yyyy/MM/d" }; //!< All of the date format 
+            DateTime dateValue; //!< datevalue
 
             if (DateTime.TryParseExact(date, formats, new CultureInfo("en-US"), DateTimeStyles.None, out dateValue))
             {
@@ -184,14 +235,19 @@ namespace AllEmployees
             return valid;
         }
 
-        //used to check if date is before beforeDate -- returns true if valid
+        /// <summary>
+        /// Used to check if date is before beforeDate
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="beforeDate"></param>
+        /// <returns>valid</returns>
         static public bool ValidateDate(string date, DateTime beforeDate)
         {
-            bool valid = false;
-            CultureInfo culture;
-            culture = CultureInfo.CreateSpecificCulture("en-US");
+            bool valid = false; //!< vool to see if date is validate or not
+            CultureInfo culture; //!< setting up calture
+            culture = CultureInfo.CreateSpecificCulture("en-US"); //!< Calture format
             string[] formats = { "yyyy/MM/dd", "yyyy/M/dd", "yyyy/M/d", "yyyy/MM/d" };
-            DateTime dateValue;
+            DateTime dateValue; //!< datevalue
 
             if (DateTime.TryParseExact(date, formats, new CultureInfo("en-US"), DateTimeStyles.None, out dateValue))
             {
@@ -203,10 +259,14 @@ namespace AllEmployees
             return valid;
         }
 
-
+        /// <summary>
+        /// Validate money for basic rules for greater then 0
+        /// </summary>
+        /// <param name="money"></param>
+        /// <returns>valid</returns>
         protected bool ValidateMoney(Decimal money)
         {
-            bool valid = false;
+            bool valid = false; //!< bool if the money is validate or not 
             if (money >= 0)
             {
                 valid = true;
