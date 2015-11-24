@@ -16,21 +16,21 @@ namespace AllEmployees
     {
         public static int[] sinCheck = new int[9] { 1, 2, 1, 2, 1, 2, 1, 2, 1 }; //!< the int array to check for
         /// An enum type. 
-        /// That contain the dataType of information that is needed
+        /// That contain the dateType of information that is needed
         ///For each employee
         public enum dateType{
             BIRTH, /// Birth of the emplogyee
             HIRE, /// Hire
-            TERMINATE, /// When was their contract terminated
+            TERMINATE, /// When the employee was fired
             CONTRACT_START, ///When was there Contract started
             CONTRACT_END /// When does their contrac end
         }
 
   
-        protected string firstName; //!<the user first name
+        protected string firstName; //!<the first name
         protected string lastName; //!<the last name
-        protected string socialInsuranceNumber; //!< the user social Insurance Number
-        protected DateTime dateOfBirth; //!<the user Date of birth
+        protected string socialInsuranceNumber; //!< the social Insurance Number
+        protected DateTime dateOfBirth; //!<the Date of birth
         private bool isValid = false; //!<bool validate or not
         protected string logString = ""; //!<The message to be logged 
 
@@ -75,14 +75,14 @@ namespace AllEmployees
             }
         }
        /// <summary>
-       /// Employee Constructor the sset the first Name and last name an social insurance number
+       /// Employee Constructor that sets the first name, last name and social insurance number to default values
        /// </summary>
         public Employee()
         {
             this.firstName = ""; //!<User first name
             this.lastName = ""; //!<User Last Name
             this.SocialInsuranceNumber = ""; //!<User Social Insurance Number
-            //this.dateOfBirth = ""; 
+            this.dateOfBirth = DateTime.MinValue; 
         }
         /// <summary>
         /// Constructor that take 2 parameter
