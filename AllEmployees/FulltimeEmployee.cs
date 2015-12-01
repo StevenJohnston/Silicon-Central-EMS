@@ -187,7 +187,31 @@ namespace AllEmployees
             return "FT|"+firstName+"|"+lastName+"|"+SocialInsuranceNumber+"|"+dateOfBirth+"|"+dateOfHire+"|"+dateOfTermination+"|"+salary;
         }
 
-        
+        /** Access the protected methods from the Base Class through inherited class referece calls **/
 
+        public bool FTValidateEmployee(string name, string lastName, string socialInsuranceNumber, string dateOfBirth)
+        {
+            return ValidateEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
+        }
+
+        public bool FTValidateName(string name)
+        {
+            return ValidateName(name);
+        }
+
+        public bool FTValidateSIN(string socialInsuranceNumber)
+        {
+            return ValidateSIN(socialInsuranceNumber);
+        }
+
+        public bool FTValidateDate(string date)
+        {
+            return ValidateDate(date);
+        }
+
+        public bool FTValidateMoney(Decimal money)
+        {
+            return ValidateMoney(money);
+        }
     }
 }
