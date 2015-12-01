@@ -14,3 +14,4 @@ C:\Users\Steven johnston\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\D
 C:\Users\Steven johnston\Documents\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.csprojResolveAssemblyReference.cache
 C:\Users\Steven johnston\Documents\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.exe
 C:\Users\Steven johnston\Documents\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.pdb
+C:\Users\Naween\Desktop\EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe.config
