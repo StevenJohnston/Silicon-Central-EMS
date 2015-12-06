@@ -48,6 +48,10 @@
     <Compile Include="SeasonalEmployee.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EMSExceptions\EMSExceptions.csproj">
+      <Project>{08fd197d-0933-416c-933e-ba510652c43f}</Project>
+      <Name>EMSExceptions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Supporting\Supporting.csproj">
       <Project>{bdb07612-18c8-47fb-9124-4c350e745782}</Project>
       <Name>Supporting</Name>

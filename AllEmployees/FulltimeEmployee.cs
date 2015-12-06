@@ -12,9 +12,9 @@ namespace AllEmployees
     /// </summary>
     public class FulltimeEmployee : Employee
     {
-        DateTime dateOfHire; //!< date of hire
-        DateTime dateOfTermination; //!< date of termination 
-        decimal salary; //!< employee salary
+        public DateTime dateOfHire; //!< date of hire
+        public DateTime dateOfTermination; //!< date of termination 
+        public decimal salary; //!< employee salary
         /// <summary>
         /// Logging full time employee with will log last name, SIN, DAte of birht, date of hire, date of termination, salary
         /// </summary>
@@ -63,6 +63,8 @@ namespace AllEmployees
         {
             int index = employeeData[0] == "FT" ? 1 : 0;
             VariablesLogString(employeeData);
+            employeeEx.employeeType = "Full Time";
+            employeeEx.operationType = "CREATE";
             if (ValidateFulltime(employeeData[index], employeeData[index+1], employeeData[index+2], employeeData[index+3], employeeData[index+4], employeeData[index+5], Convert.ToDecimal(employeeData[index+6])))
             {
                 firstName = employeeData[index];
@@ -73,6 +75,10 @@ namespace AllEmployees
                 dateOfTermination = Convert.ToDateTime(employeeData[index + 5]);
                 salary = Convert.ToDecimal(employeeData[index + 6]);
                 IsValid = true;
+            }
+            else
+            {
+                throw employeeEx;
             }
             SuccessLogString();
         }
@@ -134,11 +140,13 @@ namespace AllEmployees
                         {
                             if (dateValue <= dateOfBirth)
                             {
-                                AddToLogString("\tDate of Hire Error: Must be after the employee was born.");
+                                //AddToLogString("\tDate of Hire Error: Must be after the employee was born.");
+                                employeeEx.AddError("Date of Hire Error: Must be after the employee was born.");
                             }
                             else
                             {
-                                AddToLogString("\tDate of Hire Error: Must be before the current date.");
+                                //AddToLogString("\tDate of Hire Error: Must be before the current date.");
+                                employeeEx.AddError("Date of Hire Error: Must be before the current date.");
                             }
                         }
                         break;
@@ -152,11 +160,13 @@ namespace AllEmployees
                         {
                             if (dateValue <= dateOfHire)
                             {
-                                AddToLogString("\tDate of Termination Error: Must be after the employee was born.");
+                                //AddToLogString("\tDate of Termination Error: Must be after the employee was born.");
+                                employeeEx.AddError("Date of Termination Error: Must be after the employee was born.");
                             }
                             else
                             {
-                                AddToLogString("\tDate of Termination Error: Must be before the current date.");
+                                //AddToLogString("\tDate of Termination Error: Must be before the current date.");
+                                employeeEx.AddError("Date of Termination Error: Must be before the current date.");
                             }
                         }
                         break;
@@ -166,18 +176,17 @@ namespace AllEmployees
             {
                 if (type == dateType.HIRE)
                 {
-                    AddToLogString("\tDate of Hire Error: Invalid format.\n||\t\tTried: " + date);
+                    //AddToLogString("\tDate of Hire Error: Invalid format.\n||\t\tTried: " + date);
+                    employeeEx.AddError("Date of Hire Error: Invalid format. Tried: " + date);
                 }
                 else if(type == dateType.TERMINATE)
                 {
-                    AddToLogString("\tDate of Termination Error: Invalid format.\n||\t\tTried: " + date);
+                    //AddToLogString("\tDate of Termination Error: Invalid format.\n||\t\tTried: " + date);
+                    employeeEx.AddError("Date of Termination Error: Invalid format. Tried: " + date);
                 }
             }
             return valid;
         }
-
-
-
         /// <summary>
         /// A string with the information and the delimiter
         /// </summary>
