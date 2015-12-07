@@ -19,3 +19,4 @@ C:\Users\Matt\Desktop\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\bi
 C:\Users\Matt\Desktop\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.exe
 C:\Users\Matt\Desktop\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.pdb
 C:\Users\Wpring\Desktop\SET\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe.config
+E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe.config
