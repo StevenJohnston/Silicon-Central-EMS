@@ -63,7 +63,7 @@ namespace AllEmployees
 
         }
 
-        public bool Validate()
+        new public bool Validate()
         {
             int index = employeeData[0] == "CT" ? 1 : 0;
             return ValidateContract(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], employeeData[index + 5], Convert.ToDecimal(employeeData[index + 6]));
