@@ -47,6 +47,7 @@ namespace EmployeeUnitTesting
         [TestMethod]
         public void TestingValidateContract_ContractEmployee_Normal()
         {
+            bool status = false;
             string[] testData = new string[7] {
                 "Matt",
                 "Naween",
@@ -56,8 +57,17 @@ namespace EmployeeUnitTesting
                 "2013/10/9",
                 "604043.34"
             };
-            ContractEmployee testEmployee = new ContractEmployee(testData);
-            bool status = testEmployee.Validate();
+            try
+            {
+                ContractEmployee testEmployee = new ContractEmployee(testData);
+                status = testEmployee.Validate();
+            }
+            catch (EmployeeException eee)
+            {
+                string errors = eee.GetError();
+
+
+            }
             Assert.AreEqual(true, status);
         }
 
@@ -94,17 +104,31 @@ namespace EmployeeUnitTesting
         [TestMethod]
         public void TestingValidateContract_FulltimeEmployee_Normal()
         {
+            bool status = false;
             string[] testData = new string[7] {
                 "qwer",
                 "drfdgf",
-                "046 454 286",
+                "246 454 284",
                 "1997/3/14",
                 "2000/12/12",
                 "2013/10/9",
                 "604043.34"
             };
-            FulltimeEmployee testEmployee = new FulltimeEmployee(testData);
-            bool status = testEmployee.Validate();
+
+
+            try
+            {
+                FulltimeEmployee testEmployee = new FulltimeEmployee(testData);
+                status = testEmployee.Validate();
+            }
+            catch (EmployeeException eee)
+            {
+                string errors = eee.GetError();
+
+
+            }
+
+       
             Assert.AreEqual(true, status);
         }
         //full time
@@ -114,7 +138,7 @@ namespace EmployeeUnitTesting
             string[] testData = new string[7] {
                 "asdf",
                 "fdas",
-                "046 454 286",
+                "246 454 284",
                 "1995/3/4",
                 "2000/12/12",
                 "2013109",
@@ -142,7 +166,7 @@ namespace EmployeeUnitTesting
             string[] testData = new string[7] {
                 "qwer",
                 "drfdgf",
-                "046 454 286",
+                "246 454 284",
                 "1997/3/14",
                 "2000/12/12",
                 "2013/10/9",
@@ -186,16 +210,29 @@ namespace EmployeeUnitTesting
        [TestMethod]
        public void TestingValidateContract_SeasonalEmployee_Normal()
        {
+           bool status = false;
            string[] testData = new string[6] {
                 "qwer",
                 "drfdgf",
-                "046 454 286",
+                "246 454 284",
                 "1997/3/14",
                 "Winter",
                 "45.34"
             };
-           SeasonalEmployee testEmployee = new SeasonalEmployee(testData);
-           bool status = testEmployee.Validate();
+
+
+           try
+           {
+               SeasonalEmployee testEmployee = new SeasonalEmployee(testData);
+               status = testEmployee.Validate();
+           }
+           catch (EmployeeException ee)
+           {
+               string errors = ee.GetError();
+           }
+
+
+          
            Assert.AreEqual(true, status);
        }
        //seasonal

@@ -116,7 +116,7 @@ namespace AllEmployees
             valid[0] = ValidateEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
             valid[1] = ValidateSeason(season);
             valid[2] = ValidateMoney(piecePay);
-            if (valid[0] & valid[1] & valid[2] & valid[3])
+            if (valid[0] & valid[1] & valid[2])
             {
                 allValid = true;
             }
