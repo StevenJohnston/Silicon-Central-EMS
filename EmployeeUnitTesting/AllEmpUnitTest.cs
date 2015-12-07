@@ -26,7 +26,7 @@ namespace EmployeeUnitTesting
             Assert.AreEqual(true, status);
         }
         [TestMethod]
-        public void TestingValidateContract_Employee_Exeption()
+        public void TestingValidateContract_Employee_Exception()
         {
             Employee testEmployee = new Employee("Jimmy", "White", "36a 389 727", "1996/05/03");
 
@@ -75,7 +75,7 @@ namespace EmployeeUnitTesting
 
         //Contract Employee
         [TestMethod]
-        public void TestingValidateContract_ContractEmployee_Exeption()
+        public void TestingValidateContract_ContractEmployee_Exception()
         {
             string[] testData = new string[7] {
                 "Tamool",
@@ -101,6 +101,68 @@ namespace EmployeeUnitTesting
             }
 
         }
+                [TestMethod]
+        public void TestingValidateLongingString_ContractEmployee_Normal()
+        {
+            string[] testData = new string[7] {
+                "Tamool",
+                "Jim",
+                "123456782",
+                "1995/3/4",
+                "2000/12/12",
+                "2013/10/9",
+                "-6a04043.34"
+            };
+
+            ContractEmployee testEmployee = new ContractEmployee();
+
+            try
+            {
+                bool status = testEmployee.SuccessLogString();
+                Assert.AreEqual(false, status);
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual(true, true);
+
+            }
+
+        }
+
+
+
+
+
+
+        [TestMethod]
+        public void TestingValidateLogingString_ContractEmployee_Exception()
+        {
+            string[] testData = new string[7] {
+        "Tamool",
+        "Jim",
+        "123456782",
+        "1995/3/4",
+        "2000/12/12",
+        "2013/10/9",
+        "-6a04043.34"
+    };
+
+            ContractEmployee testEmployee = new ContractEmployee();
+
+            try
+            {
+                bool status = testEmployee.Validate();
+                Assert.AreEqual(false, status);
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual(true, true);
+
+            }
+
+        }
+
+
         //Full time
         [TestMethod]
         public void TestingValidateContract_FulltimeEmployee_Normal()
@@ -134,7 +196,7 @@ namespace EmployeeUnitTesting
         }
         //full time
         [TestMethod]
-        public void TestingValidateContract_FulltimeEmployee_Exeption()
+        public void TestingValidateContract_FulltimeEmployee_Exception()
         {
             string[] testData = new string[7] {
                 "asdf",
@@ -248,7 +310,7 @@ namespace EmployeeUnitTesting
 
         //part time
        [TestMethod]
-       public void TestingValidateContract_ParttimeEmployee_Exeption()
+       public void TestingValidateContract_ParttimeEmployee_Exception()
        {
            string[] testData = new string[7] {
                 "qwer",
@@ -286,7 +348,7 @@ namespace EmployeeUnitTesting
                 "1997/3/14",
                 "2000/12/12",
                 "2013/10/9",
-                "a"
+                "45.34"
             };
 
 
@@ -304,7 +366,7 @@ namespace EmployeeUnitTesting
            Assert.AreEqual(true, status);
        }
        [TestMethod]
-       public void TestingValidateLongingString_ParttimeEmployee_Exeption()
+       public void TestingValidateLongingString_ParttimeEmployee_Exception()
        {
            bool status = false;
            string[] testData = new string[7] {
@@ -313,8 +375,9 @@ namespace EmployeeUnitTesting
                 "246 454 284",
                 "1997/3/14",
                 "2000/12/12",
-                "2013/10/9",
+                "a/10/9",
                 "45.34"
+                //if i change the price then it will break note to self
             };
 
 
@@ -370,7 +433,7 @@ namespace EmployeeUnitTesting
        }
        //seasonal
        [TestMethod]
-       public void TestingValidateContract_SeasonalEmployee_Exeption()
+       public void TestingValidateContract_SeasonalEmployee_Exception()
        {
            string[] testData = new string[6] {
                 "qwer",
@@ -391,6 +454,106 @@ namespace EmployeeUnitTesting
                Assert.AreEqual(true, true);
 
            }
+       }
+       [TestMethod]
+       public void TestingValidateLongingString_SeasonalEmployee_Normal()
+       {
+           bool status = false;
+           string[] testData = new string[6] {
+                "qwer",
+                "drfdgf",
+                "246 454 284",
+                "1997/3/14",
+                "Winter",
+                "45.34"
+            };
+
+
+           try
+           {
+               SeasonalEmployee testEmployee = new SeasonalEmployee(testData);
+               status = testEmployee.SuccessLogString();
+           }
+           catch (EmployeeException ee)
+           {
+               string errors = ee.GetError();
+           }
+
+
+
+           Assert.AreEqual(true, status);
+       }
+
+       [TestMethod]
+       public void TestingValidateLongingString_SeasonalEmployee_Exception()
+       {
+           bool status = false;
+           string[] testData = new string[6] {
+                "qwer",
+                "drfdgf",
+                "246 454 284",
+                "1997/3/14",
+                "dfser",
+                "45.34"
+            };
+
+
+           try
+           {
+               SeasonalEmployee testEmployee = new SeasonalEmployee(testData);
+               status = testEmployee.SuccessLogString();
+           }
+           catch (EmployeeException ee)
+           {
+               string errors = ee.GetError();
+           }
+
+
+
+           Assert.AreEqual(false, status);
+       }
+       [TestMethod]
+       public void TestingValidateSeason_SeasonalEmployee_Normal()
+       {
+           bool status = false;
+
+           string[] testData = new string[6] {
+                "qwer",
+                "drfdgf",
+                "246 454 284",
+                "1997/3/14",
+                "dfser",
+                "45.34"
+            };
+
+
+         
+               SeasonalEmployee testEmployee = new SeasonalEmployee();
+               status = testEmployee.ValidateSeason("Winter");
+        
+
+
+           Assert.AreEqual(true, status);
+       }
+       [TestMethod]
+       public void TestingValidateSeason_SeasonalEmployee_Exception()
+       {
+           bool status = false;
+
+           string[] testData = new string[6] {
+                "qwer",
+                "drfdgf",
+                "246 454 284",
+                "1997/3/14",
+                "dfser",
+                "45.34"
+            };
+
+
+
+           SeasonalEmployee testEmployee = new SeasonalEmployee();
+           status = testEmployee.ValidateSeason("Wisdfnter");
+           Assert.AreEqual(false, status);
        }
 
     }

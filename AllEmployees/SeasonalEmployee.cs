@@ -50,6 +50,7 @@ namespace AllEmployees
             }
             else
             {
+                success = false;
                 AddToLogString("\t-->Creating Seasonal Employee failed.");
             }
             Supporting.Logging.LogString(logString);
