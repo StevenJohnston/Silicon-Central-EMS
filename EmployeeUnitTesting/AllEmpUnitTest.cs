@@ -23,8 +23,16 @@ namespace EmployeeUnitTesting
         [TestMethod]
         public void TestingValidateContract_ContractEmployee_Normal()
         {
-            
-            ContractEmployee testEmployee = new ContractEmployee();
+            string[] testData = new string[7] {
+                "Will",
+                "Pring",
+                "123456782",
+                "1995/3/4",
+                "2000/12/12",
+                "2013/10/9",
+                "604043.34"
+            };
+            ContractEmployee testEmployee = new ContractEmployee(testData);
             bool status = testEmployee.Validate();
             Assert.AreEqual(true, status);
         }
