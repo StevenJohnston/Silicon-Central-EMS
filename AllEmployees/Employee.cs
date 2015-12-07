@@ -111,13 +111,13 @@ namespace AllEmployees
                 this.firstName = firstName; //!< Setting the first name 
                 this.lastName = lastName; //!< setting the last name
                 this.SocialInsuranceNumber = socialInsuranceNumber; //!< setting the socail insurance number
-                //this.dateOfBirth = dateOfBirth;
+                this.dateOfBirth = Convert.ToDateTime(dateOfBirth);
             }
         }
 
         public bool Validate()
         {
-            bool status = ValidateEmployee(this.firstName, this.lastName, this.socialInsuranceNumber, this.dateOfBirth.ToString());
+            bool status = ValidateEmployee(this.firstName, this.lastName, this.socialInsuranceNumber, (Convert.ToString(this.dateOfBirth.Year)+ "/" + Convert.ToString(this.dateOfBirth.Month) + "/" + Convert.ToString(dateOfBirth.Day)));
             return status; 
         }
              
