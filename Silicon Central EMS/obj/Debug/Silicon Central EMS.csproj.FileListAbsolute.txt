@@ -35,3 +35,19 @@ E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\TheCompany.
 E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\EMSExceptions.pdb
 E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.exe
 E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.pdb
+C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe.config
+C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe
+C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.pdb
+C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\AllEmployees.dll
+C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Presentation.dll
+C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Supporting.dll
+C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\TheCompany.dll
+C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\EMSExceptions.dll
+C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\AllEmployees.pdb
+C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Presentation.pdb
+C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Supporting.pdb
+C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\TheCompany.pdb
+C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\EMSExceptions.pdb
+C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.csprojResolveAssemblyReference.cache
+C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.exe
+C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.pdb
