@@ -20,3 +20,18 @@ C:\Users\Matt\Desktop\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\ob
 C:\Users\Matt\Desktop\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.pdb
 C:\Users\Wpring\Desktop\SET\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe.config
 E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe.config
+E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.csprojResolveAssemblyReference.cache
+E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe
+E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.pdb
+E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\AllEmployees.dll
+E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Presentation.dll
+E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Supporting.dll
+E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\TheCompany.dll
+E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\EMSExceptions.dll
+E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\AllEmployees.pdb
+E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Presentation.pdb
+E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Supporting.pdb
+E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\TheCompany.pdb
+E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\EMSExceptions.pdb
+E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.exe
+E:\Assignments\Git\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.pdb
