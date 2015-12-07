@@ -15,7 +15,7 @@ namespace AllEmployees
     /// </summary>
     public class ContractEmployee : Employee
     {
-        string[] employeeData;
+        string[] myEmployeeData;
         public DateTime contractStartDate; //!< DateTime when contract start
         public DateTime contractStopDate; //!< DateTime when contract end
         public decimal fixedContractAmount; //!< Contract Length
@@ -65,8 +65,8 @@ namespace AllEmployees
 
         new public bool Validate()
         {
-            int index = employeeData[0] == "CT" ? 1 : 0;
-            return ValidateContract(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], employeeData[index + 5], Convert.ToDecimal(employeeData[index + 6]));
+            int index = myEmployeeData[0] == "CT" ? 1 : 0;
+            return ValidateContract(myEmployeeData[index], myEmployeeData[index + 1], myEmployeeData[index + 2], myEmployeeData[index + 3], myEmployeeData[index + 4], myEmployeeData[index + 5], Convert.ToDecimal(myEmployeeData[index + 6]));
         }
 
 
@@ -79,7 +79,7 @@ namespace AllEmployees
             int index = employeeData[0] == "CT" ? 1 : 0;
             employeeEx.employeeType = "Contract";
             employeeEx.operationType = "CREATE";
-            this.employeeData = employeeData;
+            myEmployeeData = employeeData;
             VariablesLogString(employeeData);
             if (ValidateContract(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], employeeData[index + 5], Convert.ToDecimal(employeeData[index + 6])))
             {
