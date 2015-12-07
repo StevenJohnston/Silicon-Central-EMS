@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using EMSExceptions;
 
 namespace AllEmployees
 {
@@ -15,6 +16,7 @@ namespace AllEmployees
     public class Employee
     {
         public static int[] sinCheck = new int[9] { 1, 2, 1, 2, 1, 2, 1, 2, 1 }; //!< the int array to check for
+        public EmployeeException employeeEx = new EmployeeException();
         /// An enum type. 
         /// That contain the dateType of information that is needed
         ///For each employee
@@ -130,9 +132,13 @@ namespace AllEmployees
             valid[1] = ValidateName(lastName);
             valid[2] = ValidateSIN(socialInsuranceNumber);
             valid[3] = ValidateDate(dateOfBirth);
-            if(valid[0] & valid[1] & valid[2] & valid[3])
+            if (valid[0] & valid[1] & valid[2] & valid[3])
             {
                 allValid = true;
+            }
+            else
+            {
+                throw employeeEx;
             }
             return allValid;
         }
@@ -159,7 +165,8 @@ namespace AllEmployees
             }
             catch (FormatException e)
             {
-                AddToLogString("\tSIN Error: " + e.Message + "\n||\t\tTried: " + socialInsuranceNumber);
+                employeeEx.AddError("SIN Error: " + e.Message + " Tried: " + socialInsuranceNumber);
+                //AddToLogString("\tSIN Error: " + e.Message + "\n||\t\tTried: " + socialInsuranceNumber);
             }
             int[] tempSin = new int[9]; //!< temp sin number 
             int[] sin = new int[9]; //!< sin number
@@ -191,7 +198,8 @@ namespace AllEmployees
                 }
                 else
                 {
-                    AddToLogString("\tSIN Error: Not a valid SIN.");
+                    employeeEx.AddError("\tSIN Error: Not a valid SIN. Tried: " + socialInsuranceNumber);
+                    //AddToLogString("\tSIN Error: Not a valid SIN.");
                 }
             }
             else if (theSin == 0)
@@ -200,10 +208,12 @@ namespace AllEmployees
             }
             else if(sin[0] == 8)
             {
-                AddToLogString("\tSIN Error: Cannot start with 8.");
+                employeeEx.AddError("SIN Error: Cannot start with 8.");
+                //AddToLogString("\tSIN Error: Cannot start with 8.");
             }
             return validSin;
         }
+
         /// <summary>
         /// Validate date to see if its validate base on the format yyyy/mm/dd
         /// </summary>
@@ -225,12 +235,14 @@ namespace AllEmployees
                 }
                 else
                 {
-                    AddToLogString("\tDate of Birth Error: Cannot be in the future.");
+                    employeeEx.AddError("Date of Birth Error: Cannot be in the future.");
+                    //AddToLogString("\tDate of Birth Error: Cannot be in the future.");
                 }
             }
             else
             {
-                AddToLogString("\tDate of Birth Error: Invalid date format.");
+                employeeEx.AddError("\tDate of Birth Error: Invalid date format. Tried: " + dateValue.ToString());
+                //AddToLogString("\tDate of Birth Error: Invalid date format.");
             }
             return valid;
         }
@@ -273,7 +285,8 @@ namespace AllEmployees
             }
             else
             {
-                AddToLogString("\tMoney Value Error: Money values must be 0 or greater.\n||\t\tTried: " + money);
+                employeeEx.AddError("Money Value Error: Money values must be 0 or greater. Tried: " + money);
+                //AddToLogString("\tMoney Value Error: Money values must be 0 or greater.\n||\t\tTried: " + money);
             }
             return valid;
         }

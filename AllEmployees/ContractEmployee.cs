@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 //SO HERES MY 
 //Edited file
+//Different comment
 namespace AllEmployees
 {
     /// <summary>
@@ -14,9 +15,9 @@ namespace AllEmployees
     /// </summary>
     public class ContractEmployee : Employee
     {
-        DateTime contractStartDate; //!< DateTime when contract start
-        DateTime contractStopDate; //!< DateTime when contract end
-        decimal fixedContractAmount; //!< Contract Length
+        public DateTime contractStartDate; //!< DateTime when contract start
+        public DateTime contractStopDate; //!< DateTime when contract end
+        public decimal fixedContractAmount; //!< Contract Length
         /// <summary>
         /// Log when trying to create an employee
         /// </summary>
@@ -67,6 +68,9 @@ namespace AllEmployees
         public ContractEmployee(string[] employeeData)
         {
             int index = employeeData[0] == "CT" ? 1 : 0;
+            employeeEx.employeeType = "Contract";
+            employeeEx.operationType = "CREATE";
+
             VariablesLogString(employeeData);
             if (ValidateContract(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], employeeData[index + 5], Convert.ToDecimal(employeeData[index + 6])))
             {
@@ -78,6 +82,10 @@ namespace AllEmployees
                 contractStopDate = Convert.ToDateTime(employeeData[index + 5]);
                 fixedContractAmount = Convert.ToDecimal(employeeData[index + 6]);
                 IsValid = true;
+            }
+            else
+            {
+                throw employeeEx;
             }
             SuccessLogString();
         }
@@ -126,7 +134,8 @@ namespace AllEmployees
             }
             catch(FormatException e)
             {
-                AddToLogString("Business Number Error: " + e.Message + " \n||\t\tTried: " + businessNumber);
+                employeeEx.AddError("Business Number Error: " + e.Message + " Tried: " + businessNumber);
+                //AddToLogString("Business Number Error: " + e.Message + " \n||\t\tTried: " + businessNumber);
             }
 
             int[] tempSin = new int[9]; ///< int array
@@ -165,7 +174,8 @@ namespace AllEmployees
                 }
                 else
                 {
-                    AddToLogString("\tBusiness Number Error: Not a valid business number");
+                    //AddToLogString("\tBusiness Number Error: Not a valid business number");
+                    employeeEx.AddError("Business Number Error: Not a valid business number. Tried: " + businessNumber);
                 }
             }
             else if (theSin == 0)
@@ -174,7 +184,8 @@ namespace AllEmployees
             }
             else
             {
-                AddToLogString("\tBusiness Number Error: First two digits must match the company's date of incorporation.");
+                //AddToLogString("\tBusiness Number Error: First two digits must match the company's date of incorporation.");
+                employeeEx.AddError("Business Number Error: First two digits must match the company's date of incorporation.");
             }
             return validSin;
         
@@ -207,11 +218,13 @@ namespace AllEmployees
                         {
                             if (dateValue <= dateOfBirth)
                             {
-                                AddToLogString("\tContract Start Date Error: Must be after the company was created.");
+                                //AddToLogString("\tContract Start Date Error: Must be after the company was created.");
+                                employeeEx.AddError("Contract Start Date Error: Must be after the company was created.");
                             }
                             else
                             {
-                                AddToLogString("\tContract Start Date Error: Must be before the current date.");
+                                //AddToLogString("\tContract Start Date Error: Must be before the current date.");
+                                employeeEx.AddError("Contract Start Date Error: Must be before the current date.");
                             }
                         }
                         break;
@@ -225,11 +238,13 @@ namespace AllEmployees
                         {
                             if (dateValue <= dateOfBirth)
                             {
-                                AddToLogString("\tContract Stop Date Error: Must be after the company was created.");
+                                //AddToLogString("\tContract Stop Date Error: Must be after the company was created.");
+                                employeeEx.AddError("Contract Stop Date Error: Must be after the company was created.");
                             }
                             else
                             {
-                                AddToLogString("\tContract Stop Date Error: Must be before the current date.");
+                                //AddToLogString("\tContract Stop Date Error: Must be before the current date.");
+                                employeeEx.AddError("Contract Stop Date Error: Must be before the current date.");
                             }
                         }
                         break;
@@ -239,11 +254,13 @@ namespace AllEmployees
             {
                 if (type == dateType.CONTRACT_START)
                 {
-                    AddToLogString("\tContract Start Date Error: Invalid format.\n||\t\tTried: " + date);
+                    //AddToLogString("\tContract Start Date Error: Invalid format.\n||\t\tTried: " + date);
+                    employeeEx.AddError("Contract Start Date Error: Invalid format. Tried: " + date);
                 }
                 else if (type == dateType.CONTRACT_END)
                 {
-                    AddToLogString("\tContract Stop Date Error: Invalid format.\n||\t\tTried: " + date);
+                    employeeEx.AddError("Contract Stop Date Error: Invalid format. Tried: " + date);
+                    //AddToLogString("\tContract Stop Date Error: Invalid format.\n||\t\tTried: " + date);
                 }
             }
             return valid;

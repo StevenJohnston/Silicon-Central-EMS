@@ -20,11 +20,8 @@ namespace AllEmployees
             fall,
         }
         seasons season { get; set; }*/
-        string season; /// What season
-       
-
-
-        Decimal piecePay { get; set; } 
+        public string season; /// What season
+        public Decimal piecePay { get; set; } 
 
         public bool VariablesLogString(string[] employeeData)
         {
@@ -71,6 +68,9 @@ namespace AllEmployees
         {
             int index = employeeData[0] == "SN" ? 1 : 0;
             VariablesLogString(employeeData);
+            employeeEx.employeeType = "Seasonal";
+            employeeEx.operationType = "CREATE";
+
             if (ValidateSeasonal(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], Convert.ToDecimal(employeeData[index + 5])))
             {
                 firstName = employeeData[index];
@@ -81,6 +81,11 @@ namespace AllEmployees
                 piecePay = Convert.ToDecimal(employeeData[index + 5]);
                 IsValid = true;
             }
+            else
+            {
+                throw employeeEx;
+            }
+
             SuccessLogString();
         }
         /// <summary>
@@ -134,7 +139,8 @@ namespace AllEmployees
             }
             else
             {
-                AddToLogString("\tSeason Error: Invalid season.\n\t\tTried: " + newSeason);
+                //AddToLogString("\tSeason Error: Invalid season.\n\t\tTried: " + newSeason);
+                employeeEx.AddError("Season Error: Invalid season. Tried: " + newSeason);
             }
 
             return valid;
