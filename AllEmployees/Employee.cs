@@ -16,7 +16,7 @@ namespace AllEmployees
     public class Employee
     {
         public static int[] sinCheck = new int[9] { 1, 2, 1, 2, 1, 2, 1, 2, 1 }; //!< the int array to check for
-        public EmployeeException employeeEx = new EmployeeException();
+        public EMSExceptions.EmployeeException employeeEx = new EmployeeException();
         /// An enum type. 
         /// That contain the dateType of information that is needed
         ///For each employee
@@ -146,7 +146,7 @@ namespace AllEmployees
             }
             else
             {
-                throw employeeEx;
+               throw employeeEx;
             }
             return allValid;
         }
