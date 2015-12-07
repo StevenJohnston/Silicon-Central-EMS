@@ -1,2 +1,15 @@
 C:\Users\Steven Windows7\Documents\SET2ndYear\Windows and Mobile Programming\SETPaint\Silicon Central EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe.config
 C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe.config
+C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.exe
+C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.pdb
+C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe
+C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.pdb
+C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\AllEmployees.dll
+C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Presentation.dll
+C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Supporting.dll
+C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\TheCompany.dll
+C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\AllEmployees.pdb
+C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Presentation.pdb
+C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Supporting.pdb
+C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\TheCompany.pdb
+C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.csprojResolveAssemblyReference.cache
