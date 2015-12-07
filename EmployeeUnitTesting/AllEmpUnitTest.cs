@@ -15,12 +15,12 @@ namespace EmployeeUnitTesting
         {
             bool status = false;
             try {
-                Employee testEmployee = new Employee("Jimmy", "White", "146 454 286", "1996/05/03");
+                Employee testEmployee = new Employee("Jimmy", "White", "246 454 284", "1996/05/03");
                 status = testEmployee.Validate();
             }
             catch(EmployeeException ee)
             {
-                
+                string errors = ee.GetError();
             }
             
             Assert.AreEqual(true, status);
