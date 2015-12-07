@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AllEmployees;
+using EMSExceptions;
+
 namespace EmployeeUnitTesting
 {
     [TestClass]
@@ -11,8 +13,16 @@ namespace EmployeeUnitTesting
         [TestMethod]
         public void TestingConstructorForEmployee_Employee_Normal()
         {
-            Employee testEmployee = new Employee("Jimmy", "White", "046 454 286", "1996/05/03");
-            bool status = testEmployee.Validate();
+            bool status = false;
+            try {
+                Employee testEmployee = new Employee("Jimmy", "White", "146 454 286", "1996/05/03");
+                status = testEmployee.Validate();
+            }
+            catch(EmployeeException ee)
+            {
+                
+            }
+            
             Assert.AreEqual(true, status);
         }
         [TestMethod]
