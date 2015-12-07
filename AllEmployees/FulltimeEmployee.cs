@@ -50,6 +50,7 @@ namespace AllEmployees
             else
             {
                 AddToLogString("\t-->Creating Fulltime Employee failed.");
+                success = false;
             }
             Supporting.Logging.LogString(logString);
             return success;

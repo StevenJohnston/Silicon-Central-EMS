@@ -11,7 +11,7 @@ namespace EmployeeUnitTesting
 
         //employee
         [TestMethod]
-        public void TestingConstructorForEmployee_Employee_Normal()
+        public void TestingValidateContract_Employee_Normal()
         {
             bool status = false;
             try {
@@ -26,7 +26,7 @@ namespace EmployeeUnitTesting
             Assert.AreEqual(true, status);
         }
         [TestMethod]
-        public void TestingConstructorForEmployee_Employee_Exeption()
+        public void TestingValidateContract_Employee_Exeption()
         {
             Employee testEmployee = new Employee("Jimmy", "White", "36a 389 727", "1996/05/03");
 
@@ -42,6 +42,7 @@ namespace EmployeeUnitTesting
             }
         }
 
+        
 
         //ContractEmployee
         [TestMethod]
@@ -159,6 +160,72 @@ namespace EmployeeUnitTesting
           
         }
 
+        //testing logging
+       [TestMethod]
+       public void TestingValidateLongingString_FulltimeEmployee_Normal()
+        {
+            bool status = false;
+            string[] testData = new string[7] {
+                "qwer",
+                "drfdgf",
+                "246 454 284",
+                "1997/3/14",
+                "2000/12/12",
+                "2013/10/9",
+                "604043.34"
+            };
+
+
+            try
+            {
+                FulltimeEmployee testEmployee = new FulltimeEmployee(testData);
+                status = testEmployee.SuccessLogString();
+            }
+            catch (EmployeeException eee)
+            {
+                string errors = eee.GetError();
+
+
+            }
+            Assert.AreEqual(true, status);
+        }
+       //testing logging
+       [TestMethod]
+       public void TestingValidateLongingString_FulltimeEmployee_Exception()
+       {
+           bool status = false;
+           string[] testData = new string[7] {
+                "qwer",
+                "drfdgf",
+                "246 054 284",
+                "1997/3/14",
+                "2000/12/12",
+                "2013/10/9",
+                "604043.34"
+            };
+
+
+           try
+           {
+               FulltimeEmployee testEmployee = new FulltimeEmployee(testData);
+               status = testEmployee.SuccessLogString();
+           }
+           catch (EmployeeException eee)
+           {
+               string errors = eee.GetError();
+           }
+           Assert.AreEqual(false, status);
+       }
+
+
+
+
+
+
+
+
+
+
         //part time
        [TestMethod]
         public void TestingValidateContract_ParttimeEmployee_Normal()
@@ -204,6 +271,72 @@ namespace EmployeeUnitTesting
 
            }
        }
+
+
+
+       //testing logging
+       [TestMethod]
+       public void TestingValidateLongingString_ParttimeEmployee_Normal()
+       {
+           bool status = false;
+           string[] testData = new string[7] {
+                "qwer",
+                "drfdgf",
+                "246 454 284",
+                "1997/3/14",
+                "2000/12/12",
+                "2013/10/9",
+                "a"
+            };
+
+
+           try
+           {
+               ParttimeEmployee testEmployee = new ParttimeEmployee(testData);
+               status = testEmployee.SuccessLogString();
+           }
+           catch (EmployeeException eee)
+           {
+               string errors = eee.GetError();
+
+
+           }
+           Assert.AreEqual(true, status);
+       }
+       [TestMethod]
+       public void TestingValidateLongingString_ParttimeEmployee_Exeption()
+       {
+           bool status = false;
+           string[] testData = new string[7] {
+                "qwer",
+                "drfdgf",
+                "246 454 284",
+                "1997/3/14",
+                "2000/12/12",
+                "2013/10/9",
+                "45.34"
+            };
+
+
+           try
+           {
+               ParttimeEmployee testEmployee = new ParttimeEmployee(testData);
+               status = testEmployee.SuccessLogString();
+           }
+           catch (EmployeeException eee)
+           {
+               string errors = eee.GetError();
+
+
+           }
+           Assert.AreEqual(false, status);
+       }
+
+
+
+
+
+
 
 
         //seasonal

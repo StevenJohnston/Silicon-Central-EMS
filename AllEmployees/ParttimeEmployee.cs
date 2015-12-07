@@ -54,6 +54,7 @@ namespace AllEmployees
             else
             {
                 AddToLogString("\t-->Creating Parttime Employee failed.");
+                success = false;
             }
             Supporting.Logging.LogString(logString);
             return success;
@@ -113,7 +114,7 @@ namespace AllEmployees
             valid[1] = ValidateDate(dateOfHire, dateType.HIRE);
             valid[2] = ValidateDate(dateOfTermination, dateType.TERMINATE);
             valid[3] = ValidateMoney(hourlyRate);
-            if (valid[0] & valid[1] & valid[2] & valid[3])
+            if (valid[0] & valid[1] & valid[2] & valid[3] & valid[4])
             {
                 allValid = true;
             }
