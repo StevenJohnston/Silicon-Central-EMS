@@ -118,11 +118,21 @@ namespace EmployeeUnitTesting
                 "1995/3/4",
                 "2000/12/12",
                 "2013109",
-                "604043.34"
+                "-a604043.34"
             };
-            FulltimeEmployee testEmployee = new FulltimeEmployee(testData);
-            bool status = testEmployee.Validate();
-            Assert.AreEqual(false, status);
+            try
+            {
+                FulltimeEmployee testEmployee = new FulltimeEmployee(testData);
+                bool status = testEmployee.Validate();
+                Assert.AreEqual(false, status);
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual(true, true);
+
+            }
+
+          
         }
 
         //part time
