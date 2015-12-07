@@ -114,6 +114,14 @@ namespace AllEmployees
                 //this.dateOfBirth = dateOfBirth;
             }
         }
+
+        public bool Validate()
+        {
+            bool status = ValidateEmployee(this.firstName, this.lastName, this.socialInsuranceNumber, this.dateOfBirth.ToString());
+            return status; 
+        }
+             
+
         /// <summary>
         /// Validate the employee name, last name, SIN, and Date of birth
         /// </summary>

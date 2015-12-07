@@ -15,6 +15,7 @@ namespace AllEmployees
     /// </summary>
     public class ContractEmployee : Employee
     {
+        string[] employeeData;
         public DateTime contractStartDate; //!< DateTime when contract start
         public DateTime contractStopDate; //!< DateTime when contract end
         public decimal fixedContractAmount; //!< Contract Length
@@ -61,6 +62,14 @@ namespace AllEmployees
         {
 
         }
+
+        public bool Validate()
+        {
+            int index = employeeData[0] == "CT" ? 1 : 0;
+            return ValidateContract(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], employeeData[index + 5], Convert.ToDecimal(employeeData[index + 6]));
+        }
+
+
         /// <summary>
         /// Constructor that validate employees and sets them
         /// </summary>
@@ -70,7 +79,7 @@ namespace AllEmployees
             int index = employeeData[0] == "CT" ? 1 : 0;
             employeeEx.employeeType = "Contract";
             employeeEx.operationType = "CREATE";
-
+            this.employeeData = employeeData;
             VariablesLogString(employeeData);
             if (ValidateContract(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], employeeData[index + 5], Convert.ToDecimal(employeeData[index + 6])))
             {
@@ -120,6 +129,9 @@ namespace AllEmployees
             }
             return allValid;
         }
+
+     
+
         /// <summary>
         /// Validate BusinessNumber that follows the bussiness rules and formating of the information
         /// </summary>
