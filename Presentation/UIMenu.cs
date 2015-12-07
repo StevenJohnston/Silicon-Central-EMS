@@ -290,8 +290,8 @@ namespace Presentation
             fullTimeInfo[4] = InputTillCorrect(ValidateDate, "Enter Employee Date Of Birth", "That date is not valid");
 
 
-            fullTimeInfo[5] = InputTillCorrect(EmployeeDirectory.isDateAfterBirth, "Enter Employee Date Of Hire", "Date must be after date of birth");
-            fullTimeInfo[6] = InputTillCorrect(EmployeeDirectory.isDateAfterHire, "Enter Date of Termination", "Date must be after date of hire");
+            //fullTimeInfo[5] = InputTillCorrect(EmployeeDirectory.isDateAfterBirth, "Enter Employee Date Of Hire", "Date must be after date of birth");
+            //fullTimeInfo[6] = InputTillCorrect(EmployeeDirectory.isDateAfterHire, "Enter Date of Termination", "Date must be after date of hire");
             fullTimeInfo[7] = InputTillCorrect(new Regex(@"^\d[(.\d)]$"), "Enter Employee Salary", "That is not a valid salary");
             return next;
         }
@@ -304,8 +304,8 @@ namespace Presentation
             fullTimeInfo[2] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee First Name", "Employee First Name consist of only characters");
             fullTimeInfo[3] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee SIN", "Employee SIN should be formatted like so: ### ### ###");
             fullTimeInfo[4] = InputTillCorrect(ValidateDate, "Enter Employee Date Of Hire", "That date is not valid");
-            fullTimeInfo[5] = InputTillCorrect(EmployeeDirectory.isDateAfterBirth, "Enter Employee Date Of Hire", "Date must be after date of birth");
-            fullTimeInfo[6] = InputTillCorrect(EmployeeDirectory.isDateAfterHire, "Enter Date of Termination", "Date must be after date of hire");
+          //  fullTimeInfo[5] = InputTillCorrect(EmployeeDirectory.isDateAfterBirth, "Enter Employee Date Of Hire", "Date must be after date of birth");
+            //fullTimeInfo[6] = InputTillCorrect(EmployeeDirectory.isDateAfterHire, "Enter Date of Termination", "Date must be after date of hire");
             fullTimeInfo[7] = InputTillCorrect(new Regex(@"^\d[(.\d)]$"), "Enter Employee Salary", "That is not a valid salary");
             return next;
         }

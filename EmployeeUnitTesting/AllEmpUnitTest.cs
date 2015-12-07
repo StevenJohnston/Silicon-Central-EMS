@@ -19,9 +19,10 @@ namespace EmployeeUnitTesting
         public void TestingConstructorForEmployee_Employee_Exeption()
         {
             Employee testEmployee = new Employee("Jimmy", "White", "36a 389 727", "1996/05/03");
-            bool status = testEmployee.Validate();
+
             try
             {
+                bool status = testEmployee.Validate();
                 Assert.AreEqual(false, status);
             }
             catch (Exception e)
@@ -64,9 +65,20 @@ namespace EmployeeUnitTesting
                 "2013/10/9",
                 "-6a04043.34"
             };
+
             ContractEmployee testEmployee = new ContractEmployee();
-            bool status = testEmployee.Validate();
-            Assert.AreEqual(true, status);
+
+            try
+            {
+                bool status = testEmployee.Validate();
+                Assert.AreEqual(false, status);
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual(true, true);
+
+            }
+
         }
         //Full time
         [TestMethod]
