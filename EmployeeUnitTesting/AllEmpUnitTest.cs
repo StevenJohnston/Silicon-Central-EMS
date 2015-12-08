@@ -25,6 +25,7 @@ namespace EmployeeUnitTesting
             
             Assert.AreEqual(true, status);
         }
+
         [TestMethod]
         public void TestingValidateContract_Employee_Exception()
         {
@@ -72,7 +73,6 @@ namespace EmployeeUnitTesting
             Assert.AreEqual(true, status);
         }
 
-
         //Contract Employee
         [TestMethod]
         public void TestingValidateContract_ContractEmployee_Exception()
@@ -101,7 +101,7 @@ namespace EmployeeUnitTesting
             }
 
         }
-                [TestMethod]
+        [TestMethod]
         public void TestingValidateLongingString_ContractEmployee_Normal()
         {
             string[] testData = new string[7] {
@@ -128,9 +128,7 @@ namespace EmployeeUnitTesting
             }
 
         }
-
-
-
+        
 
 
 
@@ -138,14 +136,14 @@ namespace EmployeeUnitTesting
         public void TestingValidateLogingString_ContractEmployee_Exception()
         {
             string[] testData = new string[7] {
-        "Tamool",
-        "Jim",
-        "123456782",
-        "1995/3/4",
-        "2000/12/12",
-        "2013/10/9",
-        "-6a04043.34"
-    };
+                "Tamool",
+                "Jim",
+                "123456782",
+                "1995/3/4",
+                "2000/12/12",
+                "2013/10/9",
+                "-6a04043.34"
+            };
 
             ContractEmployee testEmployee = new ContractEmployee();
 
@@ -159,8 +157,8 @@ namespace EmployeeUnitTesting
                 Assert.AreEqual(true, true);
 
             }
-
         }
+
 
 
         //Full time
@@ -555,6 +553,138 @@ namespace EmployeeUnitTesting
            status = testEmployee.ValidateSeason("Wisdfnter");
            Assert.AreEqual(false, status);
        }
+
+
+
+
+
+        //TESTING VALIDATE DATE FOR ALL EMPLOYEES 
+
+        /** VALIDATION DATE NORMAL TESTING **/
+        [TestMethod]
+        public void Date_Contract_Employee_Validation_Normal()
+        {
+
+            bool status = false;
+
+            try
+            {
+                string[] ctEmpObj = new string[7] {
+                "qwer",
+                "drfdgf",
+                "782 454 284",
+                "1978/3/14",
+                "2000/01/01",
+                "2005/05/05",
+                "45.34"
+            };
+
+                ContractEmployee contractEmpObj = new ContractEmployee(ctEmpObj);
+                status = contractEmpObj.ValidateDate("2000/01/01", ContractEmployee.dateType.CONTRACT_START);
+             
+            }
+            catch(EmployeeException e)
+            {
+                e.GetError(); 
+            }
+
+            Assert.AreEqual(true, status);
+
+        }
+
+        [TestMethod]
+        public void Date_FullTime_Employee_Normal_Validation()
+        {
+            string[] ftEmpData = new string[6] {
+                "qwer",
+                "drfdgf",
+                "246 454 284",
+                "1997/3/14",
+                "dfser",
+                "45.34"
+            };
+
+            FulltimeEmployee ftEmpObj = new FulltimeEmployee(ftEmpData);
+            bool status = false;
+            status = ftEmpObj.ValidateDate("2000/01/01", Employee.dateType.HIRE);
+            Assert.AreEqual(true, status);
+        }
+
+        [TestMethod]
+        public void Date_PartTime_Employee_Normal_Validation()
+        {
+            string[] ptEmpData = new string[6] {
+                "qwer",
+                "drfdgf",
+                "246 454 284",
+                "1997/3/14",
+                "dfser",
+                "45.34"
+            };
+
+            ParttimeEmployee ptEmpObj = new ParttimeEmployee(ptEmpData);
+            bool status = false;
+            status = ptEmpObj.ValidateDate("2000/01/01", Employee.dateType.HIRE);
+            Assert.AreEqual(true, status);
+        }
+
+        //There's no validatedate for the Seaonal Employee class 
+
+        //[TestMethod]
+        //public void Date_Seasonal_Employee_Normal_Validation()
+        //{
+        //    SeasonalEmployee seasonalEmpObj = new SeasonalEmployee();
+        //    bool status = false;
+        //    status = seasonalEmpObj.
+        //}
+
+        /** VALIDATION DATE EXCEPTION TESTING **/
+
+        [TestMethod]
+        public void Date_Contract_Employee_Exception_Validation()
+        {
+            ContractEmployee contractEmpObj = new ContractEmployee();
+            bool status = false;
+            status = contractEmpObj.ValidateDate("ERROR CONDITON", Employee.dateType.HIRE);
+            Assert.AreEqual(true, status);
+        }
+
+        [TestMethod]
+        public void Date_FullTime_Employee_Exception_Validation()
+        {
+            string[] ftEmpData = new string[6] {
+                "qwer",
+                "drfdgf",
+                "246 454 284",
+                "1997/3/14",
+                "dfser",
+                "45.34"
+            };
+
+            FulltimeEmployee ftEmpObj = new FulltimeEmployee(ftEmpData);
+            bool status = false;
+            status = ftEmpObj.ValidateDate("ERROR", Employee.dateType.HIRE);
+            Assert.AreEqual(true, status);
+        }
+
+        [TestMethod]
+        public void Date_PartTime_Employee_Exception_Validation()
+        {
+            string[] ptEmpData = new string[6] {
+                "qwer",
+                "drfdgf",
+                "246 454 284",
+                "1997/3/14",
+                "dfser",
+                "45.34"
+            };
+
+            ParttimeEmployee ptEmpObj = new ParttimeEmployee(ptEmpData);
+            bool status = false;
+            status = ptEmpObj.ValidateDate("ERROR", Employee.dateType.HIRE);
+            Assert.AreEqual(true, status);
+        }       
+
 
     }
 }
