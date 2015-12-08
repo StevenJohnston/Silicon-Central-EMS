@@ -53,6 +53,16 @@
     <Compile Include="AllEmpUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AllEmployees\AllEmployees.csproj">
+      <Project>{800399ec-90e1-4f98-a127-73acc4ba1228}</Project>
+      <Name>AllEmployees</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EMSExceptions\EMSExceptions.csproj">
+      <Project>{08fd197d-0933-416c-933e-ba510652c43f}</Project>
+      <Name>EMSExceptions</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

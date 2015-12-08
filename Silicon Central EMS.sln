@@ -14,6 +14,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Presentation\Presentation.csproj", "{F71C0C99-B1E9-46E1-A9FF-88B7A0361106}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EMSExceptions", "EMSExceptions\EMSExceptions.csproj", "{08FD197D-0933-416C-933E-BA510652C43F}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeUnitTesting", "EmployeeUnitTesting\EmployeeUnitTesting.csproj", "{FE787686-C197-47FE-B17E-89D9B1754B70}"
 EndProject
 Global

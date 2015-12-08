@@ -15,6 +15,7 @@ namespace AllEmployees
     /// </summary>
     public class ContractEmployee : Employee
     {
+        string[] myEmployeeData;
         public DateTime contractStartDate; //!< DateTime when contract start
         public DateTime contractStopDate; //!< DateTime when contract end
         public decimal fixedContractAmount; //!< Contract Length
@@ -49,6 +50,7 @@ namespace AllEmployees
             }
             else
             {
+                success = false;
                 AddToLogString("\t-->Creating Contract Employee failed.");
             }
             Supporting.Logging.LogString(logString);
@@ -61,6 +63,14 @@ namespace AllEmployees
         {
 
         }
+
+        new public bool Validate()
+        {
+            int index = myEmployeeData[0] == "CT" ? 1 : 0;
+            return ValidateContract(myEmployeeData[index], myEmployeeData[index + 1], myEmployeeData[index + 2], myEmployeeData[index + 3], myEmployeeData[index + 4], myEmployeeData[index + 5], Convert.ToDecimal(myEmployeeData[index + 6]));
+        }
+
+
         /// <summary>
         /// Constructor that validate employees and sets them
         /// </summary>
@@ -70,7 +80,7 @@ namespace AllEmployees
             int index = employeeData[0] == "CT" ? 1 : 0;
             employeeEx.employeeType = "Contract";
             employeeEx.operationType = "CREATE";
-
+            myEmployeeData = employeeData;
             VariablesLogString(employeeData);
             if (ValidateContract(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], employeeData[index + 5], Convert.ToDecimal(employeeData[index + 6])))
             {
@@ -120,6 +130,9 @@ namespace AllEmployees
             }
             return allValid;
         }
+
+     
+
         /// <summary>
         /// Validate BusinessNumber that follows the bussiness rules and formating of the information
         /// </summary>
@@ -130,7 +143,7 @@ namespace AllEmployees
 
             int newSin = 0; //!< SIN
             try {
-                Int32.TryParse(socialInsuranceNumber.Replace(" ", string.Empty), out newSin);
+                Int32.TryParse(businessNumber.Replace(" ", string.Empty), out newSin);
             }
             catch(FormatException e)
             {
@@ -151,7 +164,7 @@ namespace AllEmployees
                 sin[x] = newSin % 10;
                 newSin /= 10;
             }
-            for(int x = 4; x >= 0; x--)
+            for(int x = 3; x >= 0; x--)
             {
                 year[x] = tempYear % 10;
                 tempYear /= 10;
@@ -196,7 +209,7 @@ namespace AllEmployees
         /// <param name="date"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        protected bool ValidateDate(string date, dateType type)
+        public bool ValidateDate(string date, dateType type)
         {
             bool valid = false; //!< validation on date
             CultureInfo culture; //!< culture format

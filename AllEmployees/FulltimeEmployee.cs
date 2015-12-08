@@ -15,6 +15,7 @@ namespace AllEmployees
         public DateTime dateOfHire; //!< date of hire
         public DateTime dateOfTermination; //!< date of termination 
         public decimal salary; //!< employee salary
+        string[] myEmployeeData;
         /// <summary>
         /// Logging full time employee with will log last name, SIN, DAte of birht, date of hire, date of termination, salary
         /// </summary>
@@ -49,18 +50,25 @@ namespace AllEmployees
             else
             {
                 AddToLogString("\t-->Creating Fulltime Employee failed.");
+                success = false;
             }
             Supporting.Logging.LogString(logString);
             return success;
         }
 
-
+        public bool Validate()
+        {
+            int index = myEmployeeData[0] == "FT" ? 1 : 0;
+            bool status = ValidateFulltime(myEmployeeData[index], myEmployeeData[index + 1], myEmployeeData[index + 2], myEmployeeData[index + 3], myEmployeeData[index + 4], myEmployeeData[index + 5], Convert.ToDecimal(myEmployeeData[index + 6]));
+            return status;
+        }
         /// <summary>
         /// A constructor that set the first, last, SIN, DOB, DOT, Salary, isValid if it pass the validation for the full timers
         /// </summary>
         /// <param name="employeeData"></param>
         public FulltimeEmployee(string[] employeeData)
         {
+            myEmployeeData = employeeData; 
             int index = employeeData[0] == "FT" ? 1 : 0;
             VariablesLogString(employeeData);
             employeeEx.employeeType = "Full Time";
@@ -118,7 +126,7 @@ namespace AllEmployees
         /// <param name="date"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        protected bool ValidateDate(string date, dateType type)
+        public bool ValidateDate(string date, dateType type)
         {
             bool valid = false;  //!< bool if date was valid
             CultureInfo culture; //!< Culture information
@@ -222,5 +230,9 @@ namespace AllEmployees
         {
             return ValidateMoney(money);
         }
+
+        
+
+
     }
 }

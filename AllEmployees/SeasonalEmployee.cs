@@ -20,6 +20,7 @@ namespace AllEmployees
             fall,
         }
         seasons season { get; set; }*/
+        string[] myEmployeeData;
         public string season; /// What season
         public Decimal piecePay { get; set; } 
 
@@ -49,6 +50,7 @@ namespace AllEmployees
             }
             else
             {
+                success = false;
                 AddToLogString("\t-->Creating Seasonal Employee failed.");
             }
             Supporting.Logging.LogString(logString);
@@ -61,11 +63,20 @@ namespace AllEmployees
         {
 
         }
+
+
+        public bool Validate()
+        {
+            int index = myEmployeeData[0] == "FT" ? 1 : 0;
+            bool status = ValidateSeasonal(myEmployeeData[index], myEmployeeData[index + 1], myEmployeeData[index + 2], myEmployeeData[index + 3], myEmployeeData[index + 4], Convert.ToDecimal(myEmployeeData[index + 5]));
+            return status;
+        }
         /// <summary>
         /// Constructor that validate employeeData
         /// </summary>
         public SeasonalEmployee(string[] employeeData)
         {
+            myEmployeeData = employeeData;
             int index = employeeData[0] == "SN" ? 1 : 0;
             VariablesLogString(employeeData);
             employeeEx.employeeType = "Seasonal";
@@ -106,7 +117,7 @@ namespace AllEmployees
             valid[0] = ValidateEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
             valid[1] = ValidateSeason(season);
             valid[2] = ValidateMoney(piecePay);
-            if (valid[0] & valid[1] & valid[2] & valid[3])
+            if (valid[0] & valid[1] & valid[2])
             {
                 allValid = true;
             }

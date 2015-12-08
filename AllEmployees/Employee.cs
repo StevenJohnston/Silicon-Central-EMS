@@ -16,7 +16,7 @@ namespace AllEmployees
     public class Employee
     {
         public static int[] sinCheck = new int[9] { 1, 2, 1, 2, 1, 2, 1, 2, 1 }; //!< the int array to check for
-        public EmployeeException employeeEx = new EmployeeException();
+        public EMSExceptions.EmployeeException employeeEx = new EmployeeException();
         /// An enum type. 
         /// That contain the dateType of information that is needed
         ///For each employee
@@ -111,9 +111,17 @@ namespace AllEmployees
                 this.firstName = firstName; //!< Setting the first name 
                 this.lastName = lastName; //!< setting the last name
                 this.SocialInsuranceNumber = socialInsuranceNumber; //!< setting the socail insurance number
-                //this.dateOfBirth = dateOfBirth;
+                this.dateOfBirth = Convert.ToDateTime(dateOfBirth);
             }
         }
+
+        public bool Validate()
+        {
+            bool status = ValidateEmployee(this.firstName, this.lastName, this.socialInsuranceNumber, (Convert.ToString(this.dateOfBirth.Year)+ "/" + Convert.ToString(this.dateOfBirth.Month) + "/" + Convert.ToString(dateOfBirth.Day)));
+            return status; 
+        }
+             
+
         /// <summary>
         /// Validate the employee name, last name, SIN, and Date of birth
         /// </summary>
@@ -138,7 +146,7 @@ namespace AllEmployees
             }
             else
             {
-                throw employeeEx;
+               throw employeeEx;
             }
             return allValid;
         }
