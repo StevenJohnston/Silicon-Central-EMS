@@ -126,7 +126,7 @@ namespace AllEmployees
         /// <param name="date"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        protected bool ValidateDate(string date, dateType type)
+        public bool ValidateDate(string date, dateType type)
         {
             bool valid = false;  //!< bool if date was valid
             CultureInfo culture; //!< Culture information

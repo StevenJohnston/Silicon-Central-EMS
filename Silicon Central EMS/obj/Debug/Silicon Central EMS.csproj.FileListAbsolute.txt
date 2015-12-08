@@ -51,3 +51,19 @@ C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\b
 C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.csprojResolveAssemblyReference.cache
 C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.exe
 C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.pdb
+C:\Users\Naween-PC\Desktop\EMS-Good\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe.config
+C:\Users\Naween-PC\Desktop\EMS-Good\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe
+C:\Users\Naween-PC\Desktop\EMS-Good\Silicon Central EMS\bin\Debug\Silicon Central EMS.pdb
+C:\Users\Naween-PC\Desktop\EMS-Good\Silicon Central EMS\bin\Debug\AllEmployees.dll
+C:\Users\Naween-PC\Desktop\EMS-Good\Silicon Central EMS\bin\Debug\Presentation.dll
+C:\Users\Naween-PC\Desktop\EMS-Good\Silicon Central EMS\bin\Debug\Supporting.dll
+C:\Users\Naween-PC\Desktop\EMS-Good\Silicon Central EMS\bin\Debug\TheCompany.dll
+C:\Users\Naween-PC\Desktop\EMS-Good\Silicon Central EMS\bin\Debug\EMSExceptions.dll
+C:\Users\Naween-PC\Desktop\EMS-Good\Silicon Central EMS\bin\Debug\AllEmployees.pdb
+C:\Users\Naween-PC\Desktop\EMS-Good\Silicon Central EMS\bin\Debug\Presentation.pdb
+C:\Users\Naween-PC\Desktop\EMS-Good\Silicon Central EMS\bin\Debug\Supporting.pdb
+C:\Users\Naween-PC\Desktop\EMS-Good\Silicon Central EMS\bin\Debug\TheCompany.pdb
+C:\Users\Naween-PC\Desktop\EMS-Good\Silicon Central EMS\bin\Debug\EMSExceptions.pdb
+C:\Users\Naween-PC\Desktop\EMS-Good\Silicon Central EMS\obj\Debug\Silicon Central EMS.csprojResolveAssemblyReference.cache
+C:\Users\Naween-PC\Desktop\EMS-Good\Silicon Central EMS\obj\Debug\Silicon Central EMS.exe
+C:\Users\Naween-PC\Desktop\EMS-Good\Silicon Central EMS\obj\Debug\Silicon Central EMS.pdb
