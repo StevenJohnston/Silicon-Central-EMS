@@ -572,7 +572,7 @@ namespace EmployeeUnitTesting
                 string[] ctEmpObj = new string[7] {
                 "qwer",
                 "drfdgf",
-                "786 454 284",
+                "782 454 284",
                 "1978/3/14",
                 "2000/01/01",
                 "2005/05/05",
@@ -580,7 +580,7 @@ namespace EmployeeUnitTesting
             };
 
                 ContractEmployee contractEmpObj = new ContractEmployee(ctEmpObj);
-                status = contractEmpObj.ValidateDate("2000/01/01", Employee.dateType.HIRE);
+                status = contractEmpObj.ValidateDate("2000/01/01", ContractEmployee.dateType.CONTRACT_START);
              
             }
             catch(EmployeeException e)
