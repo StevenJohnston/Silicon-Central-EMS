@@ -237,7 +237,7 @@ namespace Presentation
                     {
                         case "ft":
                         case "full time":
-                            next = FullTimeMenu;
+                            
                             break;
                         case "pt":
                         case "part time":
@@ -278,6 +278,23 @@ namespace Presentation
             }
             return next;
         }
+        public string[] GetFullTimeInfo()
+        {
+            string[] fullTimeInfo = new string[8];
+
+            fullTimeInfo[0] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
+            fullTimeInfo[1] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee First Name", "Employee First Name consist of only characters");
+            fullTimeInfo[2] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee SIN", "Employee SIN should be formatted like so: ### ### ###");
+            fullTimeInfo[3] = InputTillCorrect(ValidateDate, "Enter Employee Date Of Birth", "That date is not valid");
+            fullTimeInfo[4] = InputTillCorrect(ValidateDate, "Enter Employee Date Of Birth", "That date is not valid");
+
+            //fullTimeInfo[5] = InputTillCorrect(EmployeeDirectory.isDateAfterBirth, "Enter Employee Date Of Hire", "Date must be after date of birth");
+            //fullTimeInfo[6] = InputTillCorrect(EmployeeDirectory.isDateAfterHire, "Enter Date of Termination", "Date must be after date of hire");
+            fullTimeInfo[7] = InputTillCorrect(new Regex(@"^\d[(.\d)]$"), "Enter Employee Salary", "That is not a valid salary");
+
+            return fullTimeInfo;
+        }
+
         public nextFunction FullTimeMenu()
         {
             nextFunction next = EmployeeDetailsMenu;

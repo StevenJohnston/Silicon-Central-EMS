@@ -51,3 +51,5 @@ C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\b
 C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.csprojResolveAssemblyReference.cache
 C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.exe
 C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.pdb
+C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.exe
+C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.pdb
