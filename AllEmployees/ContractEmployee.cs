@@ -143,7 +143,7 @@ namespace AllEmployees
 
             int newSin = 0; //!< SIN
             try {
-                Int32.TryParse(socialInsuranceNumber.Replace(" ", string.Empty), out newSin);
+                Int32.TryParse(businessNumber.Replace(" ", string.Empty), out newSin);
             }
             catch(FormatException e)
             {
@@ -164,7 +164,7 @@ namespace AllEmployees
                 sin[x] = newSin % 10;
                 newSin /= 10;
             }
-            for(int x = 4; x >= 0; x--)
+            for(int x = 3; x >= 0; x--)
             {
                 year[x] = tempYear % 10;
                 tempYear /= 10;
