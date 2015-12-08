@@ -75,7 +75,7 @@ namespace AllEmployees
             employeeEx.operationType = "CREATE";
             if (ValidateFulltime(employeeData[index], employeeData[index+1], employeeData[index+2], employeeData[index+3], employeeData[index+4], employeeData[index+5], Convert.ToDecimal(employeeData[index+6])))
             {
-                firstName = employeeData[index];
+                FirstName = employeeData[index];
                 lastName = employeeData[index + 1];
                 socialInsuranceNumber = employeeData[index + 2];
                 dateOfBirth = Convert.ToDateTime(employeeData[index + 3]);
@@ -201,7 +201,7 @@ namespace AllEmployees
         /// <returns></returns>
         public override string ToString()
         {
-            return "FT|"+firstName+"|"+lastName+"|"+SocialInsuranceNumber+"|"+dateOfBirth+"|"+dateOfHire+"|"+dateOfTermination+"|"+salary;
+            return "FT|"+FirstName+"|"+lastName+"|"+SocialInsuranceNumber+"|"+dateOfBirth+"|"+dateOfHire+"|"+dateOfTermination+"|"+salary;
         }
 
         /** Access the protected methods from the Base Class through inherited class referece calls **/

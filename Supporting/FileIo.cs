@@ -5,18 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
+using EMSExceptions;
 namespace Supporting
 {
-    /// <summary>
-    /// Struct definition for Message. Error message that contains the number code of the error and the 
-    /// accomodated error message that follows that error code's value (number)
-    /// </summary>
-    public struct Message
-    {
-        public int code; //!< The associated error number
-        public string message; //!< The associated message that appears based on the error number 
-    }
 
     /// <summary>
     /// Class contains the definitions and functionalities requried to perform file-related handling, like
@@ -25,9 +16,9 @@ namespace Supporting
     /// </summary>
     public class FileIO
     {
-        public delegate Message loadFunc(object param); //!< Delegate that retrieves information from a specified file
+        public delegate void loadFunc(object param); //!< Delegate that retrieves information from a specified file
 
-        public delegate Message saveFunc(StreamWriter fileOut); //!< Delegate that passes information into a specified pathfile      
+        public delegate void saveFunc(StreamWriter fileOut); //!< Delegate that passes information into a specified pathfile      
 
         public static object lockObj = new object(); //!< Static object used as a key to access flat file database, used so that users can access database one at a time
 
@@ -55,43 +46,41 @@ namespace Supporting
         /// <param name="func"></param>
         /// <returns>Returns the Message Struct that indicates whether extracting the data from the file was 
         /// succesful or not</returns>
-        public Message Load(loadFunc func)
+        public void Load(loadFunc func)
         {
-            Message returnMessage = new Message();
-            returnMessage.code = 200;
             lock (lockObj)
             {
-                try
+                if (!Directory.Exists(path))
                 {
-                    if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+                }
+                if (File.Exists(path + "\\" + file))
+                {
+                    FileLoadException fLE =null;
+                    using (StreamReader fileIn = new StreamReader(path + "\\" + file))
                     {
-                        Directory.CreateDirectory(path);
-                    }
-                    if (File.Exists(path + "\\" + file))
-                    {
-                        using (StreamReader fileIn = new StreamReader(path + "\\" + file))
+                        while (!fileIn.EndOfStream)
                         {
-                            while (!fileIn.EndOfStream)
+                            try
                             {
                                 func(fileIn.ReadLine());
                             }
+                            catch (EmployeeException eE)
+                            {
+                                fLE = new FileLoadException("Found invalid employee data in Database. Records will be removed on next save");
+                            }
                         }
                     }
-                    else
+                    if (fLE != null)
                     {
-                        File.Create(path + "\\" + file);
+                        throw fLE;
                     }
                 }
-                catch (Exception e)
+                else
                 {
-
-                }
-                finally
-                {
-
+                    File.Create(path + "\\" + file);
                 }
             }
-            return returnMessage;
         }
 
 
@@ -103,10 +92,8 @@ namespace Supporting
         /// a specifier for the file being written to using the 'streamwriter' stream</param>
         /// <returns>Returns the Message Struct that indicates whether re-storing data into the file was 
         /// succesful or not</returns>
-        public Message Save(saveFunc func)
+        public void Save(saveFunc func)
         {
-            Message returnMessage = new Message();
-            returnMessage.code = 200;
             lock (lockObj)
             {
                 try
@@ -116,6 +103,7 @@ namespace Supporting
                         Directory.CreateDirectory(path);
                     }
                     File.WriteAllText(path + "\\" + file, string.Empty);
+
                     using (StreamWriter fileOut = File.AppendText(path + "\\" + file))
                     {
                         func(fileOut);
@@ -130,7 +118,6 @@ namespace Supporting
 
                 }
             }
-            return returnMessage;
         }
 
 

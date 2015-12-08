@@ -76,7 +76,7 @@ namespace AllEmployees
             employeeEx.operationType = "CREATE";
             if (ValidateParttime(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], employeeData[index + 5], Convert.ToDecimal(employeeData[index+6])))
             {
-                firstName = employeeData[index];
+                FirstName = employeeData[index];
                 lastName = employeeData[index + 1];
                 socialInsuranceNumber = employeeData[index + 2];
                 dateOfBirth = Convert.ToDateTime(employeeData[index + 3]);
@@ -196,5 +196,13 @@ namespace AllEmployees
             return valid;
         }
 
+        /// <summary>
+        /// A string with the information and the delimiter
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "PT|" + FirstName + "|" + lastName + "|" + SocialInsuranceNumber + "|" + dateOfBirth + "|" + dateOfHire + "|" + dateOfTermination + "|" + hourlyRate;
+        }
     }
 }

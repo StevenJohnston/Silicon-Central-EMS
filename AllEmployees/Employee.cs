@@ -16,7 +16,7 @@ namespace AllEmployees
     public class Employee
     {
         public static int[] sinCheck = new int[9] { 1, 2, 1, 2, 1, 2, 1, 2, 1 }; //!< the int array to check for
-        public EMSExceptions.EmployeeException employeeEx = new EmployeeException();
+        public EmployeeException employeeEx = new EmployeeException();
         /// An enum type. 
         /// That contain the dateType of information that is needed
         ///For each employee
@@ -28,8 +28,8 @@ namespace AllEmployees
             CONTRACT_END /// When does their contrac end
         }
 
-  
-        protected string firstName; //!<the first name
+
+        private string firstName; //!<the first name
         protected string lastName; //!<the last name
         protected string socialInsuranceNumber; //!< the social Insurance Number
         protected DateTime dateOfBirth; //!<the Date of birth
@@ -76,12 +76,26 @@ namespace AllEmployees
                 isValid = value;
             }
         }
-       /// <summary>
-       /// Employee Constructor that sets the first name, last name and social insurance number to default values
-       /// </summary>
+
+        protected string FirstName
+        {
+            get
+            {
+                return firstName;
+            }
+
+            set
+            {
+                firstName = value;
+            }
+        }
+
+        /// <summary>
+        /// Employee Constructor that sets the first name, last name and social insurance number to default values
+        /// </summary>
         public Employee()
         {
-            this.firstName = ""; //!<User first name
+            this.FirstName = ""; //!<User first name
             this.lastName = ""; //!<User Last Name
             this.SocialInsuranceNumber = ""; //!<User Social Insurance Number
             this.dateOfBirth = DateTime.MinValue; 
@@ -94,7 +108,7 @@ namespace AllEmployees
         /// <param name="lastName"></param>
         public Employee(string firstName, string lastName)
         {
-            this.firstName = firstName;
+            this.FirstName = firstName;
             this.lastName = lastName;
         }
         /// <summary>
@@ -108,7 +122,7 @@ namespace AllEmployees
         {
             if (ValidateEmployee(firstName, lastName, socialInsuranceNumber, dateOfBirth))
             {
-                this.firstName = firstName; //!< Setting the first name 
+                this.FirstName = firstName; //!< Setting the first name 
                 this.lastName = lastName; //!< setting the last name
                 this.SocialInsuranceNumber = socialInsuranceNumber; //!< setting the socail insurance number
                 this.dateOfBirth = Convert.ToDateTime(dateOfBirth);
@@ -117,7 +131,7 @@ namespace AllEmployees
 
         public bool Validate()
         {
-            bool status = ValidateEmployee(this.firstName, this.lastName, this.socialInsuranceNumber, (Convert.ToString(this.dateOfBirth.Year)+ "/" + Convert.ToString(this.dateOfBirth.Month) + "/" + Convert.ToString(dateOfBirth.Day)));
+            bool status = ValidateEmployee(this.FirstName, this.lastName, this.socialInsuranceNumber, (Convert.ToString(this.dateOfBirth.Year)+ "/" + Convert.ToString(this.dateOfBirth.Month) + "/" + Convert.ToString(dateOfBirth.Day)));
             return status; 
         }
              
