@@ -59,7 +59,7 @@ namespace AllEmployees
         public bool Validate()
         {
             int index = myEmployeeData[0] == "FT" ? 1 : 0;
-            bool status = ValidateFulltime(myEmployeeData[index], myEmployeeData[index + 1], myEmployeeData[index + 2], myEmployeeData[index + 3], myEmployeeData[index + 4], myEmployeeData[index + 5], Convert.ToDecimal(myEmployeeData[index + 6]));
+            bool status = ValidateAndSetFulltime(myEmployeeData[index], myEmployeeData[index + 1], myEmployeeData[index + 2], myEmployeeData[index + 3], myEmployeeData[index + 4], myEmployeeData[index + 5], Convert.ToDecimal(myEmployeeData[index + 6]));
             return status;
         }
         /// <summary>
@@ -69,11 +69,11 @@ namespace AllEmployees
         public FulltimeEmployee(string[] employeeData)
         {
             myEmployeeData = employeeData; 
-            int index = employeeData[0] == "FT" ? 1 : 0;
+            int index = employeeData[0].ToLower() == "ft" ? 1 : 0;
             VariablesLogString(employeeData);
             employeeEx.employeeType = "Full Time";
             employeeEx.operationType = "CREATE";
-            if (ValidateFulltime(employeeData[index], employeeData[index+1], employeeData[index+2], employeeData[index+3], employeeData[index+4], employeeData[index+5], Convert.ToDecimal(employeeData[index+6])))
+            if (ValidateAndSetFulltime(employeeData[index], employeeData[index+1], employeeData[index+2], employeeData[index+3], employeeData[index+4], employeeData[index+5], Convert.ToDecimal(employeeData[index+6])))
             {
                 FirstName = employeeData[index];
                 lastName = employeeData[index + 1];
@@ -86,6 +86,7 @@ namespace AllEmployees
             }
             else
             {
+                IsValid = false;
                 throw employeeEx;
             }
             SuccessLogString();
@@ -101,22 +102,34 @@ namespace AllEmployees
         /// <param name="dateOfTermination"></param>
         /// <param name="salary"></param>
         /// <returns>allValid</returns>
-        private bool ValidateFulltime(string name, string lastName, string socialInsuranceNumber, string dateOfBirth, string dateOfHire, string dateOfTermination, decimal salary)
+        private bool ValidateAndSetFulltime(string name, string lastName, string socialInsuranceNumber, string dateOfBirth, string dateOfHire, string dateOfTermination, decimal salary)
         {
             bool[] valid = new bool[4] { false, false, false, false };  //!< bool array of false
-            bool allValid = false;  //!< bool of status if all information is valid
+            bool allValid = true;  //!< bool of status if all information is valid
 
-            valid[0] = ValidateEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
-            if (valid[0])
+            ValidateAndSetEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
+            if (ValidateDate(dateOfHire, dateType.HIRE))
             {
-                this.dateOfBirth = Convert.ToDateTime(dateOfBirth);
+                this.dateOfHire = Convert.ToDateTime(dateOfHire);
             }
-            valid[1] = ValidateDate(dateOfHire, dateType.HIRE);
-            valid[2] = ValidateDate(dateOfTermination, dateType.TERMINATE);
-            valid[3] = ValidateMoney(salary);
-            if( valid[0] & valid[1] & valid[2] & valid[3])
+            else {
+                allValid = false;
+            }
+            if (ValidateDate(dateOfTermination, dateType.TERMINATE))
             {
-                allValid = true;
+                this.dateOfTermination = Convert.ToDateTime(dateOfTermination);
+            }
+            else
+            {
+                allValid = false;
+            }
+            if (ValidateMoney(salary))
+            {
+                this.salary = salary;
+            }
+            else
+            {
+                allValid = false;
             }
             return allValid;
         }
@@ -139,42 +152,44 @@ namespace AllEmployees
                 switch (type)
                 {
                     case dateType.HIRE:
+
+                        dateOfHire = dateValue;
                         if (dateValue >= dateOfBirth && dateValue <= DateTime.Now)
                         {
                             valid = true;
-                            dateOfHire = dateValue;
                         }
                         else
                         {
                             if (dateValue <= dateOfBirth)
                             {
                                 //AddToLogString("\tDate of Hire Error: Must be after the employee was born.");
-                                employeeEx.AddError("Date of Hire Error: Must be after the employee was born.");
+                                employeeEx.AddError("\tDate of Hire Error: Must be after the employee was born.");
                             }
                             else
                             {
                                 //AddToLogString("\tDate of Hire Error: Must be before the current date.");
-                                employeeEx.AddError("Date of Hire Error: Must be before the current date.");
+                                employeeEx.AddError("\tDate of Hire Error: Must be before the current date.");
                             }
                         }
                         break;
                     case dateType.TERMINATE:
+
+                        dateOfTermination = dateValue;
                         if (dateValue >= dateOfHire && dateValue <= DateTime.Now)
                         {
                             valid = true;
-                            dateOfTermination = dateValue;
                         }
                         else
                         {
                             if (dateValue <= dateOfHire)
                             {
-                                //AddToLogString("\tDate of Termination Error: Must be after the employee was born.");
-                                employeeEx.AddError("Date of Termination Error: Must be after the employee was born.");
+                                //AddToLogString("\tDate of Termination Error: Must be after the employee was born."); 
+                                employeeEx.AddError("\tDate of Termination Error: Must be after the employee was hired.");
                             }
                             else
                             {
                                 //AddToLogString("\tDate of Termination Error: Must be before the current date.");
-                                employeeEx.AddError("Date of Termination Error: Must be before the current date.");
+                                employeeEx.AddError("\tDate of Termination Error: Must be before the current date.");
                             }
                         }
                         break;
@@ -185,12 +200,12 @@ namespace AllEmployees
                 if (type == dateType.HIRE)
                 {
                     //AddToLogString("\tDate of Hire Error: Invalid format.\n||\t\tTried: " + date);
-                    employeeEx.AddError("Date of Hire Error: Invalid format. Tried: " + date);
+                    employeeEx.AddError("\tDate of Hire Error: Invalid format. Tried: " + date);
                 }
                 else if(type == dateType.TERMINATE)
                 {
                     //AddToLogString("\tDate of Termination Error: Invalid format.\n||\t\tTried: " + date);
-                    employeeEx.AddError("Date of Termination Error: Invalid format. Tried: " + date);
+                    employeeEx.AddError("\tDate of Termination Error: Invalid format. Tried: " + date);
                 }
             }
             return valid;
@@ -208,7 +223,7 @@ namespace AllEmployees
 
         public bool FTValidateEmployee(string name, string lastName, string socialInsuranceNumber, string dateOfBirth)
         {
-            return ValidateEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
+            return ValidateAndSetEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
         }
 
         public bool FTValidateName(string name)

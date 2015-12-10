@@ -112,33 +112,118 @@ namespace AllEmployees
         /// <returns></returns>
         private bool ValidateContract(string name, string lastName, string businessNumber, string dateOfBirth, string contractStartDate, string contractStopDate, decimal fixedContractAmount)
         {
-            bool allValid = false; //!< bool which gets return indicating if it was valid
+            
+            bool allValid = true; //!< bool which gets return indicating if it was valid
             bool[] valid = new bool[5]; //!< bool array
-            valid[0] = ValidateEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
-            if (valid[0])
+            ValidateAndSetEmployee(name, lastName, businessNumber, dateOfBirth);
+            /*if (valid[0])
             {
                 this.dateOfBirth = Convert.ToDateTime(dateOfBirth);
                 valid[4] = ValidateBusinessNumber(businessNumber);
-            }
-            
-            valid[1] = ValidateDate(contractStartDate, dateType.CONTRACT_START);
-            valid[2] = ValidateDate(contractStopDate, dateType.CONTRACT_END);
-            valid[3] = ValidateMoney(fixedContractAmount);
-            if (valid[0] & valid[1] & valid[2] & valid[3] & valid[4])
+            }*/
+            /*if (ValidateBusinessNumber(businessNumber))
             {
-                allValid = true;
+                this.socialInsuranceNumber = businessNumber;
+            }*/
+            if (ValidateDate(contractStartDate, dateType.CONTRACT_START))
+            {
+                this.contractStartDate = Convert.ToDateTime(contractStartDate);
+            }
+            else
+            {
+                allValid = false;
+            }
+            if (ValidateDate(contractStopDate, dateType.CONTRACT_END))
+            {
+                this.contractStopDate = Convert.ToDateTime(contractStopDate);
+            }
+            else
+            {
+                allValid = false;
+            }
+
+            if (ValidateMoney(fixedContractAmount))
+            {
+                this.fixedContractAmount = fixedContractAmount;
+            }
+            else
+            {
+                allValid = false;
             }
             return allValid;
         }
 
-     
 
+        protected override bool ValidateSIN(string businessNumber)
+        {
+            int newSin = 0; //!< SIN
+            try
+            {
+                Int32.TryParse(businessNumber.Replace(" ", string.Empty), out newSin);
+            }
+            catch (FormatException e)
+            {
+                employeeEx.AddError("\tBusiness Number Error: " + e.Message + " Tried: " + businessNumber);
+                //AddToLogString("Business Number Error: " + e.Message + " \n||\t\tTried: " + businessNumber);
+            }
+
+            int[] tempSin = new int[9]; ///< int array
+            int[] sin = new int[9]; ///< int array
+            int[] year = new int[4]; ///< int array
+            int tempYear = dateOfBirth.Year;
+            double totalSin = 0;   ///<totalSin
+            bool validSin = false; ///< bool which gets return indicating if it was valid
+            int toAdd = 0; //!< Amount to add
+            int theSin = newSin; //!< assign theSin to newSin
+            for (int x = 8; x >= 0; x--) //splits the SIN into an array
+            {
+                sin[x] = newSin % 10;
+                newSin /= 10;
+            }
+            for (int x = 3; x >= 0; x--)
+            {
+                year[x] = tempYear % 10;
+                tempYear /= 10;
+            }
+            if (sin[0] == year[2] && sin[1] == year[3])
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    toAdd = sinCheck[x] * sin[x];
+                    if (toAdd >= 10)
+                    {
+                        toAdd = (toAdd % 10) + (toAdd / 10);
+                    }
+                    totalSin += toAdd;
+                }
+
+                if ((Math.Ceiling(totalSin / 10) * 10 - totalSin) == sin[8])
+                {
+                    validSin = true;
+                }
+                else
+                {
+                    //AddToLogString("\tBusiness Number Error: Not a valid business number");
+                    employeeEx.AddError("\tBusiness Number Error: Not a valid business number. Tried: " + businessNumber);
+                }
+            }
+            else if (theSin == 0)
+            {
+                validSin = true;
+            }
+            else
+            {
+                //AddToLogString("\tBusiness Number Error: First two digits must match the company's date of incorporation.");
+                employeeEx.AddError("\tBusiness Number Error: First two digits must match the company's date of incorporation.");
+            }
+            return validSin;
+        }
         /// <summary>
         /// Validate BusinessNumber that follows the bussiness rules and formating of the information
         /// </summary>
         /// <param name="businessNumber"></param>
         /// <returns>validSin</returns>
-        private bool ValidateBusinessNumber(string businessNumber)
+        /*private bool ValidateBusinessNumber(string businessNumber)
         {
 
             int newSin = 0; //!< SIN
@@ -147,7 +232,7 @@ namespace AllEmployees
             }
             catch(FormatException e)
             {
-                employeeEx.AddError("Business Number Error: " + e.Message + " Tried: " + businessNumber);
+                employeeEx.AddError("\tBusiness Number Error: " + e.Message + " Tried: " + businessNumber);
                 //AddToLogString("Business Number Error: " + e.Message + " \n||\t\tTried: " + businessNumber);
             }
 
@@ -188,7 +273,7 @@ namespace AllEmployees
                 else
                 {
                     //AddToLogString("\tBusiness Number Error: Not a valid business number");
-                    employeeEx.AddError("Business Number Error: Not a valid business number. Tried: " + businessNumber);
+                    employeeEx.AddError("\tBusiness Number Error: Not a valid business number. Tried: " + businessNumber);
                 }
             }
             else if (theSin == 0)
@@ -198,11 +283,11 @@ namespace AllEmployees
             else
             {
                 //AddToLogString("\tBusiness Number Error: First two digits must match the company's date of incorporation.");
-                employeeEx.AddError("Business Number Error: First two digits must match the company's date of incorporation.");
+                //employeeEx.AddError("Business Number Error: First two digits must match the company's date of incorporation.");
             }
             return validSin;
         
-        }
+        }*/
         /// <summary>
         /// Validating all dates for the contract employees
         /// </summary>
@@ -222,42 +307,44 @@ namespace AllEmployees
                 switch (type)
                 {
                     case dateType.CONTRACT_START:
+
+                        contractStartDate = dateValue;
                         if (dateValue >= dateOfBirth && dateValue <= DateTime.Now)
                         {
                             valid = true;
-                            contractStartDate = dateValue;
                         }
                         else
                         {
                             if (dateValue <= dateOfBirth)
                             {
                                 //AddToLogString("\tContract Start Date Error: Must be after the company was created.");
-                                employeeEx.AddError("Contract Start Date Error: Must be after the company was created.");
+                                employeeEx.AddError("\tContract Start Date Error: Must be after the company was created.");
                             }
                             else
                             {
                                 //AddToLogString("\tContract Start Date Error: Must be before the current date.");
-                                employeeEx.AddError("Contract Start Date Error: Must be before the current date.");
+                                employeeEx.AddError("\tContract Start Date Error: Must be before the current date.");
                             }
                         }
                         break;
                     case dateType.CONTRACT_END:
+
+                        contractStopDate = dateValue;
                         if (dateValue >= contractStartDate && dateValue <= DateTime.Now)
                         {
                             valid = true;
-                            contractStopDate = dateValue;
                         }
                         else
                         {
                             if (dateValue <= dateOfBirth)
                             {
                                 //AddToLogString("\tContract Stop Date Error: Must be after the company was created.");
-                                employeeEx.AddError("Contract Stop Date Error: Must be after the company was created.");
+                                employeeEx.AddError("\tContract Stop Date Error: Must be after the company was created.");
                             }
                             else
                             {
                                 //AddToLogString("\tContract Stop Date Error: Must be before the current date.");
-                                employeeEx.AddError("Contract Stop Date Error: Must be before the current date.");
+                                employeeEx.AddError("\tContract Stop Date Error: Must be before the current date.");
                             }
                         }
                         break;
@@ -268,11 +355,11 @@ namespace AllEmployees
                 if (type == dateType.CONTRACT_START)
                 {
                     //AddToLogString("\tContract Start Date Error: Invalid format.\n||\t\tTried: " + date);
-                    employeeEx.AddError("Contract Start Date Error: Invalid format. Tried: " + date);
+                    employeeEx.AddError("\tContract Start Date Error: Invalid format. Tried: " + date);
                 }
                 else if (type == dateType.CONTRACT_END)
                 {
-                    employeeEx.AddError("Contract Stop Date Error: Invalid format. Tried: " + date);
+                    employeeEx.AddError("\tContract Stop Date Error: Invalid format. Tried: " + date);
                     //AddToLogString("\tContract Stop Date Error: Invalid format.\n||\t\tTried: " + date);
                 }
             }
@@ -284,7 +371,7 @@ namespace AllEmployees
         /// <returns></returns>
         public override string ToString()
         {
-            return "FT|" + FirstName + "|" + lastName + "|" + SocialInsuranceNumber + "|" + dateOfBirth + "|" + contractStartDate + "|" + contractStopDate + "|" + fixedContractAmount;
+            return "CT|" + FirstName + "|" + lastName + "|" + SocialInsuranceNumber + "|" + dateOfBirth + "|" + contractStartDate + "|" + contractStopDate + "|" + fixedContractAmount;
         }
     }
 }

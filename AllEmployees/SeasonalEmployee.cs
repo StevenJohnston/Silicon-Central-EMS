@@ -68,7 +68,7 @@ namespace AllEmployees
         public bool Validate()
         {
             int index = myEmployeeData[0] == "FT" ? 1 : 0;
-            bool status = ValidateSeasonal(myEmployeeData[index], myEmployeeData[index + 1], myEmployeeData[index + 2], myEmployeeData[index + 3], myEmployeeData[index + 4], Convert.ToDecimal(myEmployeeData[index + 5]));
+            bool status = ValidateAndSetSeasonal(myEmployeeData[index], myEmployeeData[index + 1], myEmployeeData[index + 2], myEmployeeData[index + 3], myEmployeeData[index + 4], Convert.ToDecimal(myEmployeeData[index + 5]));
             return status;
         }
         /// <summary>
@@ -82,7 +82,7 @@ namespace AllEmployees
             employeeEx.employeeType = "Seasonal";
             employeeEx.operationType = "CREATE";
 
-            if (ValidateSeasonal(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], Convert.ToDecimal(employeeData[index + 5])))
+            if (ValidateAndSetSeasonal(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], Convert.ToDecimal(employeeData[index + 5])))
             {
                 FirstName = employeeData[index];
                 lastName = employeeData[index + 1];
@@ -109,17 +109,19 @@ namespace AllEmployees
         /// <param name="season"></param>
         /// <param name="piecePay"></param>
         /// <returns></returns>
-        private bool ValidateSeasonal(string name, string lastName, string socialInsuranceNumber, string dateOfBirth, string season, decimal piecePay)
+        private bool ValidateAndSetSeasonal(string name, string lastName, string socialInsuranceNumber, string dateOfBirth, string season, decimal piecePay)
         {
             bool[] valid = new bool[3] { false, false, false };
-            bool allValid = false;
+            bool allValid = true;
 
-            valid[0] = ValidateEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
-            valid[1] = ValidateSeason(season);
-            valid[2] = ValidateMoney(piecePay);
-            if (valid[0] & valid[1] & valid[2])
+            ValidateAndSetEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
+            if (ValidateSeason(season))
             {
-                allValid = true;
+                this.season = season;
+            }
+            if (ValidateMoney(piecePay))
+            {
+                this.piecePay = piecePay;
             }
             return allValid;
         }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TheCompany;
+using EMSExceptions;
 namespace Presentation
 {
     /// <summary>
@@ -279,6 +280,12 @@ namespace Presentation
                     {
                         employeeDirectory.Add(concatEmployee(employeeInfo));
                     }
+                    catch (EmployeeException eE)
+                    {
+                        Console.WriteLine(eE.errorList);
+                        eE.errorList.ForEach(x=>Console.WriteLine(x));
+                        //Console.WriteLine(eE.errorList);
+                    }
                     catch (Exception e)
                     {
                         Console.WriteLine(e.Message);
@@ -368,6 +375,7 @@ namespace Presentation
                 Console.Clear();
                 Console.WriteLine(errorMessage);
             }
+            Console.Clear();
             return lineIn;
         }
         /// <summary>
@@ -380,13 +388,15 @@ namespace Presentation
         /// <returns>Returns the string of information read from the console</returns>
         public string InputTillCorrect(validator validatorMethod,string message,string errorMessage)
         {
-            string lineIn = "";
-            for (; !validatorMethod(lineIn); lineIn = Console.ReadLine())
+            string lineIn = null;
+            for (; lineIn==null || !validatorMethod(lineIn); )
             {
+                Console.WriteLine(message);
+                lineIn = Console.ReadLine();
                 Console.Clear();
                 Console.WriteLine(errorMessage);
-                Console.WriteLine(message);
             }
+            Console.Clear();
             return lineIn;
         }
         /// <summary>

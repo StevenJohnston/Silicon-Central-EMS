@@ -56,7 +56,7 @@ namespace TheCompany
             {
                 string[] recordStr = ((string)record).Split('|');
                 Employee newEmployee = null;
-                switch (recordStr[0])
+                switch (recordStr[0].ToUpper())
                 {
                     case "FT":
                         newEmployee = new FulltimeEmployee(recordStr);
@@ -96,10 +96,6 @@ namespace TheCompany
             catch (MissingMemberException mME)
             {
                 //throw mME;
-            }
-            catch (EmployeeException eE)
-            {
-                //throw eE;
             }
             catch (ArgumentException aE)
             {

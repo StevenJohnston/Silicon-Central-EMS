@@ -34,8 +34,8 @@ namespace AllEmployees
 
         public bool Validate()
         {
-            int index = myEmployeeData[0] == "FT" ? 1 : 0;
-            bool status = ValidateParttime(myEmployeeData[index], myEmployeeData[index + 1], myEmployeeData[index + 2], myEmployeeData[index + 3], myEmployeeData[index + 4], myEmployeeData[index + 5], Convert.ToDecimal(myEmployeeData[index + 6]));
+            int index = myEmployeeData[0] == "PT" ? 1 : 0;
+            bool status = ValidateAndSetParttime(myEmployeeData[index], myEmployeeData[index + 1], myEmployeeData[index + 2], myEmployeeData[index + 3], myEmployeeData[index + 4], myEmployeeData[index + 5], Convert.ToDecimal(myEmployeeData[index + 6]));
             return status;
         }
 
@@ -74,7 +74,7 @@ namespace AllEmployees
             VariablesLogString(employeeData);
             employeeEx.employeeType = "Part Time";
             employeeEx.operationType = "CREATE";
-            if (ValidateParttime(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], employeeData[index + 5], Convert.ToDecimal(employeeData[index+6])))
+            if (ValidateAndSetParttime(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], employeeData[index + 5], Convert.ToDecimal(employeeData[index+6])))
             {
                 FirstName = employeeData[index];
                 lastName = employeeData[index + 1];
@@ -102,21 +102,42 @@ namespace AllEmployees
         /// <param name="dateOfTermination"></param>
         /// <param name="hourlyRate"></param>
         /// <returns></returns>
-        private bool ValidateParttime(string name, string lastName, string socialInsuranceNumber, string dateOfBirth, string dateOfHire, string dateOfTermination, decimal hourlyRate)
+        private bool ValidateAndSetParttime(string name, string lastName, string socialInsuranceNumber, string dateOfBirth, string dateOfHire, string dateOfTermination, decimal hourlyRate)
         {
-            bool allValid = false; //!< validate bool
+            bool allValid = true; //!< validate bool
             bool[] valid = new bool[5]; //!<list of bool to see if it was validate or not
-            valid[0] = ValidateEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
+            valid[0] = ValidateAndSetEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
             if (valid[0])
             {
                 this.dateOfBirth = Convert.ToDateTime(dateOfBirth);
             }
-            valid[1] = ValidateDate(dateOfHire, dateType.HIRE);
-            valid[2] = ValidateDate(dateOfTermination, dateType.TERMINATE);
-            valid[3] = ValidateMoney(hourlyRate);
-            if (valid[0] & valid[1] & valid[2] & valid[3])
+            else
             {
-                allValid = true;
+                allValid = false;
+            }
+            if (ValidateDate(dateOfHire, dateType.HIRE))
+            {
+                this.dateOfBirth = Convert.ToDateTime(dateOfBirth);
+            }
+            else
+            {
+                allValid = false;
+            }
+            if (ValidateDate(dateOfTermination, dateType.TERMINATE))
+            {
+                this.dateOfTermination = Convert.ToDateTime(dateOfTermination);
+            }
+            else
+            {
+                allValid = false;
+            }
+            if (ValidateMoney(hourlyRate))
+            {
+                this.hourlyRate = hourlyRate;
+            }
+            else
+            {
+                allValid = false;
             }
             return allValid;
         }
@@ -139,42 +160,43 @@ namespace AllEmployees
                 switch (type)
                 {
                     case dateType.HIRE:
+
+                        dateOfHire = dateValue;
                         if (dateValue >= dateOfBirth && dateValue <= DateTime.Now)
                         {
                             valid = true;
-                            dateOfHire = dateValue;
                         }
                         else
                         {
                             if (dateValue <= dateOfBirth)
                             {
                                 //AddToLogString("\tDate of Hire Error: Must be after the employee was born.");
-                                employeeEx.AddError("Date of Hire Error: Must be after the employee was born.");
+                                employeeEx.AddError("\tDate of Hire Error: Must be after the employee was born.");
                             }
                             else
                             {
                                 //AddToLogString("\tDate of Hire Error: Must be before the current date.");
-                                employeeEx.AddError("Date of Hire Error: Must be before the current date.");
+                                employeeEx.AddError("\tDate of Hire Error: Must be before the current date.");
                             }
                         }
                         break;
                     case dateType.TERMINATE:
+                        dateOfTermination = dateValue;
                         if (dateValue >= dateOfHire && dateValue <= DateTime.Now)
                         {
                             valid = true;
-                            dateOfTermination = dateValue;
                         }
                         else
                         {
                             if (dateValue <= dateOfHire)
                             {
                                 //AddToLogString("\tDate of Termination Error: Must be after the employee was born.");
-                                employeeEx.AddError("Date of Termination Error: Must be after the employee was born.");
+                                employeeEx.AddError("\tDate of Termination Error: Must be after the employee was born.");
                             }
                             else
                             {
                                 //AddToLogString("\tDate of Termination Error: Must be before the current date.");
-                                employeeEx.AddError("Date of Termination Error: Must be before the current date.");
+                                employeeEx.AddError("\tDate of Termination Error: Must be before the current date.");
                             }
                         }
                         break;
@@ -184,12 +206,12 @@ namespace AllEmployees
             {
                 if (type == dateType.HIRE)
                 {
-                    employeeEx.AddError("Date of Hire Error: Invalid format. Tried: " + date);
+                    employeeEx.AddError("\tDate of Hire Error: Invalid format. Tried: " + date);
                     //AddToLogString("\tDate of Hire Error: Invalid format.\n||\t\tTried: " + date);
                 }
                 else if (type == dateType.TERMINATE)
                 {
-                    employeeEx.AddError("Date of Termination Error: Invalid format. Tried: " + date);
+                    employeeEx.AddError("\tDate of Termination Error: Invalid format. Tried: " + date);
                     //AddToLogString("\tDate of Termination Error: Invalid format.\n||\t\tTried: " + date);
                 }
             }

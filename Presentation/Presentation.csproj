@@ -44,6 +44,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EMSExceptions\EMSExceptions.csproj">
+      <Project>{08fd197d-0933-416c-933e-ba510652c43f}</Project>
+      <Name>EMSExceptions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TheCompany\TheCompany.csproj">
       <Project>{1282613c-4973-47d8-ac33-c39d81f9c785}</Project>
       <Name>TheCompany</Name>
