@@ -16,7 +16,7 @@ namespace AllEmployees
     public class Employee
     {
         public static int[] sinCheck = new int[9] { 1, 2, 1, 2, 1, 2, 1, 2, 1 }; //!< the int array to check for
-        public EMSExceptions.EmployeeException employeeEx = new EmployeeException();
+        public EmployeeException employeeEx = new EmployeeException();
         /// An enum type. 
         /// That contain the dateType of information that is needed
         ///For each employee
@@ -28,8 +28,8 @@ namespace AllEmployees
             CONTRACT_END /// When does their contrac end
         }
 
-  
-        protected string firstName; //!<the first name
+
+        private string firstName; //!<the first name
         protected string lastName; //!<the last name
         protected string socialInsuranceNumber; //!< the social Insurance Number
         protected DateTime dateOfBirth; //!<the Date of birth
@@ -76,12 +76,26 @@ namespace AllEmployees
                 isValid = value;
             }
         }
-       /// <summary>
-       /// Employee Constructor that sets the first name, last name and social insurance number to default values
-       /// </summary>
+
+        protected string FirstName
+        {
+            get
+            {
+                return firstName;
+            }
+
+            set
+            {
+                firstName = value;
+            }
+        }
+
+        /// <summary>
+        /// Employee Constructor that sets the first name, last name and social insurance number to default values
+        /// </summary>
         public Employee()
         {
-            this.firstName = ""; //!<User first name
+            this.FirstName = ""; //!<User first name
             this.lastName = ""; //!<User Last Name
             this.SocialInsuranceNumber = ""; //!<User Social Insurance Number
             this.dateOfBirth = DateTime.MinValue; 
@@ -94,7 +108,7 @@ namespace AllEmployees
         /// <param name="lastName"></param>
         public Employee(string firstName, string lastName)
         {
-            this.firstName = firstName;
+            this.FirstName = firstName;
             this.lastName = lastName;
         }
         /// <summary>
@@ -106,18 +120,18 @@ namespace AllEmployees
         /// <param name="dateOfBirth"></param>
         public Employee(string firstName, string lastName, string socialInsuranceNumber, string dateOfBirth)
         {
-            if (ValidateEmployee(firstName, lastName, socialInsuranceNumber, dateOfBirth))
+            if (ValidateAndSetEmployee(firstName, lastName, socialInsuranceNumber, dateOfBirth))
             {
-                this.firstName = firstName; //!< Setting the first name 
+                /*this.FirstName = firstName; //!< Setting the first name 
                 this.lastName = lastName; //!< setting the last name
                 this.SocialInsuranceNumber = socialInsuranceNumber; //!< setting the socail insurance number
-                this.dateOfBirth = Convert.ToDateTime(dateOfBirth);
+                this.dateOfBirth = Convert.ToDateTime(dateOfBirth);*/
             }
         }
 
         public bool Validate()
         {
-            bool status = ValidateEmployee(this.firstName, this.lastName, this.socialInsuranceNumber, (Convert.ToString(this.dateOfBirth.Year)+ "/" + Convert.ToString(this.dateOfBirth.Month) + "/" + Convert.ToString(dateOfBirth.Day)));
+            bool status = ValidateAndSetEmployee(this.FirstName, this.lastName, this.socialInsuranceNumber, (Convert.ToString(this.dateOfBirth.Year)+ "/" + Convert.ToString(this.dateOfBirth.Month) + "/" + Convert.ToString(dateOfBirth.Day)));
             return status; 
         }
              
@@ -132,21 +146,44 @@ namespace AllEmployees
         /// <returns>allValid</returns>
     
 
-        protected bool ValidateEmployee(string name, string lastName, string socialInsuranceNumber, string dateOfBirth)
+        protected bool ValidateAndSetEmployee(string name, string lastName, string socialInsuranceNumber, string dateOfBirth)
         {
+            bool allValid = true;
             bool[] valid = new bool[4] { false, false, false, false }; //!< bool array that has 4 bool set to false
-            bool allValid = false; //!< a bool to see if data was validate or not
-            valid[0] = ValidateName(name);
-            valid[1] = ValidateName(lastName);
-            valid[2] = ValidateSIN(socialInsuranceNumber);
-            valid[3] = ValidateDate(dateOfBirth);
-            if (valid[0] & valid[1] & valid[2] & valid[3])
+            if (ValidateName(name))
             {
-                allValid = true;
+                this.FirstName = name;
             }
             else
             {
-               throw employeeEx;
+                allValid = false;
+            }
+
+            if (ValidateName(lastName))
+            {
+                this.lastName = lastName;
+            }
+            else
+            {
+                allValid = false;
+            }
+
+            
+            if (ValidateDate(dateOfBirth))
+            {
+                this.dateOfBirth = Convert.ToDateTime(dateOfBirth);
+            }
+            else
+            {
+                allValid = false;
+            }
+            if (ValidateSIN(socialInsuranceNumber))
+            {
+                this.socialInsuranceNumber = socialInsuranceNumber;
+            }
+            else
+            {
+                allValid = false;
             }
             return allValid;
         }
@@ -165,7 +202,7 @@ namespace AllEmployees
         /// </summary>
         /// <param name="socialInsuranceNumber"></param>
         /// <returns></returns>
-        protected bool ValidateSIN(string socialInsuranceNumber)
+        protected virtual bool ValidateSIN(string socialInsuranceNumber)
         {
             int newSin = 0; //!<first digit can't be 0 or 8
             try {

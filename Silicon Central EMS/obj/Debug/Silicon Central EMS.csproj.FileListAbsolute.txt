@@ -53,16 +53,5 @@ C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\o
 C:\Users\Wpring\Desktop\New folder (2)\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.pdb
 C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.exe
 C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.pdb
-C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe
-C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.pdb
-C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\AllEmployees.dll
-C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Presentation.dll
-C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Supporting.dll
-C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\TheCompany.dll
-C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\EMSExceptions.dll
-C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\AllEmployees.pdb
-C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Presentation.pdb
-C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Supporting.pdb
-C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\TheCompany.pdb
-C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\EMSExceptions.pdb
-C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.csprojResolveAssemblyReference.cache
+C:\Users\Steven johnston\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\EMSExceptions.dll
+C:\Users\Steven johnston\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\EMSExceptions.pdb
