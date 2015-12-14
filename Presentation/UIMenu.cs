@@ -325,6 +325,24 @@ namespace Presentation
                 case "2":
                     next = EmployeeManagementMenu;
                     break;
+                case "3":
+                    next = EmployeeManagementMenu;
+                    break;
+                case "4":
+                    next = EmployeeManagementMenu;
+                    break;
+                case "5":
+                    next = EmployeeManagementMenu;
+                    break;
+                case "6":
+                    next = EmployeeManagementMenu;
+                    break;
+                case "7":
+                    next = EmployeeManagementMenu;
+                    break;
+                case "8":
+                    next = EmployeeManagementMenu;
+                    break;
                 case "9":
                     next = null;
                     break;
@@ -367,23 +385,33 @@ namespace Presentation
                     break;
             }
             Console.Clear();
-            int index = 1;
-            foreach (string employeeString in employeeList)
+            if (employeeList.Count > 0)
             {
+                int index = 1;
+                foreach (string employeeString in employeeList)
+                {
+                    Console.WriteLine(index + ": " + employeeString);
+                    index++;
+                }
+                Console.WriteLine("Which Index of employee you want to edit");
+                Console.WriteLine("Enter 0 to narrow search");
+                int num = GetNum(0, index - 1);
+                if (num > 0)
+                {
+                    employeeDirectory.SelectIndex(num - 1);
+                    next = UpdateEmployee;
+                }
+                Console.WriteLine();
+                Console.Clear();
+            }
+            else
+            {
+                Console.WriteLine("No employees found");
+                Console.WriteLine("Press any key to continue");
+                Console.ReadKey();
+                next = EmployeeManagementMenu;
 
-                Console.WriteLine(index +": " + employeeString);
-                index++;
             }
-            Console.WriteLine("Which Index of employee you want to edit");
-            Console.WriteLine("Enter 0 to narrow search");
-            int num = GetNum(0,index-1);
-            if (num > 0)
-            {
-                employeeDirectory.SelectIndex(num-1);
-                next = UpdateEmployee;
-            }
-            Console.WriteLine();
-            Console.Clear();
             return next;
         }
         public string[] GetFullTimeInfo()
