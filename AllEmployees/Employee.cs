@@ -30,9 +30,9 @@ namespace AllEmployees
 
 
         private string firstName; //!<the first name
-        protected string lastName; //!<the last name
+        private string lastName; //!<the last name
         protected string socialInsuranceNumber; //!< the social Insurance Number
-        protected DateTime dateOfBirth; //!<the Date of birth
+        protected DateTime? dateOfBirth; //!<the Date of birth
         private bool isValid = false; //!<bool validate or not
         protected string logString = ""; //!<The message to be logged 
 
@@ -77,7 +77,7 @@ namespace AllEmployees
             }
         }
 
-        protected string FirstName
+        public string FirstName
         {
             get
             {
@@ -90,13 +90,26 @@ namespace AllEmployees
             }
         }
 
+        public string LastName
+        {
+            get
+            {
+                return lastName;
+            }
+
+            set
+            {
+                lastName = value;
+            }
+        }
+
         /// <summary>
         /// Employee Constructor that sets the first name, last name and social insurance number to default values
         /// </summary>
         public Employee()
         {
             this.FirstName = ""; //!<User first name
-            this.lastName = ""; //!<User Last Name
+            this.LastName = ""; //!<User Last Name
             this.SocialInsuranceNumber = ""; //!<User Social Insurance Number
             this.dateOfBirth = DateTime.MinValue; 
         }
@@ -109,7 +122,7 @@ namespace AllEmployees
         public Employee(string firstName, string lastName)
         {
             this.FirstName = firstName;
-            this.lastName = lastName;
+            this.LastName = lastName;
         }
         /// <summary>
         /// A constructor that takes 4 parameters and set first anme, last name, socail insurance number and date of birth
@@ -131,10 +144,10 @@ namespace AllEmployees
 
         public bool Validate()
         {
-            bool status = ValidateAndSetEmployee(this.FirstName, this.lastName, this.socialInsuranceNumber, (Convert.ToString(this.dateOfBirth.Year)+ "/" + Convert.ToString(this.dateOfBirth.Month) + "/" + Convert.ToString(dateOfBirth.Day)));
+            bool status = ValidateAndSetEmployee(this.FirstName, this.LastName, this.socialInsuranceNumber, (Convert.ToString(this.dateOfBirth.Value.Year)+ "/" + Convert.ToString(this.dateOfBirth.Value.Month) + "/" + Convert.ToString(dateOfBirth.Value.Day)));
             return status; 
         }
-             
+
 
         /// <summary>
         /// Validate the employee name, last name, SIN, and Date of birth
@@ -144,7 +157,7 @@ namespace AllEmployees
         /// <param name="socialInsuranceNumber"></param>
         /// <param name="dateOfBirth"></param>
         /// <returns>allValid</returns>
-    
+
 
         protected bool ValidateAndSetEmployee(string name, string lastName, string socialInsuranceNumber, string dateOfBirth)
         {
@@ -161,13 +174,12 @@ namespace AllEmployees
 
             if (ValidateName(lastName))
             {
-                this.lastName = lastName;
+                this.LastName = lastName;
             }
             else
             {
                 allValid = false;
             }
-
             
             if (ValidateDate(dateOfBirth))
             {

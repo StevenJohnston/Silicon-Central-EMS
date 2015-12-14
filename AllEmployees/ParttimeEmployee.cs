@@ -13,8 +13,8 @@ namespace AllEmployees
     /// </summary>
     public class ParttimeEmployee : Employee
     {
-        public DateTime dateOfHire;  //!< date of hire
-        public DateTime dateOfTermination;  //!< date of termination
+        public DateTime? dateOfHire;  //!< date of hire
+        public DateTime? dateOfTermination;  //!< date of termination
         public decimal hourlyRate;  //!< hourly pay
         string[] myEmployeeData;
         public bool VariablesLogString(string[] employeeData)
@@ -76,13 +76,13 @@ namespace AllEmployees
             employeeEx.operationType = "CREATE";
             if (ValidateAndSetParttime(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], employeeData[index + 5], Convert.ToDecimal(employeeData[index+6])))
             {
-                FirstName = employeeData[index];
+                /*FirstName = employeeData[index];
                 lastName = employeeData[index + 1];
                 socialInsuranceNumber = employeeData[index + 2];
                 dateOfBirth = Convert.ToDateTime(employeeData[index + 3]);
                 dateOfHire = Convert.ToDateTime(employeeData[index + 4]);
                 dateOfTermination = Convert.ToDateTime(employeeData[index + 5]);
-                hourlyRate = Convert.ToDecimal(employeeData[index + 6]);
+                hourlyRate = Convert.ToDecimal(employeeData[index + 6]);*/
                 IsValid = true;
             }
             else
@@ -107,14 +107,14 @@ namespace AllEmployees
             bool allValid = true; //!< validate bool
             bool[] valid = new bool[5]; //!<list of bool to see if it was validate or not
             valid[0] = ValidateAndSetEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
-            if (valid[0])
+            /*if (valid[0])
             {
                 this.dateOfBirth = Convert.ToDateTime(dateOfBirth);
             }
             else
             {
                 allValid = false;
-            }
+            }*/
             if (ValidateDate(dateOfHire, dateType.HIRE))
             {
                 this.dateOfBirth = Convert.ToDateTime(dateOfBirth);
@@ -123,13 +123,20 @@ namespace AllEmployees
             {
                 allValid = false;
             }
-            if (ValidateDate(dateOfTermination, dateType.TERMINATE))
+            if (dateOfTermination != "")
             {
-                this.dateOfTermination = Convert.ToDateTime(dateOfTermination);
+                if (ValidateDate(dateOfTermination, dateType.TERMINATE))
+                {
+                    this.dateOfTermination = Convert.ToDateTime(dateOfTermination);
+                }
+                else
+                {
+                    allValid = false;
+                }
             }
             else
             {
-                allValid = false;
+                this.dateOfTermination = null;
             }
             if (ValidateMoney(hourlyRate))
             {
@@ -224,7 +231,17 @@ namespace AllEmployees
         /// <returns></returns>
         public override string ToString()
         {
-            return "PT|" + FirstName + "|" + lastName + "|" + SocialInsuranceNumber + "|" + dateOfBirth + "|" + dateOfHire + "|" + dateOfTermination + "|" + hourlyRate;
+            string returnString = "";
+            returnString += "PT|" + FirstName + "|" + LastName + "|" + SocialInsuranceNumber;
+            returnString += "|" + dateOfBirth.Value.ToString("yyyy/MM/dd");
+            returnString += "|" + dateOfHire.Value.ToString("yyyy/MM/dd");
+            returnString += "|";
+            if (dateOfTermination != null)
+            {
+                returnString += dateOfTermination.Value.ToString("yyyy/MM/dd");
+            }
+            returnString += "|" + hourlyRate;
+            return returnString;
         }
     }
 }

@@ -180,7 +180,8 @@ namespace Presentation
                 case "3":
                     Console.Clear();
                     newEmployee = false;
-                    next = EmployeeDetailsMenu;
+                    employeeDirectory.ClearSearch();
+                    next = SearchEmployee;
                     break;
                 case "4":
                     Console.Clear();
@@ -292,11 +293,97 @@ namespace Presentation
                     }
                     break;
                 case "2":
+                    employeeDirectory.ClearSearch();
+                    next = SearchEmployee;
                     break;
                 case "9":
                     next = MainMenu;
                     break;
             }
+            return next;
+        }
+        public nextFunction UpdateEmployee()
+        {
+            string[] employeeInfo = employeeDirectory.getEmployeeInfo().Split('|');
+            string menuChoice;
+            nextFunction next = null;
+            Console.WriteLine("Menu 4 : Employee Update");
+            int index = 1;
+            foreach (string col in employeeInfo)
+            {
+                Console.WriteLine(index + ": " + col);
+                index++;
+            }
+            Console.WriteLine("What would you like to edit:");
+
+            menuChoice = Console.ReadLine();
+            switch (menuChoice)
+            {
+                case "1":
+                    next = FileManagementMenu;
+                    break;
+                case "2":
+                    next = EmployeeManagementMenu;
+                    break;
+                case "9":
+                    next = null;
+                    break;
+                default:
+                    next = MainMenu;
+                    Console.Clear();
+                    Console.WriteLine("**Invalid input. Enter values 1, 2, or 9**\n");
+                    break;
+            }
+            return next;
+        }
+        public nextFunction SearchEmployee()
+        {
+            nextFunction next = SearchEmployee;
+            string menuChoice;
+            string[] employeeInfo = new string[10];
+            Console.WriteLine("Menu 4 : UPDATE EMPLOYEE SEARCH MENU ");
+            Console.WriteLine("1. Search by first name");
+            Console.WriteLine("2. Search by last name");
+            Console.WriteLine("3. Search by SIN/BN");
+            Console.WriteLine("9. Return to Employee Management Menu");
+            menuChoice = Console.ReadLine();
+            List<string> employeeList = new List<string>();
+            switch (menuChoice)
+            {
+                case "1":
+                    string firstName = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
+                    employeeList = employeeDirectory.updateSearch("first", firstName);
+                    break;
+                case "2":
+                    string lastName = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
+                    employeeList = employeeDirectory.updateSearch("last",lastName);
+                    break;
+                case "3":
+                    string sin = InputTillCorrect(new Regex(@"^\d{9}$"), "Enter Employee SIN/BN", "Employee SIN/BN should be formatted like so: #########");
+                    employeeList = employeeDirectory.updateSearch("sin", sin);
+                    break;
+                case "9":
+                    next = SearchEmployee;
+                    break;
+            }
+            Console.Clear();
+            int index = 1;
+            foreach (string employeeString in employeeList)
+            {
+
+                Console.WriteLine(index +": " + employeeString);
+                index++;
+            }
+            Console.WriteLine("Which Index of employee you want to edit");
+            Console.WriteLine("Enter 0 to narrow search");
+            int num = GetNum(0,index-1);
+            if (num > 0)
+            {
+                employeeDirectory.SelectIndex(num-1);
+                next = UpdateEmployee;
+            }
+            Console.WriteLine();
+            Console.Clear();
             return next;
         }
         public string[] GetFullTimeInfo()
@@ -308,7 +395,7 @@ namespace Presentation
             additionalInfo[2] = InputTillCorrect(new Regex(@"^\d{3} ?\d{3} ?\d{3}$"), "Enter Employee SIN", "Employee SIN should be formatted like so: ### ### ###");
             additionalInfo[3] = InputTillCorrect(ValidateDate, "Enter Date Of Birth", "That date is not valid");
             additionalInfo[4] = InputTillCorrect(ValidateDate, "Enter Date Of Hire", "That date is not valid");
-            additionalInfo[5] = InputTillCorrect(ValidateDate, "Enter Date Of Termination", "That date is not valid");
+            additionalInfo[5] = InputTillCorrect(ValidateDate, "Enter Date Of Termination", "That date is not valid",true);
             additionalInfo[6] = InputTillCorrect(new Regex(@"^\d+(.\d{1,2})?$"), "Enter Employee Salary", "That is not a valid salary");
 
             return additionalInfo;
@@ -323,7 +410,7 @@ namespace Presentation
             AdditionalInfo[3] = InputTillCorrect(ValidateDate, "Enter Date Of Birth", "That date is not valid");
 
             AdditionalInfo[4] = InputTillCorrect(ValidateDate, "Enter Date Of Hire", "That date is not valid");
-            AdditionalInfo[5] = InputTillCorrect(ValidateDate, "Enter Date Of Termination", "That date is not valid");
+            AdditionalInfo[5] = InputTillCorrect(ValidateDate, "Enter Date Of Termination", "That date is not valid", true);
             AdditionalInfo[6] = InputTillCorrect(new Regex(@"^\d+(.\d{1,2})?$"), "Enter Employee Hourly Rate", "Hourly rate must be positive and a number");
 
             return AdditionalInfo;
@@ -333,13 +420,12 @@ namespace Presentation
             string[] AdditionalInfo = new string[7];
 
             AdditionalInfo[0] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
-            AdditionalInfo[1] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee First Name", "Employee First Name consist of only characters");
-            AdditionalInfo[2] = InputTillCorrect(new Regex(@"^\d{5} ?\d{4}$"), "Enter Business Number", "Employee BN, Should be formatted like so: ##### ####");
-            AdditionalInfo[3] = InputTillCorrect(ValidateDate, "Enter Date Of Incorporation", "That date is not valid");
+            AdditionalInfo[1] = InputTillCorrect(new Regex(@"^\d{5} ?\d{4}$"), "Enter Business Number", "Employee BN, Should be formatted like so: ##### ####");
+            AdditionalInfo[2] = InputTillCorrect(ValidateDate, "Enter Date Of Incorporation", "That date is not valid");
 
-            AdditionalInfo[4] = InputTillCorrect(ValidateDate, "Enter Contract Start Date", "That date is not valid");
-            AdditionalInfo[5] = InputTillCorrect(ValidateDate, "Enter Contract Stop Date", "That date is not valid");
-            AdditionalInfo[6] = InputTillCorrect(new Regex(@"^\d+(.\d{1,2})?$"), "Enter Fixed Contract Amount", "Fixed Contract Amount must be a positive number");
+            AdditionalInfo[3] = InputTillCorrect(ValidateDate, "Enter Contract Start Date", "That date is not valid");
+            AdditionalInfo[4] = InputTillCorrect(ValidateDate, "Enter Contract Stop Date", "That date is not valid",true);
+            AdditionalInfo[5] = InputTillCorrect(new Regex(@"^\d+(.\d{1,2})?$"), "Enter Fixed Contract Amount", "Fixed Contract Amount must be a positive number");
 
             return AdditionalInfo;
         }
@@ -351,7 +437,7 @@ namespace Presentation
             additionalInfo[0] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
             additionalInfo[1] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee First Name", "Employee First Name consist of only characters");
             additionalInfo[2] = InputTillCorrect(new Regex(@"^\d{3} ?\d{3} ?\d{3}$"), "Enter Employee SIN", "Employee SIN should be formatted like so: ### ### ###");
-            additionalInfo[3] = InputTillCorrect(ValidateDate, "Enter Date Of Birth", "That date is not valid");
+            additionalInfo[3] = InputTillCorrect(ValidateDate, "Enter Date Of Birth", "That date is not valid",true);
             additionalInfo[4] = InputTillCorrect(new Regex(@"Winter|Spring|Summer|Fall"), "Enter Season (Winter, Spring, Summer, or Fall)", "Invalid Season try (Winter, Spring, Summer, or Fall)");
             additionalInfo[5] = InputTillCorrect(new Regex(@"^\d+(.\d{1,2})?$"), "Enter Employee Piece Pay", "That is not a valid Piece Pay");
 
@@ -386,7 +472,7 @@ namespace Presentation
         /// <param name="message">Message pertaining to what is asked from the user and what information is being requested by the program</param>
         /// <param name="errorMessage">Message outlining the error involved with the inputted answer</param>
         /// <returns>Returns the string of information read from the console</returns>
-        public string InputTillCorrect(validator validatorMethod,string message,string errorMessage)
+        public string InputTillCorrect(validator validatorMethod,string message,string errorMessage,bool canBeEmpty = false)
         {
             string lineIn = null;
             for (; lineIn==null || !validatorMethod(lineIn); )
@@ -394,6 +480,10 @@ namespace Presentation
                 Console.WriteLine(message);
                 lineIn = Console.ReadLine();
                 Console.Clear();
+                if (canBeEmpty && lineIn == "")
+                {
+                    break;
+                }
                 Console.WriteLine(errorMessage);
             }
             Console.Clear();
@@ -420,6 +510,16 @@ namespace Presentation
             }
             return valid;
         }
+        private bool NumberLessThen(object numIn)
+        {
+            bool valid = false;
+            TwoInts nums = (TwoInts)numIn;
+            if (nums.num > 0 && nums.num < nums.max)
+            {
+                valid = true;
+            }
+            return valid;
+        }
         /// <summary>
         /// Validate SIN
         /// </summary>
@@ -435,5 +535,24 @@ namespace Presentation
         {
             return string.Join("|",employeeInfo);
         }
+        private int GetNum(int min, int max)
+        {
+            string lineIn = "nan";
+            int numOut;
+            for (; !int.TryParse(lineIn, out numOut)|| numOut < min || numOut > max;) {
+                lineIn = Console.ReadLine();
+            }
+            return numOut;
+        }
+    }
+    class TwoInts
+    {
+        public TwoInts(int num,int max)
+        {
+            this.num = num;
+            this.max= max;
+        }
+        public int num;
+        public int max;
     }
 }

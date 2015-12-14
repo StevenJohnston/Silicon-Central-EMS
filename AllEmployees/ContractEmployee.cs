@@ -16,8 +16,8 @@ namespace AllEmployees
     public class ContractEmployee : Employee
     {
         string[] myEmployeeData;
-        public DateTime contractStartDate; //!< DateTime when contract start
-        public DateTime contractStopDate; //!< DateTime when contract end
+        public DateTime? contractStartDate; //!< DateTime when contract start
+        public DateTime? contractStopDate; //!< DateTime when contract end
         public decimal fixedContractAmount; //!< Contract Length
         /// <summary>
         /// Log when trying to create an employee
@@ -84,13 +84,13 @@ namespace AllEmployees
             VariablesLogString(employeeData);
             if (ValidateContract(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], employeeData[index + 5], Convert.ToDecimal(employeeData[index + 6])))
             {
-                FirstName = employeeData[index];
+                /*FirstName = employeeData[index];
                 lastName = employeeData[index + 1];
                 socialInsuranceNumber = employeeData[index + 2];
                 dateOfBirth = Convert.ToDateTime(employeeData[index + 3]);
                 contractStartDate = Convert.ToDateTime(employeeData[index + 4]);
                 contractStopDate = Convert.ToDateTime(employeeData[index + 5]);
-                fixedContractAmount = Convert.ToDecimal(employeeData[index + 6]);
+                fixedContractAmount = Convert.ToDecimal(employeeData[index + 6]);*/
                 IsValid = true;
             }
             else
@@ -170,7 +170,13 @@ namespace AllEmployees
             int[] tempSin = new int[9]; ///< int array
             int[] sin = new int[9]; ///< int array
             int[] year = new int[4]; ///< int array
-            int tempYear = dateOfBirth.Year;
+
+            if (dateOfBirth == null)
+            {
+                dateOfBirth = new DateTime(Convert.ToInt16("19" + businessNumber.Substring(0, 2)), 1, 1);
+            }
+            int tempYear = dateOfBirth.Value.Year;
+
             double totalSin = 0;   ///<totalSin
             bool validSin = false; ///< bool which gets return indicating if it was valid
             int toAdd = 0; //!< Amount to add
@@ -370,8 +376,14 @@ namespace AllEmployees
         /// </summary>
         /// <returns></returns>
         public override string ToString()
-        {
-            return "CT|" + FirstName + "|" + lastName + "|" + SocialInsuranceNumber + "|" + dateOfBirth + "|" + contractStartDate + "|" + contractStopDate + "|" + fixedContractAmount;
+        {string returnString = "";
+            returnString += "CT|" + FirstName + "|" + LastName + "|" + SocialInsuranceNumber;
+            returnString += "|" + dateOfBirth.Value.ToString("yyyy/MM/dd");
+            returnString += "|" + contractStartDate.Value.ToString("yyyy/MM/dd");
+            returnString += "|";
+            returnString += contractStopDate.Value.ToString("yyyy/MM/dd");
+            returnString += "|" + fixedContractAmount;
+            return returnString;
         }
     }
 }

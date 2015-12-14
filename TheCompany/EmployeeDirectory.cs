@@ -15,6 +15,8 @@ namespace TheCompany
     /// </summary>
     public class EmployeeDirectory
     {
+        Employee currentEdit = new Employee();
+        List<Employee> CurrentSearch = new List<Employee>();
         //key: sin
         List<Employee> employees = new List<Employee>(); //!< Generic container used to keep track of the employee's information along with a unique identifier specifying that specific employee
         FileIO file = new FileIO(); //!< The object instantiated of class FileIO which performs all file-related handlings and functionalities
@@ -175,6 +177,39 @@ namespace TheCompany
                 exist = employees.Count(value => value.SocialInsuranceNumber == employee.SocialInsuranceNumber) == 0 ? false : true;
             }
             return exist;
+        }
+        public List<string> updateSearch(string call, string search)
+        {
+            switch (call)
+            {
+                case "first":
+                    CurrentSearch.RemoveAll(x=> x.FirstName != search);
+                    break;
+                case "last":
+                    CurrentSearch.RemoveAll(x => x.LastName != search);
+                    break;
+                case "sin":
+                    CurrentSearch.RemoveAll(x => x.SocialInsuranceNumber != search);
+                    break;
+            }
+            List<string> employeeStrings = new List<string>();
+            foreach (var employee in CurrentSearch)
+            {
+                employeeStrings.Add(employee.ToString());
+            }
+            return employeeStrings;
+        }
+        public void ClearSearch()
+        {
+            CurrentSearch = employees;
+        }
+        public void SelectIndex(int index)
+        {
+            currentEdit = CurrentSearch[index];
+        }
+        public string getEmployeeInfo()
+        {
+            return currentEdit.ToString();
         }
     }
 }
