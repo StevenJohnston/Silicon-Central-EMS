@@ -17,8 +17,9 @@ namespace Presentation
     /// </summary>
     public class UIMenu
     {
+        string fromMethod = "";
 
-
+        string[] employeeInfo = new string[1];
         public delegate nextFunction nextFunction(); //!< Delegate that serves reference to the specific inner UI the user chose to access
 
         EmployeeDirectory employeeDirectory = new EmployeeDirectory(); //!< Object of type EmployeeDirectory that is used to serve as a placeholder to all of the information being extracted and altered from the flat file database
@@ -180,51 +181,58 @@ namespace Presentation
                 case "3":
                     Console.Clear();
                     newEmployee = false;
-                    next = EmployeeDetailsMenu;
+                    fromMethod = "Update";
+                    employeeDirectory.ClearSearch();
+                    next = SearchEmployee;
                     break;
                 case "4":
                     Console.Clear();
-                    Console.WriteLine("Enter SIN of employees to remove");
-                    string employeeSin = Console.ReadLine();
-                    try {
-                        string employeeInfos = employeeDirectory.GetEmployeeInfosBySin(employeeSin);
-                        Console.WriteLine("Employee Found:");
-                        Console.WriteLine(employeeInfos);
-                        string lineIn = "";
-                        for (; lineIn != "y" && lineIn != "n"; lineIn = Console.ReadLine())
-                        {
-                            Console.WriteLine("Are you sure you want to remove? y:n");
-                        }
-                        if (lineIn == "y")
-                        {
-                            try
-                            {
-                                employeeDirectory.RemoveBySin(employeeSin);
-                                Console.WriteLine("Employee Removed");
-                            }
-                            catch (MissingMemberException mME)
-                            {
-                                Console.WriteLine(mME.Message);
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message);
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Employee Not Removed");
-                        }
-                        Console.WriteLine("Press Any Key To Continue...");
-                        Console.ReadKey();
-                    } catch (MissingMemberException mME)
-                    {
-                        Console.WriteLine(mME.Message);
-                    }
-                    
-
-                    next = EmployeeManagementMenu;
+                    newEmployee = false;
+                    fromMethod = "Delete";
+                    employeeDirectory.ClearSearch();
+                    next = SearchEmployee;
                     break;
+                /*Console.WriteLine("Enter SIN of employees to remove");
+                string employeeSin = Console.ReadLine();
+                try {
+                    string employeeInfos = employeeDirectory.GetEmployeeInfosBySin(employeeSin);
+                    Console.WriteLine("Employee Found:");
+                    Console.WriteLine(employeeInfos);
+                    string lineIn = "";
+                    for (; lineIn != "y" && lineIn != "n"; lineIn = Console.ReadLine())
+                    {
+                        Console.WriteLine("Are you sure you want to remove? y:n");
+                    }
+                    if (lineIn == "y")
+                    {
+                        try
+                        {
+                            employeeDirectory.RemoveBySin(employeeSin);
+                            Console.WriteLine("Employee Removed");
+                        }
+                        catch (MissingMemberException mME)
+                        {
+                            Console.WriteLine(mME.Message);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Employee Not Removed");
+                    }
+                    Console.WriteLine("Press Any Key To Continue...");
+                    Console.ReadKey();
+                } catch (MissingMemberException mME)
+                {
+                    Console.WriteLine(mME.Message);
+                }
+
+
+                next = EmployeeManagementMenu;
+                break;*/
                 case "9":
                     next = MainMenu;
                     break;
@@ -248,7 +256,7 @@ namespace Presentation
             string[] employeeInfo = new string[10];
             nextFunction next = null;
             Console.WriteLine("Menu 4 : EMPLOYEE DETAILS MENU ");
-            Console.WriteLine("1. Specify Base Employee Details");
+            Console.WriteLine("1. Specify Employee Details");
             Console.WriteLine("2. Manage Employees");
             Console.WriteLine("9. Return to Employee Management Menu");
             menuChoice = Console.ReadLine();
@@ -292,10 +300,205 @@ namespace Presentation
                     }
                     break;
                 case "2":
+                    //employeeDirectory.ClearSearch();
+                    //fromMethod = "Update";
+                    next = EmployeeManagementMenu;
                     break;
                 case "9":
-                    next = MainMenu;
+                    next = EmployeeManagementMenu;
                     break;
+            }
+            return next;
+        }
+        public nextFunction UpdateEmployee()
+        {
+            //string[] employeeInfo = employeeDirectory.getEmployeeInfo().Split('|');
+            //employeeInfo = employeeDirectory.getEmployeeInfo().Split('|');
+            string menuChoice;
+            nextFunction next = UpdateEmployee;
+            Console.WriteLine("Menu 4 : Employee Update");
+            Console.WriteLine("0: Submit changes");
+            int index = 1;
+            foreach (string col in employeeInfo)
+            {
+                Console.WriteLine(index + ": " + col);
+                index++;
+            }
+            Console.WriteLine("9: Exit update");
+            Console.WriteLine("What would you like to edit:");
+
+            menuChoice = Console.ReadLine();
+            switch (menuChoice)
+            {
+                case "0":
+                    try
+                    {
+                        employeeDirectory.UpdateRecord(employeeInfo);
+                        next = EmployeeManagementMenu;
+                    }
+                    catch (ArgumentException aE)
+                    {
+                        Console.Clear();
+                        Console.WriteLine(aE.Message);
+                        
+                    }
+                    catch (EmployeeException eE)
+                    {
+                        Console.Clear();
+                        eE.errorList.ForEach(x => Console.WriteLine(x));
+                        //Console.WriteLine(eEM.errorList[0]);
+                    }
+                    break;
+                case "1":
+                    employeeInfo[0] = validateInput(employeeInfo[0]);
+                    break;
+                case "2":
+                    employeeInfo[1] = validateInput(employeeInfo[1]);
+                    break;
+                case "3":
+                    employeeInfo[2] = validateInput(employeeInfo[2]);
+                    break;
+                case "4":
+                    employeeInfo[3] = validateInput(employeeInfo[3]);
+                    break;
+                case "5":
+                    employeeInfo[4] = validateInput(employeeInfo[4]);
+                    break;
+                case "6":
+                    employeeInfo[5] = validateInput(employeeInfo[5]);
+                    break;
+                case "7":
+                    employeeInfo[6] = validateInput(employeeInfo[6]);
+                    break;
+                case "8":
+                    employeeInfo[7] = validateInput(employeeInfo[7]);
+                    break;
+                case "9":
+                    next = EmployeeManagementMenu;
+                    break;
+                default:
+                    next = MainMenu;
+                    Console.Clear();
+                    Console.WriteLine("**Invalid input. Enter values 1, 2, or 9**\n");
+                    break;
+            }
+            return next;
+        }
+        public nextFunction DeleteEmployee()
+        {
+            //string[] employeeInfo = employeeDirectory.getEmployeeInfo().Split('|');
+            //employeeInfo = employeeDirectory.getEmployeeInfo().Split('|');
+            string menuChoice;
+            nextFunction next = DeleteEmployee;
+            Console.WriteLine("Menu 4 : Employee Delete");
+            foreach (string col in employeeInfo)
+            {
+                Console.WriteLine(col);
+            }
+            Console.WriteLine("1: Delete");
+            Console.WriteLine("2: Dont Delete");
+            Console.WriteLine("9: Exit");
+
+            menuChoice = Console.ReadLine();
+            switch (menuChoice)
+            {
+                case "1":
+                    try
+                    {
+                        employeeDirectory.RemoveBySin(employeeInfo[3]);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        next = EmployeeManagementMenu;
+                    }
+                    break;
+                case "2":
+                    next = EmployeeManagementMenu;
+                    break;
+                case "9":
+                    next = EmployeeManagementMenu;
+                    break;
+                default:
+                    next = DeleteEmployee;
+                    Console.Clear();
+                    Console.WriteLine("**Invalid input. Enter values 1, 2, or 9**\n");
+                    break;
+            }
+            return next;
+        }
+        public nextFunction SearchEmployee()
+        {
+            nextFunction next = SearchEmployee;
+            string menuChoice;
+            //string[] employeeInfo = new string[10];
+            Console.WriteLine("Menu 4 : UPDATE EMPLOYEE SEARCH MENU ");
+            Console.WriteLine("1. Search by last name");
+            Console.WriteLine("2. Search by first name");
+            Console.WriteLine("3. Search by SIN/BN");
+            Console.WriteLine("9. Return to Employee Management Menu");
+            menuChoice = Console.ReadLine();
+            List<string> employeeList = new List<string>();
+            switch (menuChoice)
+            {
+                case "1":
+                    string firstName = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
+                    employeeList = employeeDirectory.updateSearch("first", firstName);
+                    break;
+                case "2":
+                    string lastName = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
+                    employeeList = employeeDirectory.updateSearch("last",lastName);
+                    break;
+                case "3":
+                    string sin = InputTillCorrect(new Regex(@"^\d{9}$"), "Enter Employee SIN/BN", "Employee SIN/BN should be formatted like so: #########");
+                    employeeList = employeeDirectory.updateSearch("sin", sin);
+                    break;
+                case "9":
+                    next = EmployeeManagementMenu;
+                    break;
+            }
+            Console.Clear();
+            if (employeeList.Count > 0)
+            {
+                int index = 1;
+                foreach (string employeeString in employeeList)
+                {
+                    Console.WriteLine(index + ": " + employeeString);
+                    index++;
+                }
+                Console.WriteLine("Which Index of employee you want to edit");
+                Console.WriteLine("Enter 0 to narrow search");
+                int num = GetNum(0, index - 1);
+                if (num > 0)
+                {
+                    employeeDirectory.SelectIndex(num - 1);
+                    string[] temp = employeeDirectory.getEmployeeInfo().Split('|');
+                    List<string> tempList = temp.ToList();
+                    tempList.RemoveAll(x => x == null);
+                    temp = tempList.ToArray();
+                    employeeInfo = new string[temp.Length];
+                    Array.Copy(temp, employeeInfo, temp.Length);
+                    if (fromMethod == "Update")
+                    {
+                        next = UpdateEmployee;
+                    }
+                    else if (fromMethod == "Delete")
+                    {
+                        next = DeleteEmployee;
+                    }
+                }
+                Console.WriteLine();
+                Console.Clear();
+            }
+            else
+            {
+                if (next != EmployeeManagementMenu)
+                {
+                    Console.WriteLine("No employees found");
+                    Console.WriteLine("Press any key to continue");
+                    Console.ReadKey();
+                    next = EmployeeManagementMenu;
+                }
             }
             return next;
         }
@@ -303,11 +506,11 @@ namespace Presentation
         {
             string[] additionalInfo = new string[7];
 
-            additionalInfo[0] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
-            additionalInfo[1] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee First Name", "Employee First Name consist of only characters");
+            additionalInfo[0] = InputTillCorrect(new Regex(@"^[a-zA-Z]+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
+            additionalInfo[1] = InputTillCorrect(new Regex(@"^[a-zA-Z]+$"), "Enter Employee First Name", "Employee First Name consist of only characters");
             additionalInfo[2] = InputTillCorrect(new Regex(@"^\d{3} ?\d{3} ?\d{3}$"), "Enter Employee SIN", "Employee SIN should be formatted like so: ### ### ###");
-            additionalInfo[3] = InputTillCorrect(ValidateDate, "Enter Date Of Birth", "That date is not valid",true);
-            additionalInfo[4] = InputTillCorrect(ValidateDate, "Enter Date Of Hire", "That date is not valid",true);
+            additionalInfo[3] = InputTillCorrect(ValidateDate, "Enter Date Of Birth", "That date is not valid");
+            additionalInfo[4] = InputTillCorrect(ValidateDate, "Enter Date Of Hire", "That date is not valid");
             additionalInfo[5] = InputTillCorrect(ValidateDate, "Enter Date Of Termination", "That date is not valid",true);
             additionalInfo[6] = InputTillCorrect(new Regex(@"^\d+(.\d{1,2})?$"), "Enter Employee Salary", "That is not a valid salary");
 
@@ -317,13 +520,13 @@ namespace Presentation
         {
             string[] AdditionalInfo = new string[7];
 
-            AdditionalInfo[0] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
-            AdditionalInfo[1] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee First Name", "Employee First Name consist of only characters");
+            AdditionalInfo[0] = InputTillCorrect(new Regex(@"^[a-zA-Z]+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
+            AdditionalInfo[1] = InputTillCorrect(new Regex(@"^[a-zA-Z]+$"), "Enter Employee First Name", "Employee First Name consist of only characters");
             AdditionalInfo[2] = InputTillCorrect(new Regex(@"^\d{3} ?\d{3} ?\d{3}$"), "Enter Employee SIN", "Employee SIN should be formatted like so: ### ### ###");
             AdditionalInfo[3] = InputTillCorrect(ValidateDate, "Enter Date Of Birth", "That date is not valid");
 
             AdditionalInfo[4] = InputTillCorrect(ValidateDate, "Enter Date Of Hire", "That date is not valid");
-            AdditionalInfo[5] = InputTillCorrect(ValidateDate, "Enter Date Of Termination", "That date is not valid");
+            AdditionalInfo[5] = InputTillCorrect(ValidateDate, "Enter Date Of Termination", "That date is not valid", true);
             AdditionalInfo[6] = InputTillCorrect(new Regex(@"^\d+(.\d{1,2})?$"), "Enter Employee Hourly Rate", "Hourly rate must be positive and a number");
 
             return AdditionalInfo;
@@ -332,14 +535,13 @@ namespace Presentation
         {
             string[] AdditionalInfo = new string[7];
 
-            AdditionalInfo[0] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
-            AdditionalInfo[1] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee First Name", "Employee First Name consist of only characters");
-            AdditionalInfo[2] = InputTillCorrect(new Regex(@"^\d{5} ?\d{4}$"), "Enter Business Number", "Employee BN, Should be formatted like so: ##### ####");
-            AdditionalInfo[3] = InputTillCorrect(ValidateDate, "Enter Date Of Incorporation", "That date is not valid");
+            AdditionalInfo[0] = InputTillCorrect(new Regex(@"^[a-zA-Z]+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
+            AdditionalInfo[1] = InputTillCorrect(new Regex(@"^\d{5} ?\d{4}$"), "Enter Business Number", "Employee BN, Should be formatted like so: ##### ####");
+            AdditionalInfo[2] = InputTillCorrect(ValidateDate, "Enter Date Of Incorporation", "That date is not valid");
 
-            AdditionalInfo[4] = InputTillCorrect(ValidateDate, "Enter Contract Start Date", "That date is not valid");
-            AdditionalInfo[5] = InputTillCorrect(ValidateDate, "Enter Contract Stop Date", "That date is not valid");
-            AdditionalInfo[6] = InputTillCorrect(new Regex(@"^\d+(.\d{1,2})?$"), "Enter Fixed Contract Amount", "Fixed Contract Amount must be a positive number");
+            AdditionalInfo[3] = InputTillCorrect(ValidateDate, "Enter Contract Start Date", "That date is not valid");
+            AdditionalInfo[4] = InputTillCorrect(ValidateDate, "Enter Contract Stop Date", "That date is not valid",true);
+            AdditionalInfo[5] = InputTillCorrect(new Regex(@"^\d+(.\d{1,2})?$"), "Enter Fixed Contract Amount", "Fixed Contract Amount must be a positive number");
 
             return AdditionalInfo;
         }
@@ -348,10 +550,10 @@ namespace Presentation
         {
             string[] additionalInfo = new string[6];
 
-            additionalInfo[0] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
-            additionalInfo[1] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee First Name", "Employee First Name consist of only characters");
+            additionalInfo[0] = InputTillCorrect(new Regex(@"^[a-zA-Z]+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
+            additionalInfo[1] = InputTillCorrect(new Regex(@"^[a-zA-Z]+$"), "Enter Employee First Name", "Employee First Name consist of only characters");
             additionalInfo[2] = InputTillCorrect(new Regex(@"^\d{3} ?\d{3} ?\d{3}$"), "Enter Employee SIN", "Employee SIN should be formatted like so: ### ### ###");
-            additionalInfo[3] = InputTillCorrect(ValidateDate, "Enter Date Of Birth", "That date is not valid");
+            additionalInfo[3] = InputTillCorrect(ValidateDate, "Enter Date Of Birth", "That date is not valid",true);
             additionalInfo[4] = InputTillCorrect(new Regex(@"Winter|Spring|Summer|Fall"), "Enter Season (Winter, Spring, Summer, or Fall)", "Invalid Season try (Winter, Spring, Summer, or Fall)");
             additionalInfo[5] = InputTillCorrect(new Regex(@"^\d+(.\d{1,2})?$"), "Enter Employee Piece Pay", "That is not a valid Piece Pay");
 
@@ -386,15 +588,15 @@ namespace Presentation
         /// <param name="message">Message pertaining to what is asked from the user and what information is being requested by the program</param>
         /// <param name="errorMessage">Message outlining the error involved with the inputted answer</param>
         /// <returns>Returns the string of information read from the console</returns>
-        public string InputTillCorrect(validator validatorMethod,string message,string errorMessage,bool canEmpty = false)
+        public string InputTillCorrect(validator validatorMethod,string message,string errorMessage,bool canBeEmpty = false)
         {
             string lineIn = null;
-            for (; lineIn==null || !validatorMethod(lineIn) || (lineIn==""&&canEmpty); )
+            for (; lineIn==null || !validatorMethod(lineIn); )
             {
                 Console.WriteLine(message);
                 lineIn = Console.ReadLine();
                 Console.Clear();
-                if (lineIn == "" && canEmpty)
+                if (canBeEmpty && lineIn == "")
                 {
                     break;
                 }
@@ -424,6 +626,16 @@ namespace Presentation
             }
             return valid;
         }
+        private bool NumberLessThen(object numIn)
+        {
+            bool valid = false;
+            TwoInts nums = (TwoInts)numIn;
+            if (nums.num > 0 && nums.num < nums.max)
+            {
+                valid = true;
+            }
+            return valid;
+        }
         /// <summary>
         /// Validate SIN
         /// </summary>
@@ -439,5 +651,53 @@ namespace Presentation
         {
             return string.Join("|",employeeInfo);
         }
+        private int GetNum(int min, int max)
+        {
+            string lineIn = "nan";
+            int numOut;
+            for (; !int.TryParse(lineIn, out numOut)|| numOut < min || numOut > max;) {
+                lineIn = Console.ReadLine();
+            }
+            return numOut;
+        }
+        string validateInput(string comp)
+        {
+            string returnString = "";
+            if (new Regex(@"^[a-zA-Z]+$").IsMatch(comp))
+            {
+                returnString = InputTillCorrect(new Regex(@"^[a-zA-Z]+$"), "Enter name", "Name must only consist of letters");
+            }
+            else if (new Regex(@"^\d{3} ?\d{3} ?\d{3}$").IsMatch(comp))
+            {
+                returnString = InputTillCorrect(new Regex(@"^\d{3} ?\d{3} ?\d{3}$"), "Enter Employee SIN", "Employee SIN should be formatted like so: ### ### ###");
+            }
+            else if (new Regex(@"^\d{5} ?\d{4}$").IsMatch(comp))
+            {
+                returnString = InputTillCorrect(new Regex(@"^\d{5} ?\d{4}$"), "Enter Business Number", "Employee BN, Should be formatted like so: ##### ####");
+            }
+            else if (new Regex(@"^\d{3}\\d{2}\\d{2}$").IsMatch(comp))
+            {
+                returnString = InputTillCorrect(ValidateDate, "Enter Date Of Birth", "That date is not valid");
+            }
+            else if (new Regex(@"^\d+(.\d{1,2})?$").IsMatch(comp))
+            {
+                returnString = InputTillCorrect(new Regex(@"^\d+(.\d{1,2})?$"), "Enter Money value", "That is not a valid money");
+            }
+            else if (comp == "")
+            {
+                returnString = InputTillCorrect(ValidateDate, "Enter date", "That date is not valid");
+            }
+            return returnString;
+        }
+    }
+    class TwoInts
+    {
+        public TwoInts(int num,int max)
+        {
+            this.num = num;
+            this.max= max;
+        }
+        public int num;
+        public int max;
     }
 }

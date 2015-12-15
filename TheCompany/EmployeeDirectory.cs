@@ -15,6 +15,9 @@ namespace TheCompany
     /// </summary>
     public class EmployeeDirectory
     {
+        Employee currentEdit = new Employee();
+        Employee refCurrentEdit = new Employee();
+        List<Employee> CurrentSearch = new List<Employee>();
         //key: sin
         List<Employee> employees = new List<Employee>(); //!< Generic container used to keep track of the employee's information along with a unique identifier specifying that specific employee
         FileIO file = new FileIO(); //!< The object instantiated of class FileIO which performs all file-related handlings and functionalities
@@ -26,10 +29,13 @@ namespace TheCompany
         {
             try
             {
+                Logging.LogString("Loading database from file. ");
                 file.Load(Add);
+                Logging.LogString("Loading complete.");
             }
             catch (FileLoadException fLE)
             {
+                Logging.LogString("Failed to open the file.");
                 throw fLE;
             }
             catch (MissingMemberException mME)
@@ -84,7 +90,8 @@ namespace TheCompany
                         }
                         else
                         {
-                            throw new ArgumentException();
+                            Logging.LogString("Tried adding employee but the SIN/BN matched another record.");
+                            throw new ArgumentException("That Sin Already Exists");
                         }
                     }
                     else
@@ -99,7 +106,7 @@ namespace TheCompany
             }
             catch (ArgumentException aE)
             {
-                throw new Exception("Employee exist with that SIN");
+                throw aE;
             }
         }
 
@@ -109,7 +116,9 @@ namespace TheCompany
         /// </summary>
         public void Save()
         {
+            Logging.LogString("Saving database to file.");
             file.Save(SaveAll);
+            Logging.LogString("Save complete.");
         }
 
 
@@ -149,14 +158,17 @@ namespace TheCompany
         /// <returns>Returns a Message struct the outlines if the process failed by providing an error number and the accomodated error message that follows</returns>
         public void RemoveBySin(string employeeSin)
         {
+            employeeSin = RemoveSpaces(employeeSin);
             int employeesRemoved = employees.RemoveAll(element => element.SocialInsuranceNumber == employeeSin);
             //Employee removeEmployee = employees[employeeSin];
             if (employeesRemoved == 0)
             {
+                Logging.LogString("Tried removing Employee with SIN/BN " + employeeSin + ", not found.");
                 throw new MissingMemberException("Employee with SIN/BN " + employeeSin + " not found");
             }
             else
             {
+                Logging.LogString("Removed " + employeesRemoved + " employees from database");
                 throw new Exception("Removed " + employeesRemoved + " employees from database");
             }
         }
@@ -175,6 +187,68 @@ namespace TheCompany
                 exist = employees.Count(value => value.SocialInsuranceNumber == employee.SocialInsuranceNumber) == 0 ? false : true;
             }
             return exist;
+        }
+        public List<string> updateSearch(string call, string search)
+        {
+            switch (call)
+            {
+                case "first":
+                    CurrentSearch.RemoveAll(x=> x.FirstName.ToLower() != search.ToLower());
+                    break;
+                case "last":
+                    CurrentSearch.RemoveAll(x => x.LastName.ToLower() != search.ToLower());
+                    break;
+                case "sin":
+                    CurrentSearch.RemoveAll(x => x.SocialInsuranceNumber != search);
+                    break;
+            }
+            List<string> employeeStrings = new List<string>();
+            foreach (var employee in CurrentSearch)
+            {
+                employeeStrings.Add(employee.ToString());
+            }
+            return employeeStrings;
+        }
+        public void ClearSearch()
+        {
+            CurrentSearch = new List<Employee>(employees);
+        }
+        public void SelectIndex(int index)
+        {
+            currentEdit = CurrentSearch[index];
+        }
+        public string getEmployeeInfo()
+        {
+            return currentEdit.ToString();
+        }
+
+        public void UpdateRecord(string[] employeeInfo)
+        {
+            try
+            {
+                RemoveBySin(currentEdit.SocialInsuranceNumber);
+            }
+            catch (Exception e)
+            {
+                //worked
+            }
+            try {
+                Add(String.Join("|", employeeInfo));
+            }
+            catch(ArgumentException aE)
+            {
+                employees.Add(currentEdit);
+                throw aE;
+            }
+            catch (EmployeeException eEM)
+            {
+                employees.Add(currentEdit);
+                throw eEM;
+            }
+        }
+        public string RemoveSpaces(string stringIn)
+        {
+            return new string(stringIn.ToCharArray().Where(c => !Char.IsWhiteSpace(c)).ToArray());
         }
     }
 }

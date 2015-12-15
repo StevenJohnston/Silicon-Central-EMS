@@ -12,8 +12,8 @@ namespace AllEmployees
     /// </summary>
     public class FulltimeEmployee : Employee
     {
-        public DateTime dateOfHire; //!< date of hire
-        public DateTime dateOfTermination; //!< date of termination 
+        public DateTime? dateOfHire; //!< date of hire
+        public DateTime? dateOfTermination; //!< date of termination 
         public decimal salary; //!< employee salary
         string[] myEmployeeData;
         /// <summary>
@@ -75,18 +75,13 @@ namespace AllEmployees
             employeeEx.operationType = "CREATE";
             if (ValidateAndSetFulltime(employeeData[index], employeeData[index+1], employeeData[index+2], employeeData[index+3], employeeData[index+4], employeeData[index+5], Convert.ToDecimal(employeeData[index+6])))
             {
-                FirstName = employeeData[index];
-                lastName = employeeData[index + 1];
-                socialInsuranceNumber = employeeData[index + 2];
-                dateOfBirth = Convert.ToDateTime(employeeData[index + 3]);
-                dateOfHire = Convert.ToDateTime(employeeData[index + 4]);
-                dateOfTermination = Convert.ToDateTime(employeeData[index + 5]);
-                salary = Convert.ToDecimal(employeeData[index + 6]);
                 IsValid = true;
+                SuccessLogString();
             }
             else
             {
                 IsValid = false;
+                SuccessLogString();
                 throw employeeEx;
             }
             SuccessLogString();
@@ -112,16 +107,24 @@ namespace AllEmployees
             {
                 this.dateOfHire = Convert.ToDateTime(dateOfHire);
             }
-            else {
-                allValid = false;
-            }
-            if (ValidateDate(dateOfTermination, dateType.TERMINATE))
-            {
-                this.dateOfTermination = Convert.ToDateTime(dateOfTermination);
-            }
             else
             {
                 allValid = false;
+            }
+            if (dateOfTermination != "")
+            {
+                if (ValidateDate(dateOfTermination, dateType.TERMINATE))
+                {
+                    this.dateOfTermination = Convert.ToDateTime(dateOfTermination);
+                }
+                else
+                {
+                    allValid = false;
+                }
+            }
+            else
+            {
+                this.dateOfTermination = null;
             }
             if (ValidateMoney(salary))
             {
@@ -154,7 +157,7 @@ namespace AllEmployees
                     case dateType.HIRE:
 
                         dateOfHire = dateValue;
-                        if (dateValue >= dateOfBirth && dateValue <= DateTime.Now)
+                        if ((this.dateOfBirth==null||dateValue >= dateOfBirth )&& dateValue <= DateTime.Now)
                         {
                             valid = true;
                         }
@@ -216,7 +219,18 @@ namespace AllEmployees
         /// <returns></returns>
         public override string ToString()
         {
-            return "FT|"+FirstName+"|"+lastName+"|"+SocialInsuranceNumber+"|"+dateOfBirth+"|"+dateOfHire+"|"+dateOfTermination+"|"+salary;
+            string returnString = "";
+            returnString += "FT|" + FirstName + "|" + LastName + "|";
+            returnString += socialInsuranceNumber.Substring(0,3) + " "+ socialInsuranceNumber.Substring(3,3) +  " " +socialInsuranceNumber.Substring(6, 3);
+            returnString += "|" + dateOfBirth.Value.ToString("yyyy/MM/dd");
+            returnString += "|" + dateOfHire.Value.ToString("yyyy/MM/dd");
+            returnString += "|";
+            if (dateOfTermination != null)
+            {
+                returnString += dateOfTermination.Value.ToString("yyyy/MM/dd");
+            }
+            returnString += "|"+salary;
+            return returnString;
         }
 
         /** Access the protected methods from the Base Class through inherited class referece calls **/

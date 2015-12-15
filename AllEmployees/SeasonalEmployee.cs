@@ -84,16 +84,20 @@ namespace AllEmployees
 
             if (ValidateAndSetSeasonal(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], Convert.ToDecimal(employeeData[index + 5])))
             {
-                FirstName = employeeData[index];
+                /*FirstName = employeeData[index];
                 lastName = employeeData[index + 1];
                 socialInsuranceNumber = employeeData[index + 2];
                 dateOfBirth = Convert.ToDateTime(employeeData[index + 3]);
                 season = employeeData[index + 4];
-                piecePay = Convert.ToDecimal(employeeData[index + 5]);
+                piecePay = Convert.ToDecimal(employeeData[index + 5]);*/
+
                 IsValid = true;
+                SuccessLogString();
             }
             else
             {
+                IsValid = false;
+                SuccessLogString();
                 throw employeeEx;
             }
 
@@ -164,7 +168,13 @@ namespace AllEmployees
         /// <returns></returns>
         public override string ToString()
         {
-            return "SS|" + FirstName + "|" + lastName + "|" + SocialInsuranceNumber + "|" + dateOfBirth + "|" + season + "|" + piecePay;
+            string returnString = "";
+            returnString += "SS|" + FirstName + "|" + LastName + "|";
+            returnString += socialInsuranceNumber.Substring(0, 3) + " " + socialInsuranceNumber.Substring(3, 3) + " " + socialInsuranceNumber.Substring(6, 3);
+            returnString += "|" + dateOfBirth.Value.ToString("yyyy/MM/dd");
+            returnString += "|" + season;
+            returnString += "|" + piecePay;
+            return returnString;
         }
     }
 }
