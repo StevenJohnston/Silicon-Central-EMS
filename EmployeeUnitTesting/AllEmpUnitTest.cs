@@ -683,8 +683,175 @@ namespace EmployeeUnitTesting
             bool status = false;
             status = ptEmpObj.ValidateDate("ERROR", Employee.dateType.HIRE);
             Assert.AreEqual(true, status);
-        }       
+        }
+        //naw
+        /*
+        [TestMethod]
+        public void Date_Contract_Employee_Validation_Normal()
+        {
 
+            bool status = false;
+
+            try
+            {
+                string[] ctEmpObj = new string[7] {
+                "qwer",
+                "drfdgf",
+                "782 454 284",
+                "1978/3/14",
+                "2000/01/01",
+                "2005/05/05",
+                "45.34"
+            };
+
+                ContractEmployee contractEmpObj = new ContractEmployee(ctEmpObj);
+                status = contractEmpObj.ValidateDate("2000/01/01", ContractEmployee.dateType.CONTRACT_START);
+
+            }
+            catch (EmployeeException e)
+            {
+                e.GetError();
+            }
+
+            Assert.AreEqual(true, status);
+
+        }
+
+        [TestMethod]
+        public void Date_FullTime_Employee_Normal_Validation()
+        {
+            string[] ftEmpData = new string[7] {
+                "qwer",
+                "drfdgf",
+                "782 454 284",
+                "1978/3/14",
+                "2000/01/01",
+                "2005/05/05",
+                "45.34"
+            };
+            bool status = false;
+
+            FulltimeEmployee ftEmpObj = new FulltimeEmployee(ftEmpData);
+            status = ftEmpObj.ValidateDate("2002/01/01", Employee.dateType.HIRE);
+            Assert.AreEqual(true, status);
+        }
+
+        [TestMethod]
+        public void Date_PartTime_Employee_Normal_Validation()
+        {
+            string[] ptEmpData = new string[7]{
+                "qwer",
+                "drfdgf",
+                "782 454 284",
+                "1978/3/14",
+                "2000/01/01",
+                "2005/05/05",
+                "45.34"
+            };
+
+            ParttimeEmployee ptEmpObj = new ParttimeEmployee(ptEmpData);
+            bool status = false;
+            status = ptEmpObj.ValidateDate("2002/01/01", Employee.dateType.HIRE);
+            Assert.AreEqual(true, status);
+        }
+
+        /** VALIDATION DATE EXCEPTION TESTING **/
+        /
+        [TestMethod]
+        public void Date_Contract_Employee_Exception_Validation()
+        {
+            ContractEmployee contractEmpObj = new ContractEmployee();
+            bool status = false;
+            status = contractEmpObj.ValidateDate("ERROR/0/01", Employee.dateType.CONTRACT_START);
+            Assert.AreEqual(false, status);
+        }
+
+        [TestMethod]
+        public void Date_FullTime_Employee_Exception_Validation()
+        {
+            string[] ftEmpData = new string[7] {
+                "qwer",
+                "drfdgf",
+                "782 454 284",
+                "1978/3/14",
+                "2000/01/01",
+                "2005/05/05",
+                "45.34"
+            };
+
+            FulltimeEmployee ftEmpObj = new FulltimeEmployee(ftEmpData);
+            bool status = false;
+            status = ftEmpObj.ValidateDate("ERROR", Employee.dateType.HIRE);
+            Assert.AreEqual(false, status);
+        }
+
+        [TestMethod]
+        public void Date_PartTime_Employee_Exception_Validation()
+        {
+            string[] ptEmpData = new string[7] {
+                "qwer",
+                "drfdgf",
+                "782 454 284",
+                "1978/3/14",
+                "2000/01/01",
+                "2005/05/05",
+                "45.34"
+            };
+
+            ParttimeEmployee ptEmpObj = new ParttimeEmployee(ptEmpData);
+            bool status = false;
+            status = ptEmpObj.ValidateDate("ERROR", Employee.dateType.HIRE);
+            Assert.AreEqual(false, status);
+        }
+        */
+        /** VALIDATION DATE BOUNDARY TESTING **/
+
+        [TestMethod]
+        public void Date_Contract_Employee_Boundary_Validation()
+        {
+            ContractEmployee contractEmpObj = new ContractEmployee();
+            bool status = false;
+            status = contractEmpObj.ValidateDate("0001/01/01", Employee.dateType.CONTRACT_START);
+            Assert.AreEqual(true, status);
+        }
+
+        [TestMethod]
+        public void Date_FullTime_Employee_Boundary_Validation()
+        {
+            string[] ftEmpData = new string[7] {
+                "qwer",
+                "drfdgf",
+                "782 454 284",
+                "0001/1/23",
+                "2000/01/01",
+                "2005/05/05",
+                "45.34"
+            };
+
+            FulltimeEmployee ftEmpObj = new FulltimeEmployee(ftEmpData);
+            bool status = false;
+            status = ftEmpObj.ValidateDate("0001/12/31", Employee.dateType.HIRE);
+            Assert.AreEqual(true, status);
+        }
+
+        [TestMethod]
+        public void Date_PartTime_Employee_Boundary_Validation()
+        {
+            string[] ptEmpData = new string[7] {
+                "qwer",
+                "drfdgf",
+                "782 454 284",
+                "1978/3/14",
+                "2000/01/01",
+                "2005/05/05",
+                "45.34"
+            };
+
+            ParttimeEmployee ptEmpObj = new ParttimeEmployee(ptEmpData);
+            bool status = false;
+            status = ptEmpObj.ValidateDate("2012/2/29", Employee.dateType.HIRE);
+            Assert.AreEqual(true, status);
+        }
 
     }
 }

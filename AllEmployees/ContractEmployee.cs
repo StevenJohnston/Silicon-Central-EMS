@@ -377,7 +377,8 @@ namespace AllEmployees
         /// <returns></returns>
         public override string ToString()
         {string returnString = "";
-            returnString += "CT|" + FirstName + "|" + LastName + "|" + SocialInsuranceNumber;
+            returnString += "CT|" + FirstName + "|" + LastName + "|";
+            returnString += socialInsuranceNumber.Substring(0, 5) + " " + socialInsuranceNumber.Substring(5, 4);
             returnString += "|" + dateOfBirth.Value.ToString("yyyy/MM/dd");
             returnString += "|" + contractStartDate.Value.ToString("yyyy/MM/dd");
             returnString += "|";

@@ -165,7 +165,8 @@ namespace AllEmployees
         public override string ToString()
         {
             string returnString = "";
-            returnString += "SS|" + FirstName + "|" + LastName + "|" + SocialInsuranceNumber;
+            returnString += "SS|" + FirstName + "|" + LastName + "|";
+            returnString += socialInsuranceNumber.Substring(0, 3) + " " + socialInsuranceNumber.Substring(3, 3) + " " + socialInsuranceNumber.Substring(6, 3);
             returnString += "|" + dateOfBirth.Value.ToString("yyyy/MM/dd");
             returnString += "|" + season;
             returnString += "|" + piecePay;

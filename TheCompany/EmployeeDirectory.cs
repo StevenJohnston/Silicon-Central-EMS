@@ -16,6 +16,7 @@ namespace TheCompany
     public class EmployeeDirectory
     {
         Employee currentEdit = new Employee();
+        Employee refCurrentEdit = new Employee();
         List<Employee> CurrentSearch = new List<Employee>();
         //key: sin
         List<Employee> employees = new List<Employee>(); //!< Generic container used to keep track of the employee's information along with a unique identifier specifying that specific employee
@@ -86,7 +87,7 @@ namespace TheCompany
                         }
                         else
                         {
-                            throw new ArgumentException();
+                            throw new ArgumentException("That Sin Already Exist");
                         }
                     }
                     else
@@ -101,7 +102,7 @@ namespace TheCompany
             }
             catch (ArgumentException aE)
             {
-                throw new Exception("Employee exist with that SIN");
+                throw aE;
             }
         }
 
@@ -151,6 +152,7 @@ namespace TheCompany
         /// <returns>Returns a Message struct the outlines if the process failed by providing an error number and the accomodated error message that follows</returns>
         public void RemoveBySin(string employeeSin)
         {
+            employeeSin = RemoveSpaces(employeeSin);
             int employeesRemoved = employees.RemoveAll(element => element.SocialInsuranceNumber == employeeSin);
             //Employee removeEmployee = employees[employeeSin];
             if (employeesRemoved == 0)
@@ -201,7 +203,7 @@ namespace TheCompany
         }
         public void ClearSearch()
         {
-            CurrentSearch = employees;
+            CurrentSearch = new List<Employee>(employees);
         }
         public void SelectIndex(int index)
         {
@@ -210,6 +212,35 @@ namespace TheCompany
         public string getEmployeeInfo()
         {
             return currentEdit.ToString();
+        }
+
+        public void UpdateRecord(string[] employeeInfo)
+        {
+            try
+            {
+                RemoveBySin(currentEdit.SocialInsuranceNumber);
+            }
+            catch (Exception e)
+            {
+                //worked
+            }
+            try {
+                Add(String.Join("|", employeeInfo));
+            }
+            catch(ArgumentException aE)
+            {
+                employees.Add(currentEdit);
+                throw aE;
+            }
+            catch (EmployeeException eEM)
+            {
+                employees.Add(currentEdit);
+                throw eEM;
+            }
+        }
+        public string RemoveSpaces(string stringIn)
+        {
+            return new string(stringIn.ToCharArray().Where(c => !Char.IsWhiteSpace(c)).ToArray());
         }
     }
 }

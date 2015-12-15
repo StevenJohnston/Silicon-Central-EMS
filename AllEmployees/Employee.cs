@@ -191,6 +191,8 @@ namespace AllEmployees
             }
             if (ValidateSIN(socialInsuranceNumber))
             {
+                socialInsuranceNumber = new string(socialInsuranceNumber.ToCharArray().Where(c => !Char.IsWhiteSpace(c)).ToArray());
+                //Regex.Replace(socialInsuranceNumber, @"\s+", "");
                 this.socialInsuranceNumber = socialInsuranceNumber;
             }
             else
