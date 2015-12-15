@@ -76,10 +76,12 @@ namespace AllEmployees
             if (ValidateAndSetFulltime(employeeData[index], employeeData[index+1], employeeData[index+2], employeeData[index+3], employeeData[index+4], employeeData[index+5], Convert.ToDecimal(employeeData[index+6])))
             {
                 IsValid = true;
+                SuccessLogString();
             }
             else
             {
                 IsValid = false;
+                SuccessLogString();
                 throw employeeEx;
             }
             SuccessLogString();

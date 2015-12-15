@@ -90,10 +90,14 @@ namespace AllEmployees
                 dateOfBirth = Convert.ToDateTime(employeeData[index + 3]);
                 season = employeeData[index + 4];
                 piecePay = Convert.ToDecimal(employeeData[index + 5]);*/
+
                 IsValid = true;
+                SuccessLogString();
             }
             else
             {
+                IsValid = false;
+                SuccessLogString();
                 throw employeeEx;
             }
 

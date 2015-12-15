@@ -92,12 +92,15 @@ namespace AllEmployees
                 contractStopDate = Convert.ToDateTime(employeeData[index + 5]);
                 fixedContractAmount = Convert.ToDecimal(employeeData[index + 6]);*/
                 IsValid = true;
+                SuccessLogString();
             }
             else
             {
+                IsValid = false;
+                SuccessLogString();
                 throw employeeEx;
             }
-            SuccessLogString();
+            
         }
         /// <summary>
         /// Validate employee contract

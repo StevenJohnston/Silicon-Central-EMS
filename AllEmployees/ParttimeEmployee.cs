@@ -84,12 +84,14 @@ namespace AllEmployees
                 dateOfTermination = Convert.ToDateTime(employeeData[index + 5]);
                 hourlyRate = Convert.ToDecimal(employeeData[index + 6]);*/
                 IsValid = true;
+                SuccessLogString();
             }
             else
             {
+                IsValid = false;
+                SuccessLogString();
                 throw employeeEx;
             }
-            SuccessLogString();
         }
         /// <summary>
         /// Constructor that validate part time employees
