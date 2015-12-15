@@ -29,10 +29,13 @@ namespace TheCompany
         {
             try
             {
+                Logging.LogString("Loading database from file. ");
                 file.Load(Add);
+                Logging.LogString("Loading complete.");
             }
             catch (FileLoadException fLE)
             {
+                Logging.LogString("Failed to open the file.");
                 throw fLE;
             }
             catch (MissingMemberException mME)
@@ -87,7 +90,8 @@ namespace TheCompany
                         }
                         else
                         {
-                            throw new ArgumentException("That Sin Already Exist");
+                            Logging.LogString("Tried adding employee but the SIN/BN matched another record.");
+                            throw new ArgumentException("That Sin Already Exists");
                         }
                     }
                     else
@@ -112,7 +116,9 @@ namespace TheCompany
         /// </summary>
         public void Save()
         {
+            Logging.LogString("Saving database to file.");
             file.Save(SaveAll);
+            Logging.LogString("Save complete.");
         }
 
 
@@ -157,10 +163,12 @@ namespace TheCompany
             //Employee removeEmployee = employees[employeeSin];
             if (employeesRemoved == 0)
             {
+                Logging.LogString("Tried removing Employee with SIN/BN " + employeeSin + ", not found.");
                 throw new MissingMemberException("Employee with SIN/BN " + employeeSin + " not found");
             }
             else
             {
+                Logging.LogString("Removed " + employeesRemoved + " employees from database");
                 throw new Exception("Removed " + employeesRemoved + " employees from database");
             }
         }
