@@ -67,7 +67,7 @@ namespace TheCompany
                     case "CT":
                         newEmployee = new ContractEmployee(recordStr); //PARAM Needs to be changed, temp fix
                         break;
-                    case "SN":
+                    case "SS":
                         newEmployee = new SeasonalEmployee(recordStr); //PARAM Needs to be changed, temp fix
                         break;
                     default:

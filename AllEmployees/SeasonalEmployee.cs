@@ -27,7 +27,7 @@ namespace AllEmployees
         public bool VariablesLogString(string[] employeeData)
         {
             bool success = true; //!< status of the sucess on logging
-            int index = employeeData[0] == "SN" ? 1 : 0;
+            int index = employeeData[0] == "SS" ? 1 : 0;
             string toLog = "Trying to create Seasonal Employee with:\n||\tFirst Name: " + employeeData[index] +
                         "||Last Name: " + employeeData[index + 1] +
                         "||SIN: " + employeeData[index + 2] +
@@ -67,7 +67,7 @@ namespace AllEmployees
 
         public bool Validate()
         {
-            int index = myEmployeeData[0] == "FT" ? 1 : 0;
+            int index = myEmployeeData[0] == "SS" ? 1 : 0;
             bool status = ValidateAndSetSeasonal(myEmployeeData[index], myEmployeeData[index + 1], myEmployeeData[index + 2], myEmployeeData[index + 3], myEmployeeData[index + 4], Convert.ToDecimal(myEmployeeData[index + 5]));
             return status;
         }
@@ -77,7 +77,7 @@ namespace AllEmployees
         public SeasonalEmployee(string[] employeeData)
         {
             myEmployeeData = employeeData;
-            int index = employeeData[0] == "SN" ? 1 : 0;
+            int index = employeeData[0] == "SS" ? 1 : 0;
             VariablesLogString(employeeData);
             employeeEx.employeeType = "Seasonal";
             employeeEx.operationType = "CREATE";

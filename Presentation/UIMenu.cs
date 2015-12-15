@@ -306,9 +306,9 @@ namespace Presentation
             additionalInfo[0] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee Last Name", "Employee Last Name consist of only characters");
             additionalInfo[1] = InputTillCorrect(new Regex(@"^\w+$"), "Enter Employee First Name", "Employee First Name consist of only characters");
             additionalInfo[2] = InputTillCorrect(new Regex(@"^\d{3} ?\d{3} ?\d{3}$"), "Enter Employee SIN", "Employee SIN should be formatted like so: ### ### ###");
-            additionalInfo[3] = InputTillCorrect(ValidateDate, "Enter Date Of Birth", "That date is not valid");
-            additionalInfo[4] = InputTillCorrect(ValidateDate, "Enter Date Of Hire", "That date is not valid");
-            additionalInfo[5] = InputTillCorrect(ValidateDate, "Enter Date Of Termination", "That date is not valid");
+            additionalInfo[3] = InputTillCorrect(ValidateDate, "Enter Date Of Birth", "That date is not valid",true);
+            additionalInfo[4] = InputTillCorrect(ValidateDate, "Enter Date Of Hire", "That date is not valid",true);
+            additionalInfo[5] = InputTillCorrect(ValidateDate, "Enter Date Of Termination", "That date is not valid",true);
             additionalInfo[6] = InputTillCorrect(new Regex(@"^\d+(.\d{1,2})?$"), "Enter Employee Salary", "That is not a valid salary");
 
             return additionalInfo;
@@ -386,14 +386,18 @@ namespace Presentation
         /// <param name="message">Message pertaining to what is asked from the user and what information is being requested by the program</param>
         /// <param name="errorMessage">Message outlining the error involved with the inputted answer</param>
         /// <returns>Returns the string of information read from the console</returns>
-        public string InputTillCorrect(validator validatorMethod,string message,string errorMessage)
+        public string InputTillCorrect(validator validatorMethod,string message,string errorMessage,bool canEmpty = false)
         {
             string lineIn = null;
-            for (; lineIn==null || !validatorMethod(lineIn); )
+            for (; lineIn==null || !validatorMethod(lineIn) || (lineIn==""&&canEmpty); )
             {
                 Console.WriteLine(message);
                 lineIn = Console.ReadLine();
                 Console.Clear();
+                if (lineIn == "" && canEmpty)
+                {
+                    break;
+                }
                 Console.WriteLine(errorMessage);
             }
             Console.Clear();
