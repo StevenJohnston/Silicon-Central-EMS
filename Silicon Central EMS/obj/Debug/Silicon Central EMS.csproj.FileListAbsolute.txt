@@ -68,3 +68,19 @@ C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\D
 C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\TheCompany.pdb
 C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\EMSExceptions.pdb
 C:\Users\Steven Windows7\Documents\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.csprojResolveAssemblyReference.cache
+C:\Users\mwarren\Source\Repos\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe.config
+C:\Users\mwarren\Source\Repos\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.exe
+C:\Users\mwarren\Source\Repos\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Silicon Central EMS.pdb
+C:\Users\mwarren\Source\Repos\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\AllEmployees.dll
+C:\Users\mwarren\Source\Repos\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Presentation.dll
+C:\Users\mwarren\Source\Repos\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Supporting.dll
+C:\Users\mwarren\Source\Repos\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\TheCompany.dll
+C:\Users\mwarren\Source\Repos\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\EMSExceptions.dll
+C:\Users\mwarren\Source\Repos\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\AllEmployees.pdb
+C:\Users\mwarren\Source\Repos\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Presentation.pdb
+C:\Users\mwarren\Source\Repos\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\Supporting.pdb
+C:\Users\mwarren\Source\Repos\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\TheCompany.pdb
+C:\Users\mwarren\Source\Repos\Silicon-Central-EMS\Silicon Central EMS\bin\Debug\EMSExceptions.pdb
+C:\Users\mwarren\Source\Repos\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.csprojResolveAssemblyReference.cache
+C:\Users\mwarren\Source\Repos\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.exe
+C:\Users\mwarren\Source\Repos\Silicon-Central-EMS\Silicon Central EMS\obj\Debug\Silicon Central EMS.pdb

@@ -342,9 +342,11 @@ namespace Presentation
                         Console.WriteLine(aE.Message);
                         
                     }
-                    catch (EmployeeException eEM)
+                    catch (EmployeeException eE)
                     {
-                        Console.WriteLine(eEM.errorList[0]);
+                        Console.Clear();
+                        eE.errorList.ForEach(x => Console.WriteLine(x));
+                        //Console.WriteLine(eEM.errorList[0]);
                     }
                     break;
                 case "1":
@@ -372,7 +374,7 @@ namespace Presentation
                     employeeInfo[7] = validateInput(employeeInfo[7]);
                     break;
                 case "9":
-                    next = null;
+                    next = EmployeeManagementMenu;
                     break;
                 default:
                     next = MainMenu;

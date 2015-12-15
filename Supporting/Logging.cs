@@ -32,7 +32,7 @@ namespace Supporting
                 }
                 StreamWriter logFile = new StreamWriter(path, true);
                 logFile.Write(temp);
-                logFile.Write(toLog + "\n");
+                logFile.Write(toLog + " \n");
                 logFile.Close();
                 success = true;
             }

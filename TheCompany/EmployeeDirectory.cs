@@ -193,10 +193,10 @@ namespace TheCompany
             switch (call)
             {
                 case "first":
-                    CurrentSearch.RemoveAll(x=> x.FirstName != search);
+                    CurrentSearch.RemoveAll(x=> x.FirstName.ToLower() != search.ToLower());
                     break;
                 case "last":
-                    CurrentSearch.RemoveAll(x => x.LastName != search);
+                    CurrentSearch.RemoveAll(x => x.LastName.ToLower() != search.ToLower());
                     break;
                 case "sin":
                     CurrentSearch.RemoveAll(x => x.SocialInsuranceNumber != search);
