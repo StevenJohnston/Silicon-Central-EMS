@@ -61,6 +61,7 @@ namespace Supporting
                     {
                         while (!fileIn.EndOfStream)
                         {
+
                             try
                             {
                                 func(fileIn.ReadLine());

@@ -27,7 +27,7 @@ namespace AllEmployees
         public bool VariablesLogString(string[] employeeData)
         {
             bool success = true; //!< status of the sucess on logging
-            int index = employeeData[0] == "SS" ? 1 : 0;
+            int index = employeeData[0] == "SN" ? 1 : 0;
             string toLog = "Trying to create Seasonal Employee with:\n||\tFirst Name: " + employeeData[index] +
                         "||Last Name: " + employeeData[index + 1] +
                         "||SIN: " + employeeData[index + 2] +
@@ -67,7 +67,7 @@ namespace AllEmployees
 
         public bool Validate()
         {
-            int index = myEmployeeData[0] == "SS" ? 1 : 0;
+            int index = myEmployeeData[0] == "SN" ? 1 : 0;
             bool status = ValidateAndSetSeasonal(myEmployeeData[index], myEmployeeData[index + 1], myEmployeeData[index + 2], myEmployeeData[index + 3], myEmployeeData[index + 4], Convert.ToDecimal(myEmployeeData[index + 5]));
             return status;
         }
@@ -77,7 +77,7 @@ namespace AllEmployees
         public SeasonalEmployee(string[] employeeData)
         {
             myEmployeeData = employeeData;
-            int index = employeeData[0] == "SS" ? 1 : 0;
+            int index = employeeData[0] == "SN" ? 1 : 0;
             VariablesLogString(employeeData);
             employeeEx.employeeType = "Seasonal";
             employeeEx.operationType = "CREATE";
@@ -118,7 +118,7 @@ namespace AllEmployees
             bool[] valid = new bool[3] { false, false, false };
             bool allValid = true;
 
-            ValidateAndSetEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
+            allValid = ValidateAndSetEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
             if (ValidateSeason(season))
             {
                 this.season = season;
@@ -169,10 +169,11 @@ namespace AllEmployees
         public override string ToString()
         {
             string returnString = "";
-            returnString += "SS|" + FirstName + "|" + LastName + "|";
+            returnString += "SN|" + FirstName + "|" + LastName + "|";
             returnString += socialInsuranceNumber.Substring(0, 3) + " " + socialInsuranceNumber.Substring(3, 3) + " " + socialInsuranceNumber.Substring(6, 3);
             returnString += "|" + dateOfBirth.Value.ToString("yyyy/MM/dd");
-            returnString += "|" + season;
+            returnString += "|";
+            returnString+= season==null||season==""?"None":season;
             returnString += "|" + piecePay;
             return returnString;
         }

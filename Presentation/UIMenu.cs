@@ -264,7 +264,7 @@ namespace Presentation
             {
                 case "1":
                     next = EmployeeDetailsMenu;
-                    employeeInfo[0] = InputTillCorrect(new Regex(@"^(?i)(FT|PT|CT|SS|Full Time|Part Time|Contract|Seasonal)(?-i)$"), "Enter Employee Type", "Employee Types consist of (FT,PT,CT,SS,)");
+                    employeeInfo[0] = InputTillCorrect(new Regex(@"^(?i)(FT|PT|CT|SN|Full Time|Part Time|Contract|Seasonal)(?-i)$"), "Enter Employee Type", "Employee Types consist of (FT,PT,CT,SN,)");
                     switch (employeeInfo[0].ToLower())
                     {
                         case "ft":
@@ -279,7 +279,7 @@ namespace Presentation
                         case "contract":
                             GetContractEmployee().CopyTo(employeeInfo,1);
                             break;
-                        case "ss":
+                        case "sn":
                         case "seasonal":
                             GetSeasonalEmployee().CopyTo(employeeInfo, 1);
                             break;
@@ -290,7 +290,7 @@ namespace Presentation
                     }
                     catch (EmployeeException eE)
                     {
-                        Console.WriteLine(eE.errorList);
+                        //Console.WriteLine(eE.errorList);
                         eE.errorList.ForEach(x=>Console.WriteLine(x));
                         //Console.WriteLine(eE.errorList);
                     }
@@ -663,7 +663,11 @@ namespace Presentation
         string validateInput(string comp)
         {
             string returnString = "";
-            if (new Regex(@"^[a-zA-Z]+$").IsMatch(comp))
+            if (new Regex(@"^(None|Winter|Spring|Summer|Fall)$").IsMatch(comp))
+            {
+                returnString = InputTillCorrect(new Regex(@"^(None|Winter|Spring|Summer|Fall)?$"), "Enter Season (Winter, Spring, Summer, or Fall)", "Invalid Season try (Winter, Spring, Summer, or Fall)");
+            }
+            else if (new Regex(@"^[a-zA-Z]+$").IsMatch(comp))
             {
                 returnString = InputTillCorrect(new Regex(@"^[a-zA-Z]+$"), "Enter name", "Name must only consist of letters");
             }

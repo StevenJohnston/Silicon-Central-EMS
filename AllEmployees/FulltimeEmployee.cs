@@ -55,7 +55,7 @@ namespace AllEmployees
             Supporting.Logging.LogString(logString);
             return success;
         }
-
+        
         public bool Validate()
         {
             int index = myEmployeeData[0] == "FT" ? 1 : 0;
@@ -70,21 +70,29 @@ namespace AllEmployees
         {
             myEmployeeData = employeeData; 
             int index = employeeData[0].ToLower() == "ft" ? 1 : 0;
-            VariablesLogString(employeeData);
-            employeeEx.employeeType = "Full Time";
-            employeeEx.operationType = "CREATE";
-            if (ValidateAndSetFulltime(employeeData[index], employeeData[index+1], employeeData[index+2], employeeData[index+3], employeeData[index+4], employeeData[index+5], Convert.ToDecimal(employeeData[index+6])))
+            if (employeeData.Length - index == 7)
             {
-                IsValid = true;
+                VariablesLogString(employeeData);
+                employeeEx.employeeType = "Full Time";
+                employeeEx.operationType = "CREATE";
+                if (ValidateAndSetFulltime(employeeData[index], employeeData[index + 1], employeeData[index + 2], employeeData[index + 3], employeeData[index + 4], employeeData[index + 5], Convert.ToDecimal(employeeData[index + 6])))
+                {
+                    IsValid = true;
+                    SuccessLogString();
+                }
+                else
+                {
+                    IsValid = false;
+                    SuccessLogString();
+                    throw employeeEx;
+                }
                 SuccessLogString();
+
             }
             else
             {
                 IsValid = false;
-                SuccessLogString();
-                throw employeeEx;
             }
-            SuccessLogString();
         }
         /// <summary>
         /// Validate full timers 
@@ -102,7 +110,7 @@ namespace AllEmployees
             bool[] valid = new bool[4] { false, false, false, false };  //!< bool array of false
             bool allValid = true;  //!< bool of status if all information is valid
 
-            ValidateAndSetEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
+            allValid = ValidateAndSetEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
             if (ValidateDate(dateOfHire, dateType.HIRE))
             {
                 this.dateOfHire = Convert.ToDateTime(dateOfHire);

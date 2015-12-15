@@ -118,7 +118,7 @@ namespace AllEmployees
             
             bool allValid = true; //!< bool which gets return indicating if it was valid
             bool[] valid = new bool[5]; //!< bool array
-            ValidateAndSetEmployee(name, lastName, businessNumber, dateOfBirth);
+            allValid = ValidateAndSetEmployee(name, lastName, businessNumber, dateOfBirth);
             /*if (valid[0])
             {
                 this.dateOfBirth = Convert.ToDateTime(dateOfBirth);

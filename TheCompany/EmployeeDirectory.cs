@@ -58,55 +58,58 @@ namespace TheCompany
         /// <returns></returns>
         public void Add(object record)
         {
-            try
+            if (((string)record)[0] != ';')
             {
-                string[] recordStr = ((string)record).Split('|');
-                Employee newEmployee = null;
-                switch (recordStr[0].ToUpper())
+                try
                 {
-                    case "FT":
-                        newEmployee = new FulltimeEmployee(recordStr);
-                        break;
-                    case "PT":
-                        newEmployee = new ParttimeEmployee(recordStr); //PARAM Needs to be changed, temp fix
-                        break;
-                    case "CT":
-                        newEmployee = new ContractEmployee(recordStr); //PARAM Needs to be changed, temp fix
-                        break;
-                    case "SS":
-                        newEmployee = new SeasonalEmployee(recordStr); //PARAM Needs to be changed, temp fix
-                        break;
-                    default:
-                        break;
-                }
-                if (newEmployee != null)
-                {
-                    if (newEmployee.IsValid)
+                    string[] recordStr = ((string)record).Split('|');
+                    Employee newEmployee = null;
+                    switch (recordStr[0].ToUpper())
                     {
-                        //Exist by sin
-                        if (!employeeSinExist(newEmployee))
+                        case "FT":
+                            newEmployee = new FulltimeEmployee(recordStr);
+                            break;
+                        case "PT":
+                            newEmployee = new ParttimeEmployee(recordStr); //PARAM Needs to be changed, temp fix
+                            break;
+                        case "CT":
+                            newEmployee = new ContractEmployee(recordStr); //PARAM Needs to be changed, temp fix
+                            break;
+                        case "SN":
+                            newEmployee = new SeasonalEmployee(recordStr); //PARAM Needs to be changed, temp fix
+                            break;
+                        default:
+                            break;
+                    }
+                    if (newEmployee != null)
+                    {
+                        if (newEmployee.IsValid)
                         {
-                            employees.Add(newEmployee);
+                            //Exist by sin
+                            if (!employeeSinExist(newEmployee))
+                            {
+                                employees.Add(newEmployee);
+                            }
+                            else
+                            {
+                                Logging.LogString("Tried adding employee but the SIN/BN matched another record.");
+                                throw new ArgumentException("That Sin Already Exists");
+                            }
                         }
                         else
                         {
-                            Logging.LogString("Tried adding employee but the SIN/BN matched another record.");
-                            throw new ArgumentException("That Sin Already Exists");
+                            //Employee is not valid dont add Needs LOG
                         }
                     }
-                    else
-                    {
-                        //Employee is not valid dont add Needs LOG
-                    }
                 }
-            }
-            catch (MissingMemberException mME)
-            {
-                //throw mME;
-            }
-            catch (ArgumentException aE)
-            {
-                throw aE;
+                catch (MissingMemberException mME)
+                {
+                    //throw mME;
+                }
+                catch (ArgumentException aE)
+                {
+                    throw aE;
+                }
             }
         }
 

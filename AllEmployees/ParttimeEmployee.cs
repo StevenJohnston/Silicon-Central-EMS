@@ -108,7 +108,7 @@ namespace AllEmployees
         {
             bool allValid = true; //!< validate bool
             bool[] valid = new bool[5]; //!<list of bool to see if it was validate or not
-            valid[0] = ValidateAndSetEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
+            allValid = ValidateAndSetEmployee(name, lastName, socialInsuranceNumber, dateOfBirth);
             /*if (valid[0])
             {
                 this.dateOfBirth = Convert.ToDateTime(dateOfBirth);
